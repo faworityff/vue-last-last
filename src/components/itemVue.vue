@@ -65,11 +65,9 @@ console.log(seen, 'seen1');
     methods: {
       clickItem:function (a) {
         console.log(this.seen[0], this.seen[0].indexOf(a), a);
-        alert(11)
-
         if(this.seen[0].indexOf(a)< 0) {
           this.seen[0].push(a)
-          window.$cookies.set('seen', JSON.stringify(this.seen), Infinity);
+          window.$cookies.set('seen', JSON.stringify(this.seen), Infinity, '/map');
         }
       }
     }

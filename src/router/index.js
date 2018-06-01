@@ -45,7 +45,7 @@ var z =0;
 for (var cateObj  in  inst.category) {
   var VRegExp = new RegExp(/\/+/g);
 
-  filtred[z] = {sub:[],mark:[],slug:[],category_id:[],district:[], time_from:'', time_till:'', limitList:12,shown:0,seen:seen};
+  filtred[z] = {sub:[],mark:[],slug:[],category_id:[],district:[], time_from:'', time_till:'', limitList:12,shown:0};
   filtred[z].slug.push(routsArr[z].getAttribute('to').replace(VRegExp, ''))
   filtred[z].category_id.push(+routsArr[z].getAttribute('data-id'))
 
@@ -53,7 +53,7 @@ for (var cateObj  in  inst.category) {
 }
 
 // todo добавление фильтров для страницы all. потом переделать
-filtred[z] = {sub:[],mark:[],slug:[],category_id:[],district:[], time_from:'', time_till:'', limitList:12,shown:0,seen:seen};
+filtred[z] = {sub:[],mark:[],slug:[],category_id:[],district:[], time_from:'', time_till:'', limitList:12,shown:0};
 filtred[z].slug.push(routsArr[z].getAttribute('to').replace(VRegExp, ''))
 var allrouts = routsArr[z].getAttribute('data-id').split(',')
 
@@ -67,13 +67,13 @@ console.log(filtred, 'filtred');
 routsObjArr[0] = {
   path: routsArr[0].getAttribute('to'),
   component: mainViews,
-  props: { needle: inst.category,  allPoints: inst.objects, locations: inst.location, main: inst.main, seen:seen },
+  props: { needle: inst.category,  allPoints: inst.objects, locations: inst.location, main: inst.main},
 }
 /* routs страницы все */
 routsObjArr[routsArr.length] = {
   path: routsArr[routsArr.length-1].getAttribute('to'),
   component: categoryViews,
-  props: { objcts: inst.objects, categories: inst.category, filtred: filtred[routsArr.length-1], location: inst.location, seen:seen},
+  props: { objcts: inst.objects, categories: inst.category, filtred: filtred[routsArr.length-1], location: inst.location},
 }
 
 /* routs категорий */
@@ -81,7 +81,7 @@ for (var i = 1; i < routsArr.length - 1; i++) {
     routsObjArr[i] = {
       path: routsArr[i].getAttribute('to'),
       component: categoryViews,
-      props: { objcts: inst.objects, categories: inst.category, filtred: filtred[i], location: inst.location, seen:seen},
+      props: { objcts: inst.objects, categories: inst.category, filtred: filtred[i], location: inst.location},
     }
 }
 /* routs одного заведения */
@@ -90,7 +90,7 @@ for (var i = 1; i < routsArr.length; i++) {
     path: routsArr[i].getAttribute('to') + '/:alias',
     name: 'category',
     component: aloneViews,
-    props: { objcts: inst.objects, seen:seen},
+    props: { objcts: inst.objects},
   }
   routsObjArr.push(routsSubObjArr[i])
 }

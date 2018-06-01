@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>vuedrug</title>
+    <link rel="icon" type="image/ico" href="favicon.ico"/>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat+Alternates:400,500,600,700,900|PT+Sans+Caption:400,700|Roboto:300,400,500,600,700|Vidaloka&amp;subset=cyrillic-ext,latin-ext"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://45.j2landing.com/DrugStoreMap/css/base.css"> <!--ALL PAGES-->
+    <link rel="stylesheet" href="https://45.j2landing.com/DrugStoreMap/css/style.css"><!--ALL PAGES-->
+    <link rel="stylesheet" href="https://45.j2landing.com/DrugStoreMap/css/responsive.css"><!--ALL PAGES-->
+
+
+</head>
+<body>
+<div id="app" style="width: 100%">
+
+    <div class="menu-list col-md-auto col-12">
+        <div class="row">
+            <router-link to="/" v-on:click.native="routClicks('main')" data-id="0" style="color:#000">main</router-link>
+
+            <router-link to="/razvlecheniya" class="col-md col-12" data-id="10" style="color:#000">
+                Развлечения
+            </router-link>
+            <router-link to="/krasota" class="col-md col-12" data-id="11" style="color:#000">
+                Красота
+            </router-link>
+            <router-link to="/sport" class="col-md col-12" data-id="12" style="color:#000">
+                Спорт
+            </router-link>
+            <router-link to="/zdorove" class="col-md col-12" data-id="13" style="color:#000">
+                Здоровье
+            </router-link>
+            <router-link to="/eda" class="col-md col-12" data-id="14" style="color:#000">
+                Еда
+            </router-link>
+            <router-link to="/all" class="col-md col-12" data-id="12,11,10,13,14" style="color:#000">
+                все
+            </router-link>
+        </div>
+    </div>
+    <router-view></router-view>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gijgo/1.9.6/combined/js/gijgo.min.js "></script>
+<script src="https://45.j2landing.com/DrugStoreMap/js/ds_map.js"></script>
+<script src="https://45.j2landing.com/DrugStoreMap/js/map.js"></script>
+
+<script async="" defer="" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCKFztHzVA7_L75JrTwyrzhk2asYAWUL7I&amp;callback=initMap" type="text/javascript"></script>
+
+</body>
+</html>

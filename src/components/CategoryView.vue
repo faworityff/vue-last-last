@@ -403,7 +403,6 @@
   var lang = document.querySelector('html').getAttribute('lang');
   var country = 'Украина';
 
-
   Object.defineProperty(Object.prototype, 'length', {
     get: function () {
       var size = 0, key;

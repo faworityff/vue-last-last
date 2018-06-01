@@ -9,7 +9,6 @@ Vue.config.productionTip = false
 const app = new Vue({
   el: '#app',
   router:router,
-
   methods: {
     routClicks: function (a) {
 

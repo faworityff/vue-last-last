@@ -520,7 +520,6 @@
         obj: {}
       }
     },
-
     created: function () {
       var objName = this.$route.params.alias
       for (this.objs in this.objcts) {

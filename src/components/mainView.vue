@@ -193,8 +193,6 @@
   import Vue from 'vue'
   import item_vue from '@/components/itemVue';
 
-
-
   Vue.component('item-vues', item_vue,  {
     props: ['obj','seen']
   })

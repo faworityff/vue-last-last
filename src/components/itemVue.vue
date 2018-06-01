@@ -51,7 +51,6 @@
         </div>
     </a>
 </template>
-
 <script>
   var seen = window.$cookies.isKey('seen') ? JSON.parse(window.$cookies.get('seen')) : {0:[]};
 console.log(seen, 'seen1');

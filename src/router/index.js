@@ -38,6 +38,7 @@ var lang = document.querySelector('html').getAttribute('lang');
 
 var routsArr = document.querySelectorAll('router-link');
 var routsObjArr = [];
+
 var routsSubObjArr = [];
 var filtred=[]
 var z =0;

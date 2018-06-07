@@ -48,7 +48,7 @@
                             <a href="#review">Отзывы</a>
                             <a href="#map">На карте</a>
                             <a href="#profile">Обзор</a>
-                            <a href="#description" class="active">Описание</a>
+                            <a href="#description" class="active-title">Описание</a>
                         </div>
                         <div class="line-navigation">
                             <div class="block-navigation"></div>
@@ -256,7 +256,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!--todo raiting percents-->
                                 <div class="rating rating-percent">
                                     <div class="row">
                                         <div class="col-4">Отлично:</div>
@@ -267,7 +266,7 @@
                                             <span class="round active"></span>
                                             <span class="round active"></span>
                                         </div>
-                                        <div class="col-2">42%</div>
+                                        <div class="col-2"><span v-if="obj.precentage[5]">{{obj.precentage[5]}}</span> <span v-else>0</span></div>
                                     </div>
                                     <div class="row">
                                         <div class="col-4">Хорошо:</div>
@@ -277,7 +276,7 @@
                                             <span class="round active"></span>
                                             <span class="round active"></span>
                                         </div>
-                                        <div class="col-2">24%</div>
+                                        <div class="col-2"><span v-if="obj.precentage[4] ">{{obj.precentage[4]}}</span> <span v-else>0</span></div>
                                     </div>
                                     <div class="row">
                                         <div class="col-4">Неплохо:</div>
@@ -286,7 +285,7 @@
                                             <span class="round active"></span>
                                             <span class="round active"></span>
                                         </div>
-                                        <div class="col-2">20%</div>
+                                        <div class="col-2"><span v-if="obj.precentage[3] ">{{obj.precentage[3]}}</span> <span v-else>0</span></div>
                                     </div>
                                     <div class="row">
                                         <div class="col-4">Плохо:</div>
@@ -294,14 +293,14 @@
                                             <span class="round active"></span>
                                             <span class="round active"></span>
                                         </div>
-                                        <div class="col-2">11%</div>
+                                        <div class="col-2" ><span v-if="obj.precentage[2] ">{{obj.precentage[2]}}</span> <span v-else>0</span></div>
                                     </div>
                                     <div class="row">
                                         <div class="col-4">Ужасно:</div>
                                         <div class="col-6">
                                             <span class="round active"></span>
                                         </div>
-                                        <div class="col-2">3%</div>
+                                        <div class="col-2"><span v-if="obj.precentage[1] ">{{obj.precentage[1]}}</span> <span v-else>0</span></div>
                                     </div>
                                 </div>
                                 <div class="marks col">
@@ -419,7 +418,7 @@
                                             </div>
                                         </div>
                                         <div class="club-name-slider">Forsage</div>
-                                        <div class="recommended">
+                                        <div class="recommended" v-on:click="addToFavorite(obj)" v-bind:class="{active: obj.isFav}">
                                             <svg version="1.1" id="reccom" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                                  x="0px" y="0px"	 viewBox="0 0 40.9 39" style="enable-background:new 0 0 40.9 39;" xml:space="preserve">
 <g>
@@ -444,8 +443,7 @@
                                         </div>
                                     </div>
                                     <div class="content-club-wrap">
-                                        <div class="content-club">
-                                            {{obj.content}}
+                                        <div class="content-club" v-html="obj.content">
                                         </div>
                                         <div class="social">
                                             поделиться:
@@ -487,7 +485,7 @@
                                         </svg>
                                 </span>
                             </a>
-                            <a class="add-location">
+                            <a class="add-location open-in-popup" data-number="3">
                                 Добавить отзыв
                                 <span class="add-locate">
                                         <svg version="1.1" id="add" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -503,13 +501,19 @@
                 </div>
             </div>
         </div>
+        <!--POPUP REVIEW-->
+
+        <div class="popup" data-number="3"  v-html="popRewiev"></div>
+
+        <!--end POPUP REVIEW -->
     </div>
 </template>
 
 <script>
+
   import Vue from 'vue'
   import review_vue from '@/components/reviewView';
-
+  import axios from 'axios';
   Vue.component('review-vues', review_vue, {
     props: ['obj']
   })
@@ -517,17 +521,8 @@
     props: ['objcts','seen'],
     data() {
       return {
-        obj: {}
-      }
-    },
-    created: function () {
-      var objName = this.$route.params.alias
-      for (this.objs in this.objcts) {
-        if (this.objcts[this.objs].slug == objName) {
-          this.obj = this.objcts[this.objs]
-          console.log(this.objcts[this.objs]);
-
-        }
+        obj: {},
+        popRewiev: 'dsadsads'
       }
     },
     metaInfo: {
@@ -543,15 +538,46 @@
         {src: 'https://45.j2landing.com/DrugStoreMap/js/jquery.scrollTo-min.js', type: 'text/javascript', body: true},
       ]
     },
+    created: function () {
+      var objName = this.$route.params.alias
+      for (this.objs in this.objcts) {
+        if (this.objcts[this.objs].slug == objName) {
+          this.obj = this.objcts[this.objs]
+          console.log(this.objcts[this.objs]);
+        }
+      }
+
+    },
+    mounted:function () {
+      axios.get('/comment-create/' + this.$route.params.alias)
+        .then(resp => {
+          console.log(4);
+          this.popRewiev  = resp.data ;
+        })
+
+      setTimeout(function () {
+        restartClub();
+        initSliders()
+      },500)
+    },
     methods: {
+      popReviews: function (ids) {
+
+      },
       avgPoint: function (a, b) {
         return +a >= b ? true : false
+      },
+      addToFavorite:function (obj) {
+        //todo убрать путь
+        console.log(obj);
+
+        var uri = obj.isFav ?  '/favorites/unset/'+obj.id :  '/favorites/set/'+obj.id;
+        axios.post(uri)
+          .then(resp => {
+            obj.isFav  = resp.data ;
+          })
       }
-      // sheduleLenth: function (sh) {
-      //  return  sh.length == 1 ? true : false
-      // }
     }
   }
 
 </script>
-

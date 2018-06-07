@@ -4,7 +4,7 @@
             <div class="review-block row justify-content-between align-items-start">
                 <div class="col-auto">
                     <div class="review-image row">
-                        <img src="/assets/img/drugstore_map/img/6.jpg">
+                        <img src="/assets/img/drugstore_map/6.jpg">
                     </div>
                 </div>
                 <div class="col review-right-content">
@@ -66,9 +66,11 @@
                             </div>
                         </div>
                         <div class="col-12 review-block answer-block">
-                            <form class="row">
-                                <textarea rows="4"></textarea>
-                                <a class="answer-btn">Ответить</a>
+                            <form class="row" :id="'addAnswer' + review.id" v-on:submit.prevent="addAnswer('addAnswer' + review.id)">
+                                <textarea name="content_ru" rows="4"></textarea>
+                                <input class="answer-btn"  type="submit">Ответить</input>
+                                <input type="hidden" name="rev_id"  :value="review.id">
+                                <input type="hidden" name="inst_id"  :value="obj.id">
                             </form>
                         </div>
                     </div>
@@ -120,16 +122,16 @@
 	C54.8,63.7,53.7,64.8,52.3,64.8z"/>
 </svg>
                                     </div>
-                                    <div class="answer-button row justify-content-end align-items-center">
-                                        <div class="underline">Ответить</div>
-                                        <svg version="1.1" id="add" xmlns="http://www.w3.org/2000/svg"
-                                                                         xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                                                         viewBox="0 0 528.9 530.6" style="enable-background:new 0 0 528.9 530.6;" xml:space="preserve">
-
-<polygon class="st0" points="528.9,230.4 300.2,230.4 300.2,1.4 229.3,1.4 229.3,230.4 1,230.4 1,301.3 229.3,301.3 229.3,530.3
-	300.2,530.3 300.2,301.3 528.9,301.3 "></polygon>
-</svg>
-                                    </div>
+                                    <!--<div class="answer-button row justify-content-end align-items-center">-->
+                                        <!--<div class="underline">Ответить</div>-->
+                                        <!--<svg version="1.1" id="add" xmlns="http://www.w3.org/2000/svg"  -->
+                                             <!--xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" -->
+                                             <!--viewBox="0 0 528.9 530.6" style="enable-background:new 0 0 528.9 530.6;" xml:space="preserve">-->
+                                            <!--<polygon class="st0" points="528.9,230.4 300.2,230.4 300.2,1.4 229.3,1.4 229.3,230.4 1,230.4
+                                            1,301.3 229.3,301.3 229.3,530.3-->
+                                                        <!--300.2,530.3 300.2,301.3 528.9,301.3 "></polygon>-->
+                                        <!--</svg>-->
+                                    <!--</div>-->
                                 </div>
                             </div>
                         </div>
@@ -143,15 +145,24 @@
                 </div>
             </div>
         </div>
+
     </div>
 </template>
 
 <script>
+  import axios from 'axios';
   export default {
     props: ['obj'],
     methods: {
       actPoint: function (a,b) {
         return +a >= b ? true : false
+      },
+      addAnswer:function (k) {
+        axios({
+          method: 'post',
+          url: '/comment-create',
+          data: $('#' + k).serialize()
+        });
       }
     }
   }

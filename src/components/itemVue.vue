@@ -1,5 +1,5 @@
 <template>
-    <a :href="obj.category_slug+'/'+obj.slug" v-on:click="clickItem(obj.id)" class="one-club">
+    <a :href="baseHref + obj.category_slug +'/'+ obj.slug" v-on:click="clickItem(obj.id)" class="one-club">
         <div class="club-block row">
             <div class="clone-img"></div>
             <div class="club-arr"></div>
@@ -53,9 +53,8 @@
 </template>
 <script>
   var seen = window.$cookies.isKey('seen') ? JSON.parse(window.$cookies.get('seen')) : {0:[]};
-console.log(seen, 'seen1');
   export default {
-    props: ['obj'],
+    props: ['obj','baseHref'],
     data: function () {
       return {
         seen:seen
@@ -63,8 +62,7 @@ console.log(seen, 'seen1');
     },
     methods: {
       clickItem:function (a) {
-        console.log(this.seen[0], this.seen[0].indexOf(a), a);
-        if(this.seen[0].indexOf(a)< 0) {
+        if(this.seen[0].indexOf(a) < 0) {
           this.seen[0].push(a)
           window.$cookies.set('seen', JSON.stringify(this.seen), Infinity, '/map');
         }

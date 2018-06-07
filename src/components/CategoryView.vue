@@ -2,7 +2,7 @@
     <div class="search-content container-fluid m-top">
         <div class="club-top-nav club-all">
             <div class="wrap row align-items-center justify-content-between">
-                <a href="/map" class="back-page">
+                <a class="back-page" v-on:click="goBack">
                     Назад
                     <span class="forward">
                         <svg version="1.1" id="back"
@@ -16,7 +16,7 @@
                         </svg>
                     </span>
                 </a>
-                <a href="!#" class="add-location">
+                <a href="/inst-create" class="add-location">
                 <span class="location-pin">
                     <svg version="1.1" id="add-loc" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                          viewBox="0 0 43.8 51.4" style="enable-background:new 0 0 43.8 51.4;" xml:space="preserve">
@@ -50,7 +50,7 @@
                     <!--FILTERS-->
                     <div class="filter-column col-md-4 col-lg-3">
                         <div class="map">
-                            <div id="map"></div>
+                            <google-map name="map" :coord_lat="objcts[0].lat" :coord_lng="objcts[0].lng" :city="city"></google-map>
                             <div class="show-full">
                                 <a href="map.html" class="btn">
                                     Показать карту
@@ -179,12 +179,12 @@
                                                     </div>
                                                     <div class="col-5">
                                                         <input id="timepickerFr" type="text"
-                                                               class="form-control timepicker" placeholder="от" >
+                                                               class="form-control timepicker" placeholder="от" value="">
                                                     </div>
                                                     -
                                                     <div class="col-5">
                                                         <input id="timepickerTo" type="text"
-                                                               class="form-control timepicker" placeholder="до">
+                                                               class="form-control timepicker" placeholder="до"  value="">
                                                     </div>
                                                     <button v-on:click="timeChangeFrom">Выбрать</button>
                                                 </div>
@@ -199,13 +199,13 @@
                                      aria-expanded="true" aria-controls="collapse7">
                                     <div class="filter-title">
                                     <span class="filter-cat-icon">
-                                        <svg version="1.1" id="reccom" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                                 viewBox="0 0 40.9 39" style="enable-background:new 0 0 40.9 39;" xml:space="preserve">
+                                        <svg version="1.1" id="reccom" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                             x="0px" y="0px" viewBox="0 0 40.9 39" style="enable-background:new 0 0 40.9 39;" xml:space="preserve">
                                             <g>
-                                                <path d="M14.8,23.4l-3.6,11l9.4-6.8l9.4,6.8l-3.6-11l9.4-6.8H24.2L20.6,5.5L17,16.6H5.4L14.8,23.4 M20.6,0.1l4.8,14.8h15.5L28.3,24
-                                                    l4.8,14.8l-12.6-9.1L7.9,38.8L12.7,24L0.1,14.9h15.5L20.6,0.1"/>
-                                                <polyline points="18.6,18.5 20.6,12.3 22.6,18.5 29.2,18.5 23.8,22.4 25.9,28.7 20.6,24.8 15.3,28.7 17.3,22.4 12,18.5 18.6,18.5
-                                                    "/>
+                                                <path d="M14.8,23.4l-3.6,11l9.4-6.8l9.4,6.8l-3.6-11l9.4-6.8H24.2L20.6,5.5L17,16.6H5.4L14.8,23.4
+                                                 M20.6,0.1l4.8,14.8h15.5L28.3,24 l4.8,14.8l-12.6-9.1L7.9,38.8L12.7,24L0.1,14.9h15.5L20.6,0.1"/>
+                                                <polyline points="18.6,18.5 20.6,12.3 22.6,18.5 29.2,18.5 23.8,22.4 25.9,28.7 20.6,24.8 15.3,28.7
+                                                17.3,22.4 12,18.5 18.6,18.5"/>
                                             </g>
                                         </svg>
                                     </span>
@@ -216,7 +216,7 @@
                                     <div class="card-body">
                                         <div class="form-check">
                                             <input class="form-check-input" type="checkbox" name="exampleRadios7"
-                                                   id="exampleRadios7-1" value="option7-1">
+                                                   id="exampleRadios7-1" value="option7-1"  :checked="recomend == 'true'">
                                             <label class="form-check-label" for="exampleRadios7-1"
                                                    v-on:click="recomendFilterObj()">
                                                 Да
@@ -259,17 +259,18 @@
                                     </div>
                                 </div>
                             </div>
+                            <!--РАНЕЕ ИЗБРАННЫЕ-->
                             <div class="card">
                                 <div class="card-header" id="heading9" data-toggle="collapse" data-target="#collapse9"
                                      aria-expanded="true" aria-controls="collapse9">
                                     <div class="filter-title">
                                     <span class="filter-cat-icon">
-                                        <svg version="1.1" id="favorite" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-	 viewBox="0 0 41 50" style="enable-background:new 0 0 41 50;" xml:space="preserve">
-<g>
-	<path d="M20.8,0.9C9.6,0.9,0.6,10.3,0.6,21.7c0,4.8,3.2,11,9.6,18.4c3.9,4.4,7.7,7.9,8.9,9V27.2l-5.4-5.4L12,20
-		c-2-2.1-2.1-5.4-0.1-7.5c2-2,5.3-2,7.2,0l1.6,1.7l1.7-1.7c2-2,5.3-2.1,7.2,0c2,2.1,2,5.4,0,7.5L28,21.8l-5.4,5.5v9.6
-		c0,2.1,0,4.3,0,6.4v5.9c1.4-1.2,5-4.6,8.8-9c6.4-7.4,9.6-13.6,9.6-18.4C41,10.3,32,0.9,20.8,0.9z"/>
+                                        <svg version="1.1" id="favorite" xmlns="http://www.w3.org/2000/svg"
+                                             xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 41 50" style="enable-background:new 0 0 41 50;" xml:space="preserve">
+                            <g>
+                                <path d="M20.8,0.9C9.6,0.9,0.6,10.3,0.6,21.7c0,4.8,3.2,11,9.6,18.4c3.9,4.4,7.7,7.9,8.9,9V27.2l-5.4-5.4L12,20
+                                    c-2-2.1-2.1-5.4-0.1-7.5c2-2,5.3-2,7.2,0l1.6,1.7l1.7-1.7c2-2,5.3-2.1,7.2,0c2,2.1,2,5.4,0,7.5L28,21.8l-5.4,5.5v9.6
+                                    c0,2.1,0,4.3,0,6.4v5.9c1.4-1.2,5-4.6,8.8-9c6.4-7.4,9.6-13.6,9.6-18.4C41,10.3,32,0.9,20.8,0.9z"/>
 </g>
 </svg>
                                     </span>
@@ -279,8 +280,8 @@
                                 <div id="collapse9" class="collapse show" aria-labelledby="heading9">
                                     <div class="card-body">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="exampleRadios9"
-                                                   id="exampleRadios9-1" value="option9-1">
+                                            <input class="form-check-input" type="checkbox" name="exampleRadios9"
+                                                   id="exampleRadios9-1" value="option9-1" :checked="faworite == true" v-on:click="faworiteShow()">
                                             <label class="form-check-label" for="exampleRadios9-1">
                                                 Да
                                             </label>
@@ -361,9 +362,22 @@
                         <div class="row">
                             <div class="club-item col-lg-4 col-6" v-for="(obj, index) in objcts"
                                  v-if="obj.show_district == true && obj.show_subs == true &&
-                                 obj.show_marks == true && (obj.isCounsel  == recomend ? true : obj.isCounsel)
-                                 && city == obj.city && obj.show_time == true && filtred.limitList >= filtred.shown">
-                                <item-vues :obj="obj" :seen="seen" v-if="calcShow()"></item-vues>
+                                 obj.show_marks == true && (obj.isCounsel  == (recomend ? true : obj.isCounsel))
+                                  && (obj.isFav  == (faworite ? true : obj.isFav)) && city == obj.city
+                                  && obj.show_time == true && filtred.limitList >= filtred.shown">
+
+                                <span v-if="obj.schedule[2] != undefined "> {{obj.schedule[2].start}} </span> -
+
+                                <span v-if="obj.schedule[2] != undefined "> {{obj.schedule[2].end}} </span> ----
+                                <span v-if="obj.schedule[3] != undefined "> {{obj.schedule[3].start}} </span> -
+
+                                <span v-if="obj.schedule[3] != undefined "> {{obj.schedule[3].end}} </span>
+
+                                    ежедневно
+                                <span v-if="obj.schedule[2] == undefined"> {{obj.schedule[1].start}} </span> -
+                                <span v-if="obj.schedule[2]== undefined "> {{obj.schedule[1].end}} </span>
+
+                                <item-vues :obj="obj" :seen="seen" v-if="calcShow()" :baseHref="baseHref"></item-vues>
                             </div>
                         </div>
                     </div>
@@ -394,10 +408,15 @@
 <script>
   import Vue from 'vue'
   import item_vue from '@/components/itemVue';
+  import google_map from '@/components/mapView';
 
   Vue.component('item-vues', item_vue, {
     props: ['obj', 'seen']
   })
+  Vue.component('google-map', google_map, {
+    props: ['name', 'coord_lat', 'coord_lng','city']
+  })
+
   var seen = window.$cookies.isKey('seen') ? JSON.parse(window.$cookies.get('seen')) : {0:[]};
   var city = 'Київ';
   var lang = document.querySelector('html').getAttribute('lang');
@@ -413,16 +432,16 @@
     }
   });
   export default {
-    props: ['objcts', 'filtred', 'categories', 'location'],
+    props: ['objcts', 'filtred', 'categories', 'location', 'baseHref'],
     lang: lang,
     recomend: false,
     data() {
       return {
         lang: lang,
-        recomend: this.recomend = false,
+        faworite: false,
         city: city,
         country: country,
-        seen:seen
+        seen:seen,
       }
     },
     metaInfo: {
@@ -431,7 +450,6 @@
       link: [
         {rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css'},
         {rel: 'stylesheet', href: 'https://45.j2landing.com/DrugStoreMap/css/search.css'},
-
         // { rel: 'favicon', href: 'favicon.ico' }
       ],
       script: [
@@ -439,10 +457,23 @@
       ]
     },
     created: function () {
+      if(window.location.search.search('state=') >= 0){
+        var  h = window.location.search.split('&')
+        for (var i = 0; i < h.length; i++){
+          if(h[i].search('state=')>=0) {
+            var p  = h[i].split('=')
+            p =  JSON.parse(decodeURIComponent(p[1]));
+            for (var t in p) {
+              this.filtred[t] = p[t]
+            }
+            this.recomend =  this.filtred.recomend
+          }
+        }
+      }
       this.createFilterObject()
     },
     // mounted() {
-    //   restartClub()
+    //
     // },
     computed: {
       objctsGet: function () {
@@ -458,6 +489,14 @@
       }
     },
     methods: {
+      /* НАзад */
+      goBack: function () {
+        window.history.go(-1)
+      },
+      /* избранные */
+      faworiteShow: function () {
+        this.faworite = this.faworite ? false : true
+      },
       /* считаем показаные заведения */
       calcShow: function () {
         this.filtred.shown = this.filtred.shown + 1
@@ -466,7 +505,7 @@
       /* показать больше */
       showMore: function (e) {
         e.preventDefault(e);
-        this.filtred.limitList++;
+        this.filtred.limitList +=12;
         this.filtersubFilter();
       },
       /* создаем объект */
@@ -522,6 +561,13 @@
       recomendFilterObj: function () {
         this.recomend = this.recomend ? false : true;
         this.filtred.recomend = this.recomend
+        this.filtred.shown = 0
+        this.pushState()
+      },
+      /* записываем состояние */
+      pushState: function (){
+        var t =  this.filtred.slug + '?state=' + JSON.stringify(this.filtred);
+        window.history.pushState('', '',  t )
       },
       /* переводим время в формат */
       getTimeStamp: function (a) {
@@ -534,25 +580,42 @@
       /* проверяем заведения с ежедневным расписанием */
       checkTimeOpen: function (day) {
         var bj = this.objcts[this.obj].schedule[day]
-        if(bj.start != null && bj.end != null) {
-          var shedule_from = this.getTimeStamp(bj.start);
-          var shedule_till = this.getTimeStamp(bj.end);
+        if( bj.start != null &&  bj.end != null ) {
+          var shedule_from =  this.getTimeStamp(bj.start);
+          var shedule_till =  this.getTimeStamp(bj.end);
           var time_from = this.getTimeStamp(this.filtred.time_from);
           var time_till = this.getTimeStamp(this.filtred.time_till);
           if (time_from > time_till) {
-            time_till = new Date(time_till).setDate((new Date(time_till)).getDate() + 1)
-            shedule_till = day == 7 ? this.objcts[this.obj].schedule[1] : this.objcts[this.obj].schedule[day +1];
-            if(shedule_till.end != null) {
-              shedule_till = this.getTimeStamp(shedule_till.end);
-              shedule_till = new Date(shedule_till).setDate((new Date(shedule_till)).getDate() + 1)
+            // time_till = new Date(time_till).setDate((new Date(time_till)).getDate() + 1)
+            if (shedule_from > shedule_till ) {
+              console.log(shedule_till, 'dsfsfds');
+              shedule_till = new Date(shedule_till).setDate((new Date(shedule_till)).getDate() + 1);
+              if (shedule_till > time_from ) {
+                console.log(shedule_till > time_from , shedule_till , time_from);
+                console.log( '1' , this.objcts[this.obj].name, new Date(shedule_till), new Date(time_from))
+                return true;
+              }
+            }else {
+              time_till = new Date(time_till).setDate((new Date(time_till)).getDate() + 1)
+              shedule_from = day == 7 ? this.objcts[this.obj].schedule[1].start : this.objcts[this.obj].schedule[day +1].start;
+              if(shedule_from != null) {
+                shedule_from =  this.getTimeStamp(shedule_from);
+                shedule_from = new Date(shedule_from).setDate((new Date(shedule_from)).getDate() + 1);
+                if (shedule_from < time_till ) {
+                  console.log( '2' , this.objcts[this.obj].name, new Date(shedule_from), new Date(time_till))
+
+                  return true;
+                }
+              }
+            }
             }else{
-              return false
+                if (shedule_till > time_till ) {
+                  console.log( '3' , this.objcts[this.obj].name, new Date(shedule_till), new Date(time_till))
+                  return true;
+                }
             }
           }
-          if (shedule_from < time_from && shedule_till > time_from) {
-            return true;
-          }
-        }
+
         return false
       },
       /* получаем значения из таймпикера */
@@ -570,13 +633,14 @@
           var shedule_till = this.getTimeStamp(bj.end);
           var time_from = this.getTimeStamp(this.filtred.time_from);
           var time_till = this.getTimeStamp(this.filtred.time_till);
-          if (shedule_from < time_from && shedule_till > time_from) {
+          if (shedule_till > time_from ) {
             return true;
           }
         }
         return false
       },
       filtersubFilter: function (k) {
+        console.log('this.filtred---', this.filtred);
         var day = new Date()
             day = day.getDay()
         this.filtred.shown = 0
@@ -628,9 +692,13 @@
                     }
                 }else {
                   var chrck = this.checkTimeOpenEveryday(1)
+                  if(chrck) {
+                    this.objcts[this.obj].show_time = true;
+                  }
                 }
             }
         }
+       this.pushState()
         console.log('this.filtred', this.filtred);
         console.log('this.objcts', this.objcts);
         this.$forceUpdate();

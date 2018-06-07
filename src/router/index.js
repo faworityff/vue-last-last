@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Meta from 'vue-meta';
 import VueCookies from 'vue-cookies'
+import axios from 'axios';
 
 import mainView from '@/components/mainView';
 import categoryView from '@/components/categoryView';
@@ -11,34 +12,39 @@ Vue.use(Router)
 Vue.use(Meta)
 Vue.use(VueCookies)
 
-var lang = document.querySelector('html').getAttribute('lang');
-var baseHref = '/map/';
+/* получаем данные */
 
-if(lang != 'ru') {
-   baseHref = '/' +lang +'/map/';
-}
+var obj = '';
+$.ajax({
+  url: '//sova.j2landing.com/map-api/get',
+  type:'POST',
+  async: false,
+  success:function( data ) {
+    obj = JSON.parse( data)
+  }
+})
+
+var lang = document.querySelector('html').getAttribute('lang');
+var baseHref = obj.main.base_href.slice(obj.main.base.length, obj.main.base_href.length) + '/';
+var lang = document.querySelector('html').getAttribute('lang');
+
 const mainViews = mainView;
 const categoryViews = categoryView;
 const aloneViews = aloneView;
+// todo добавить отзыв ограничение отзывов
+// todo фильтр по избранным
+if(lang != 'ru') {
+   baseHref = '/' +lang + baseHref;
+}
+
 var seen = window.$cookies.isKey('seen') ? JSON.parse(window.$cookies.get('seen')) : {0:[]};
-console.log(seen);
-var obj = '';
- $.ajax({
-   url: '//sova.j2landing.com/map-api/get',
-   type:'POST',
-   async: false,
-   success:function( data ) {
-     obj = JSON.parse( data)
-    }
-   })
+
 console.log(obj);
 
 const inst = obj;
-var lang = document.querySelector('html').getAttribute('lang');
 
 var routsArr = document.querySelectorAll('router-link');
 var routsObjArr = [];
-
 var routsSubObjArr = [];
 var filtred=[]
 var z =0;
@@ -46,43 +52,40 @@ var z =0;
 for (var cateObj  in  inst.category) {
   var VRegExp = new RegExp(/\/+/g);
 
-  filtred[z] = {sub:[],mark:[],slug:[],category_id:[],district:[], time_from:'', time_till:'', limitList:12,shown:0};
+  filtred[z] = {sub:[],mark:[],slug:[],category_id:[],district:[], time_from:'', time_till:'', limitList:11,shown:0};
   filtred[z].slug.push(routsArr[z].getAttribute('to').replace(VRegExp, ''))
   filtred[z].category_id.push(+routsArr[z].getAttribute('data-id'))
-
+  z == 0 ? filtred[z].limitList = 4 : ''
   z++
 }
+filtred[z] = {sub:[],mark:[],slug:[],category_id:[],district:[], time_from:'', time_till:'', limitList:11,shown:0};
+filtred[z].slug.push('all')
 
-// todo добавление фильтров для страницы all. потом переделать
-filtred[z] = {sub:[],mark:[],slug:[],category_id:[],district:[], time_from:'', time_till:'', limitList:12,shown:0};
-filtred[z].slug.push(routsArr[z].getAttribute('to').replace(VRegExp, ''))
-var allrouts = routsArr[z].getAttribute('data-id').split(',')
-
-for (var i = 0; i < allrouts.length; i++) {
-  filtred[z].category_id.push(+allrouts[i])
+for (var i = 0; i < routsArr.length; i++) {
+  filtred[z].category_id.push(+routsArr[i].getAttribute('data-id'))
 }
-
+/* routs страницы все */
+routsObjArr[routsArr.length] = {
+  path: '/all',
+  component: categoryViews,
+  props: { objcts: inst.objects, categories: inst.category, filtred: filtred[routsArr.length], location: inst.location, baseHref:baseHref},
+}
 console.log(filtred, 'filtred');
 
 /* routs главной страницы*/
 routsObjArr[0] = {
   path: routsArr[0].getAttribute('to'),
   component: mainViews,
-  props: { needle: inst.category,  allPoints: inst.objects, locations: inst.location, main: inst.main},
-}
-/* routs страницы все */
-routsObjArr[routsArr.length] = {
-  path: routsArr[routsArr.length-1].getAttribute('to'),
-  component: categoryViews,
-  props: { objcts: inst.objects, categories: inst.category, filtred: filtred[routsArr.length-1], location: inst.location},
+  props: { needle: inst.category,  allPoints: inst.objects, filtred: filtred[0], locations: inst.location, main: inst.main, baseHref:baseHref},
 }
 
+
 /* routs категорий */
-for (var i = 1; i < routsArr.length - 1; i++) {
+for (var i = 1; i < routsArr.length ; i++) {
     routsObjArr[i] = {
       path: routsArr[i].getAttribute('to'),
       component: categoryViews,
-      props: { objcts: inst.objects, categories: inst.category, filtred: filtred[i], location: inst.location},
+      props: { objcts: inst.objects, categories: inst.category, filtred: filtred[i], location: inst.location,baseHref:baseHref},
     }
 }
 /* routs одного заведения */

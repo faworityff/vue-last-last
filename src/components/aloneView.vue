@@ -642,6 +642,7 @@
         initSliders()
       },500)
     },
+
     methods: {
       allReviews: function () {
         this.limitReview = 1000

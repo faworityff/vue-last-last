@@ -390,7 +390,7 @@
                                 </div>
                             </div>
                             <div class="map">
-                                <div id="map"></div>
+                                <google-map name="map" :coord_lat="obj.lat" :coord_lng="obj.lng" :city="null"></google-map>
                                 <div class="show-full">
                                     <a href="map.html" class="btn">Показать карту
                                         <span class="forward">
@@ -502,27 +502,32 @@
             </div>
         </div>
         <!--POPUP REVIEW-->
-
-        <div class="popup" data-number="3"  v-html="popRewiev"></div>
-
+            <div class="popup" data-number="3"  v-html="popRewiev"></div>
         <!--end POPUP REVIEW -->
     </div>
 </template>
 
 <script>
-
   import Vue from 'vue'
   import review_vue from '@/components/reviewView';
   import axios from 'axios';
+  import google_map from '@/components/mapView';
+
   Vue.component('review-vues', review_vue, {
     props: ['obj']
   })
+
+  Vue.component('google-map', google_map, {
+    props: ['name', 'coord_lat', 'coord_lng', 'city']
+  })
+
+
   export default {
     props: ['objcts','seen'],
     data() {
       return {
         obj: {},
-        popRewiev: 'dsadsads'
+        popRewiev: ''
       }
     },
     metaInfo: {

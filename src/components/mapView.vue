@@ -3,9 +3,10 @@
 </template>
 
 <script>
-    import axios from 'axios';
+
+  import axios from 'axios';
   export default {
-    props: ['name', 'city'],
+    props: ['name', 'city', 'coord_lat', 'coord_lng'],
     data: function () {
       return {
         mapName: this.name,
@@ -16,13 +17,17 @@
       var _city = this.city;
       var coord_lat, coord_lng;
       var adressGeo = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
+        if(_city != null) {
+          axios.post(adressGeo + _city + key)
+            .then(resp => {
+              coord_lat = resp.data.results[0].geometry.location.lat
+              coord_lng = resp.data.results[0].geometry.location.lng
+              this.createMap(coord_lat,coord_lng)
+            })
+        }else{
+          this.createMap(this.coord_lat,this.coord_lng)
+        }
 
-      axios.post(adressGeo + _city + key)
-        .then(resp => {
-          coord_lat = resp.data.results[0].geometry.location.lat
-          coord_lng = resp.data.results[0].geometry.location.lng
-          this.createMap(coord_lat,coord_lng)
-        })
     },
     methods: {
       createMap: function (coord_lat,coord_lng) {

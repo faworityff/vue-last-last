@@ -18,7 +18,7 @@
                                 </datalist>
                             </div>
                             <div class="input-group-select col-9 col-sm-4">
-                                <select class="" v-model="city" :onchange="newCity">
+                                <select class="" v-model="city" v-on:change="newCity">
                                     <option v-for="(value, key ) in cities" :value="key" :selected="key == city">{{key}}</option>
                                 </select>
                             </div>
@@ -184,8 +184,9 @@
   var seen = window.$cookies.isKey('seen') ? JSON.parse(window.$cookies.get('seen')) : {0:[]};
   var lang = document.querySelector('html').getAttribute('lang');
   var country = 'Украина';
-  var city = 'Київ';
+  var city = window.$cookies.isKey('city') ? window.$cookies.get('city') : 'Київ';
 
+  window.$cookies.set('city', city, Infinity, '/map');
   export default {
     searched: '',
     input: '',
@@ -236,32 +237,37 @@
       },
     },
     mounted() {
+      this.creatingSorting()
       this.cities = this.locations[country];
-      for ( this.obj in this.allPoints) {
-        if(this.allPoints[this.obj].isCounsel == true  && this.allPoints[this.obj].city == this.city) {
-          this.listRecom.push(this.allPoints[this.obj]);
-        }
-      }
-      for ( this.obj in this.allPoints) {
-        if(this.allPoints[this.obj].arr_sub.indexOf('9') >= 0  && this.allPoints[this.obj].city == this.city) {
-          this.listClub.push(this.allPoints[this.obj]);
-        }
-      }
-      for (this.obj in this.allPoints) {
-        if(seen[0].indexOf(this.allPoints[this.obj].id)  >= 0  && this.allPoints[this.obj].city == this.city) {
-          this.listSeen.push(this.allPoints[this.obj]);
-        }
-      }
       setTimeout(function () {
         restartClub();
       }, 50)
     },
     methods: {
 
+      creatingSorting: function () {
+        this.listRecom = []
+        this.listClub = []
+        this.listSeen = []
+        for ( this.obj in this.allPoints) {
+          if(this.allPoints[this.obj].isCounsel == true  && this.allPoints[this.obj].city == this.city) {
+            this.listRecom.push(this.allPoints[this.obj]);
+          }
+        }
+        for ( this.obj in this.allPoints) {
+          if(this.allPoints[this.obj].arr_sub.indexOf('9') >= 0  && this.allPoints[this.obj].city == this.city) {
+            this.listClub.push(this.allPoints[this.obj]);
+          }
+        }
+        for (this.obj in this.allPoints) {
+          if(seen[0].indexOf(this.allPoints[this.obj].id)  >= 0 && this.allPoints[this.obj].city == this.city ) {
+            this.listSeen.push(this.allPoints[this.obj]);
+          }
+        }
+      },
       searchFilter: function () {
         var p = this.input
         var l = [];
-        console.log(this.allPoints);
         this.allPoints.filter(function (obj) {
           var searchRegex = new RegExp(p, 'i');
           if ((searchRegex.test(obj['name']) || searchRegex.test(['obj.content'])) && this.city == obj.city)
@@ -276,7 +282,11 @@
         return true
       },
       newCity: function () {
-        console.log(545);
+      //   window.$cookies.set('city', this.city, Infinity, '/map');
+      //   this.creatingSorting()
+      //   setTimeout(function () {
+      //     restartClub();
+      //   }, 50)
       }
     },
 

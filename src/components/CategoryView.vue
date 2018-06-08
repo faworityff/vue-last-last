@@ -66,6 +66,11 @@
                                         </svg>
                                     </span>
                                 </a>
+                                <div class="input-group-select col-9 col-sm-4">
+                                    <select class="" v-model="city" v-on:change="newCity">
+                                        <option v-for="(value, key ) in cities" :value="key" :selected="key == city">{{key}}</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <form id="accordion" class="filter">
@@ -366,16 +371,16 @@
                                   && (obj.isFav  == (faworite ? true : obj.isFav)) && city == obj.city
                                   && obj.show_time == true && filtred.limitList >= filtred.shown">
 
-                                <span v-if="obj.schedule[2] != undefined "> {{obj.schedule[2].start}} </span> -
+                                <!--<span v-if="obj.schedule[2] != undefined "> {{obj.schedule[2].start}} </span> - -->
 
-                                <span v-if="obj.schedule[2] != undefined "> {{obj.schedule[2].end}} </span> ----
-                                <span v-if="obj.schedule[3] != undefined "> {{obj.schedule[3].start}} </span> -
+                                <!--<span v-if="obj.schedule[2] != undefined "> {{obj.schedule[2].end}} </span> &#45;&#45;&#45;&#45;-->
+                                <!--<span v-if="obj.schedule[3] != undefined "> {{obj.schedule[3].start}} </span> - -->
 
-                                <span v-if="obj.schedule[3] != undefined "> {{obj.schedule[3].end}} </span>
+                                <!--<span v-if="obj.schedule[3] != undefined "> {{obj.schedule[3].end}} </span>-->
 
-                                    ежедневно
-                                <span v-if="obj.schedule[2] == undefined"> {{obj.schedule[1].start}} </span> -
-                                <span v-if="obj.schedule[2]== undefined "> {{obj.schedule[1].end}} </span>
+                                    <!--ежедневно-->
+                                <!--<span v-if="obj.schedule[2] == undefined"> {{obj.schedule[1].start}} </span> - -->
+                                <!--<span v-if="obj.schedule[2]== undefined "> {{obj.schedule[1].end}} </span>-->
 
                                 <item-vues :obj="obj" :seen="seen" v-if="calcShow()" :baseHref="baseHref"></item-vues>
                             </div>
@@ -417,9 +422,11 @@
     props: ['name', 'coord_lat', 'coord_lng','city']
   })
 
-  var seen = window.$cookies.isKey('seen') ? JSON.parse(window.$cookies.get('seen')) : {0:[]};
-  var city = 'Київ';
-  var lang = document.querySelector('html').getAttribute('lang');
+  var seen = window.$cookies.isKey('seenseen') ? JSON.parse(window.$cookies.get('seen')) : {0:[]};
+
+  var city = window.$cookies.isKey('city') ? window.$cookies.get('city') : 'Київ';
+  window.$cookies.set('city', city, Infinity, '/map');
+console.log(city);
   var country = 'Украина';
 
   Object.defineProperty(Object.prototype, 'length', {
@@ -433,15 +440,14 @@
   });
   export default {
     props: ['objcts', 'filtred', 'categories', 'location', 'baseHref'],
-    lang: lang,
-    recomend: false,
     data() {
       return {
-        lang: lang,
         faworite: false,
         city: city,
         country: country,
         seen:seen,
+        recomend: false,
+        cities:null
       }
     },
     metaInfo: {
@@ -470,11 +476,16 @@
           }
         }
       }
+      if(this.filtred.city != '' ){
+        this.city = this.filtred.city
+        window.$cookies.set('city', this.city, Infinity, '/map');
+      }else {
+        this.filtred.city = this.city
+      }
       this.createFilterObject()
     },
-    // mounted() {
-    //
-    // },
+    mounted() {
+    },
     computed: {
       objctsGet: function () {
         return this.objcts
@@ -489,6 +500,11 @@
       }
     },
     methods: {
+      newCity: function () {
+          window.$cookies.set('city', this.city, Infinity, '/map');
+            this.filtred.city = this.city
+          this.filtersubFilter()
+      },
       /* НАзад */
       goBack: function () {
         window.history.go(-1)
@@ -640,6 +656,8 @@
         return false
       },
       filtersubFilter: function (k) {
+        this.cities = this.location[country];
+
         console.log('this.filtred---', this.filtred);
         var day = new Date()
             day = day.getDay()

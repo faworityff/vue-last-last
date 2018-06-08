@@ -48,17 +48,18 @@ var routsObjArr = [];
 var routsSubObjArr = [];
 var filtred=[]
 var z =0;
+console.log(routsArr);
 /* при старте получаем все фильтры в исходном положении */
 for (var cateObj  in  inst.category) {
   var VRegExp = new RegExp(/\/+/g);
 
-  filtred[z] = {sub:[],mark:[],slug:[],category_id:[],district:[], time_from:'', time_till:'', limitList:11,shown:0};
+  filtred[z] = {sub:[],mark:[],slug:[],category_id:[],district:[], time_from:'', time_till:'', limitList:11,shown:0,city:''};
   filtred[z].slug.push(routsArr[z].getAttribute('to').replace(VRegExp, ''))
   filtred[z].category_id.push(+routsArr[z].getAttribute('data-id'))
   z == 0 ? filtred[z].limitList = 4 : ''
   z++
 }
-filtred[z] = {sub:[],mark:[],slug:[],category_id:[],district:[], time_from:'', time_till:'', limitList:11,shown:0};
+filtred[z] = {sub:[],mark:[],slug:[],category_id:[],district:[], time_from:'', time_till:'', limitList:11,shown:0,city:''};
 filtred[z].slug.push('all')
 
 for (var i = 0; i < routsArr.length; i++) {

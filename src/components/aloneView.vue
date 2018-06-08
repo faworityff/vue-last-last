@@ -3,7 +3,7 @@
         <div class="club-content container-fluid m-top">
             <div class="club-top-nav club-all">
                 <div class="wrap row align-items-center justify-content-between">
-                    <a href="index.html" class="back-page">
+                    <a v-on:click="goBack" class="back-page">
                         Назад
                         <span class="forward">
                             <svg version="1.1" id="back" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -16,7 +16,7 @@
 </svg>
                          </span>
                     </a>
-                    <a href="!#" class="add-location">
+                    <a href="/inst-create" class="add-location">
                         Добавить локацию
                         <span class="location-pin">
                             <svg version="1.1" id="add-loc" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -417,7 +417,7 @@
                                                 <img :src="img.path" :title="img.title" :alt="img.alt">
                                             </div>
                                         </div>
-                                        <div class="club-name-slider">Forsage</div>
+                                        <div class="club-name-slider" v-html="obj.name_short"></div>
                                         <div class="recommended" v-on:click="addToFavorite(obj)" v-bind:class="{active: obj.isFav}">
                                             <svg version="1.1" id="reccom" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                                  x="0px" y="0px"	 viewBox="0 0 40.9 39" style="enable-background:new 0 0 40.9 39;" xml:space="preserve">
@@ -454,7 +454,7 @@
                                     </div>
                                 </div>
                                 <!--ОТЗЫВЫ-->
-                                <review-vues :obj="obj"></review-vues>
+                                <review-vues :obj="obj" :limit="limitReview"></review-vues>
                             </div>
                         </div>
                     </div>
@@ -466,7 +466,7 @@
                     <div class="filter-column col-md-4 col-lg-3"></div>
                     <div class="filter-club col-md-8 col-lg-9">
                         <div class="content-club-wrap row justify-content-between">
-                            <a class="back-page">
+                            <a class="back-page" v-on:click="allReviews">
                                 Все отзывы
                                 <span class="rew">
                                         <svg version="1.1" id="rew" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -501,6 +501,78 @@
                 </div>
             </div>
         </div>
+
+        <div class="popup" data-number="2">
+            <div class="popup-content show">
+                <div class="closeX"><span></span><span></span></div>
+                <div class="activate-popup container-fluid">
+                    <div class="row">
+                        <div class="pop-title">
+                            <div class="pop-title-inner">
+                                Фотогалерея
+                            </div>
+                        </div>
+                        <div class="pop-inner pop-gallery">
+                            <div class="col-lg-8 col-12 slider-gallery slider">
+                                <div class="" v-for="img in obj.gallery" v-if="img.status == 'active'">
+                                    <img :src="img.path" :title="img.title" :alt="img.alt">
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-12 gallery-description">
+                                <div class="gallery-icon">
+                                    <span class="filter-cat-icon">
+                                        <svg version="1.1" id="disko" xmlns="http://www.w3.org/2000/svg"
+                                             xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 84.1 91.9"
+                                             style="enable-background:new 0 0 84.1 91.9;" xml:space="preserve">
+<path d="M33.6,26.9c0.2-1.2,0.1-2.6,0.6-3.1c3.9-3,2.4-7.2,2.5-10.9c0.2-4.3,0-8.6,0-12.9c0.4,0,0.9,0,1.3,0c0,1.9,0,3.7,0,5.6
+	c0,3.5,0,7,0,10.5c0,2.6-0.7,5.4,2.3,7.3c0.8,0.5,0.7,2.2,1.1,3.7c9.7,1.7,17.7,6.5,22.9,15.4c4,6.8,5,14.1,3.7,21.7
+	C65.5,78.6,51.6,89.7,37,89.3C22.2,89,9,77.7,6.9,63.4C4.6,47.6,13.1,31,33.6,26.9z M30.8,63.9c4.4,0,8.4,0,12.5,0
+	c0-4.4,0-8.4,0-12.4c-4.3,0-8.4,0-12.5,0C30.8,55.7,30.8,59.6,30.8,63.9z M56.3,52.5c-3.9-0.4-7.4-0.7-11.1-1.1c0,4.3,0,8.3,0,12.7
+	c3.8-0.4,7.3-0.7,11.1-1.1C56.3,59.5,56.3,56.3,56.3,52.5z M43.5,49.7c-0.3-3.2-0.4-5.9-0.9-8.6c-0.1-0.8-1.3-1.8-2.1-1.9
+	c-2.2-0.3-4.5-0.3-6.7,0c-0.8,0.1-2,1.1-2.1,1.9c-0.5,2.7-0.6,5.5-0.8,8.6c3.2,0,6,0,8.9,0C40.8,49.7,41.9,49.7,43.5,49.7z
+	 M44.1,76.6c10.6-1.6,10.6-0.8,11.8-11.9c-3.6,0.4-7.1,0.7-10.7,1.1C44.8,69.4,44.5,72.8,44.1,76.6z M19,64.7
+	c1.6,10.6,1.8,10.8,11.2,11.7c-0.4-3.6-0.7-7.1-1-10.8C25.7,65.3,22.5,65,19,64.7z M44.1,39.8c0.4,3.5,0.8,6.7,1.2,10
+	c3.7,0.3,7.1,0.6,10.6,0.9C54.7,41,54.6,40.8,44.1,39.8z M30.2,39.6c-9.4,1-11.4,3.2-10.5,11.1c3.1-0.3,6.3-0.7,9.4-1
+	C29.5,46.2,29.9,43.1,30.2,39.6z M32.3,37.5c3.4,0,6.4,0,9.5,0c-0.4-6.7-0.8-7.3-4.5-7.3C33,30.2,32.6,30.9,32.3,37.5z M17,53
+	c-7.5,0.7-7.9,1.1-7.3,6.3c0.3,2.4,2.9,3.4,7.3,2.6C17,59,17,56,17,53z M65,54.1c-2.3-0.4-4.5-0.9-6.9-1.3c0,3.4,0,6.3,0,9.2
+	C65,62.8,65.8,62,65,54.1z M32.4,78.9c0.9,7.1,1.2,7.5,6.1,6.9c4.7-0.5,2.1-4.5,3.9-6.9C38.6,78.9,35.7,78.9,32.4,78.9z M52.7,77
+	c-9.1,1-10.1,1.8-9.7,8.2C49.4,84.2,50.6,83.2,52.7,77z M22.1,39.6c8.8-0.9,10.1-2.1,9.2-8.4C26,31.5,23.1,34.6,22.1,39.6z M43,31
+	c-0.1,6.8,2.1,8.5,9.6,7.9C51.5,33.8,48.2,31.5,43,31z M64.4,63.2c-7.1,1.2-7.6,1.8-7.9,10C62.7,71.2,64.2,69.4,64.4,63.2z
+	 M64.4,52.1c-0.3-5.3-3.2-7.9-7.9-9.1C57.8,52.2,56.7,51.3,64.4,52.1z M14.5,41.6c0.3,0.3,0.5,0.5,0.8,0.8c3.5-0.9,6.4-2.6,6.5-7.6
+	C19.1,37.3,16.8,39.4,14.5,41.6z M60.7,73.9c-4.8,0.6-6.7,2.9-6.6,7C56.1,78.8,58.1,76.7,60.7,73.9z M14.7,74.7
+	c2.1,2,4.2,4.1,6.9,6.8C21.1,76.5,18.8,74.6,14.7,74.7z M58.7,42.8c0.4-0.4,0.9-0.7,1.3-1.1c-1.9-2.2-3.9-4.4-5.8-6.5
+	c-0.5,0.5-0.9,0.9-1.4,1.4C54.7,38.6,56.7,40.7,58.7,42.8z M40.8,25.3c-1.7-1-2.6-2-3.3-1.9c-0.8,0.1-1.4,1.3-2.1,2
+	c0.7,0.5,1.4,1.5,2.1,1.5C38.3,27,39.1,26.2,40.8,25.3z"></path>
+<path d="M65,37.8c-0.6-4.3-2.5-6.8-7-7.3c4.6,0,6.4-2.6,6.6-7.5c1.9,6.3,1.9,6.3,7.7,7.7C67.7,31.5,64.5,32.9,65,37.8z"></path>
+<path d="M14.6,19.4c-0.6-4.3-2.5-6.8-7-7.3c4.6,0,6.4-2.6,6.6-7.5c1.9,6.3,1.9,6.3,7.7,7.7C17.3,13,14.1,14.4,14.6,19.4z"></path>
+<path d="M7.4,91c-0.6-4.3-2.5-6.8-7-7.3c4.6,0,6.4-2.6,6.6-7.5c1.9,6.3,1.9,6.3,7.7,7.6C10,84.7,6.8,86.1,7.4,91z"></path>
+<path d="M75.7,80.4c-0.6-4.3-2.5-6.8-7-7.3c4.6,0,6.4-2.6,6.6-7.5c1.9,6.3,1.9,6.3,7.7,7.7C78.3,74,75.1,75.4,75.7,80.4z"></path>
+</svg>
+                                    </span>
+                                </div>
+                                <div class="gallery-description-col">
+                                    <div class="gallery-desc">
+                                        <div class="gallery-title">"<span>Отлично погуляли</span>"</div>
+                                        <div class="gallery-desc-light">Фотографию представил:</div>
+                                        <div class="gallery-desc-bold">Александр Вальченко</div>
+                                        <div class="gallery-desc-light">Дата публикации:</div>
+                                        <div class="gallery-desc-bold">Февраль 2018</div>
+                                    </div>
+                                    <div class="gallery-problem">
+                                        <div class="problem-link">Сообщить о проблеме</div>
+                                        <div class="gallery-problem-descr" v-html="galleryForm">
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="closeLayout show"></div>
+        </div>
+
         <!--POPUP REVIEW-->
             <div class="popup" data-number="3"  v-html="popRewiev"></div>
         <!--end POPUP REVIEW -->
@@ -514,7 +586,7 @@
   import google_map from '@/components/mapView';
 
   Vue.component('review-vues', review_vue, {
-    props: ['obj']
+    props: ['obj', 'limit']
   })
 
   Vue.component('google-map', google_map, {
@@ -527,20 +599,23 @@
     data() {
       return {
         obj: {},
-        popRewiev: ''
+        popRewiev: '',
+        limitReview:3,
+        galleryForm:''
       }
     },
     metaInfo: {
       title: 'Default Title',
       titleTemplate: '%s | My Awesome Webapp',
       link: [
-        {rel: 'stylesheet', href: 'https://45.j2landing.com/DrugStoreMap/css/club.css'},
+        {rel: 'stylesheet', href: '/assets/css/map/club.css'},
+        {rel: 'stylesheet', href: '/assets/css/map/responsive.css'},
         // { rel: 'favicon', href: 'favicon.ico' }
       ],
       script: [
         {src: '//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js', type: 'text/javascript', body: true},
-        {src: 'https://45.j2landing.com/DrugStoreMap/js/sliders.js', type: 'text/javascript', body: true},
-        {src: 'https://45.j2landing.com/DrugStoreMap/js/jquery.scrollTo-min.js', type: 'text/javascript', body: true},
+        {src: 'https://sova.j2landing.com/assets/js/map/sliders.js', type: 'text/javascript', body: true},
+        {src: 'https://sova.j2landing.com/assets/js/map/jquery.scrollTo-min.js', type: 'text/javascript', body: true},
       ]
     },
     created: function () {
@@ -556,18 +631,23 @@
     mounted:function () {
       axios.get('/comment-create/' + this.$route.params.alias)
         .then(resp => {
-          console.log(4);
           this.popRewiev  = resp.data ;
         })
-
+      axios.get('/yammer-gallery/' + this.$route.params.alias)
+        .then(resp => {
+          this.galleryForm  = resp.data ;
+        })
       setTimeout(function () {
         restartClub();
         initSliders()
       },500)
     },
     methods: {
-      popReviews: function (ids) {
-
+      allReviews: function () {
+        this.limitReview = 1000
+      },
+      goBack: function () {
+        window.history.go(-1)
       },
       avgPoint: function (a, b) {
         return +a >= b ? true : false

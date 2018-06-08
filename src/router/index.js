@@ -31,8 +31,6 @@ var lang = document.querySelector('html').getAttribute('lang');
 const mainViews = mainView;
 const categoryViews = categoryView;
 const aloneViews = aloneView;
-// todo добавить отзыв ограничение отзывов
-// todo фильтр по избранным
 if(lang != 'ru') {
    baseHref = '/' +lang + baseHref;
 }

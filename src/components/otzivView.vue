@@ -32,7 +32,7 @@
                             </div>
                             <div class="review-buttons col-auto">
                                 <div class="complain-button row justify-content-end align-items-center">
-                                    <div class="underline">Пожаловаться</div>
+                                    <div class="underline" :data-id="otz.id">Пожаловаться</div>
                                     <svg version="1.1" id="complain" xmlns="http://www.w3.org/2000/svg"
                                                                              xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                                                              viewBox="0 0 104.4 104.5" style="enable-background:new 0 0 104.4 104.5;" xml:space="preserve">
@@ -70,8 +70,12 @@
                 </div>
             </div>
         </div>
-    <div   class="child-comment ml-5" v-for="val in otz.comments" >
-        <otziv-view :otz="val" :obj="obj"></otziv-view>
+    <div   class="child-comment ml-5" v-for="(val, index) in otz.comments" >
+        <div v-if="index < otzLimElse">
+            <otziv-view :otz="val" :obj="obj" :otzLimElse="otzLimElse"></otziv-view>
+        </div>
+        <div v-else-if="index == otzLimElse"  v-on:click="moreOtzivov" class="more-comments underline">Показать все ответы</div>
+
     </div>
     </div>
 </template>
@@ -82,12 +86,21 @@
   import otziv_view from '@/components/otzivView';
 
   Vue.component('otziv-view', otziv_view, {
-    props: ['otz','obj']
+    props: ['otz','obj','otzLimElse']
   })
 
   export default {
-    props: ['otz','obj'],
+    props: ['otz','obj','otzLim'],
+    data () {
+      return {
+        otzLimElse:0
+      }
+  },
     methods: {
+      moreOtzivov: function () {
+        this.otzLimElse = this.otzLimElse ? 0 : 1000;
+        console.log(this.otzLimElse);
+      },
       addAnswer:function (k) {
         axios({
           method: 'post',

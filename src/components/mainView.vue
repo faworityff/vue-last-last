@@ -219,11 +219,12 @@
       title: 'Default Title',
       titleTemplate: '%s | My Awesome Webapp',
       link: [
-        { rel: 'stylesheet', href: 'https://45.j2landing.com/DrugStoreMap/css/main-page.css' },
+        { rel: 'stylesheet', href: '/assets/css/map/main-page.css' },
+        { rel: 'stylesheet', href: '/assets/css/map/responsive.css' },
         // { rel: 'favicon', href: 'favicon.ico' }
       ],
       script: [
-        { src: 'https://45.j2landing.com/DrugStoreMap/js/main-page.js', type: 'text/javascript', body: true },
+        { src: 'https://sova.j2landing.com/assets/js/map/main-page.js', type: 'text/javascript', body: true },
       ]
     },
     computed: {

@@ -1,6 +1,6 @@
 <template>
     <div id="review" class="">
-        <div class="review-section" v-for="review in obj.reviews">
+        <div class="review-section" v-for="(review, index) in obj.reviews" v-if="index < limit">
             <div class="review-block row justify-content-between align-items-start">
                 <div class="col-auto">
                     <div class="review-image row">
@@ -38,7 +38,7 @@
                                 </div>
                                 <div class="review-buttons col-auto">
                                     <div class="complain-button row justify-content-end align-items-center">
-                                        <div class="underline">Пожаловаться</div>
+                                        <div class="underline" :data-id="review.id">Пожаловаться</div>
                                         <svg version="1.1" id="complain" xmlns="http://www.w3.org/2000/svg"
                                                                          xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                                                          viewBox="0 0 104.4 104.5" style="enable-background:new 0 0 104.4 104.5;" xml:space="preserve">
@@ -76,9 +76,13 @@
                     </div>
                 </div>
             </div>
-            <div v-for="otz in review.comments">
-                <otziv-view :otz="otz" :obj="obj"></otziv-view>
+            <div v-for="(otz, index) in review.comments" >
+                <div v-if="index < limitComment">
+                    <otziv-view :otz="otz" :obj="obj" :otzLim="otzLim"></otziv-view>
+                </div>
+                <div v-else-if="index == limitComment"   v-on:click="moreOtzivov" class="more-comments underline">Показать все ответы</div>
             </div>
+
         </div>
 
     </div>
@@ -89,13 +93,22 @@
   import otziv_view from '@/components/otzivView';
 
   Vue.component('otziv-view', otziv_view, {
-    props: ['otz','obj']
+    props: ['otz','obj','otzLim']
   })
 
 
   export default {
-    props: ['obj'],
+    props: ['obj','limit'],
+    data: function (){
+        return {
+          otzLim:0,
+          limitComment:0
+        }
+    },
     methods: {
+      moreOtzivov: function () {
+        this.limitComment = this.limitComment ? 0 : 1000;
+      },
       actPoint: function (a,b) {
         return +a >= b ? true : false
       },

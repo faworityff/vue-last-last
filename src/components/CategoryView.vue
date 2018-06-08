@@ -455,7 +455,8 @@ console.log(city);
       titleTemplate: '%s | My Awesome Webapp',
       link: [
         {rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css'},
-        {rel: 'stylesheet', href: 'https://45.j2landing.com/DrugStoreMap/css/search.css'},
+        {rel: 'stylesheet', href: '/assets/css/map/search.css'},
+        {rel: 'stylesheet', href: '/assets/css/map/responsive.css'},
         // { rel: 'favicon', href: 'favicon.ico' }
       ],
       script: [

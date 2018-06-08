@@ -560,8 +560,9 @@
                                     </div>
                                     <div class="gallery-problem">
                                         <div class="problem-link">Сообщить о проблеме</div>
-                                        <div class="gallery-problem-descr" v-html="galleryForm">
-
+                                        <div class="gallery-problem-descr" >
+                                            <form method="POST"  v-on:submit.prevent="yammerAdd" v-html="galleryForm">
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
@@ -653,10 +654,13 @@
       avgPoint: function (a, b) {
         return +a >= b ? true : false
       },
+      yammerAdd: function () {
+        axios.post('/yammer-gallery/')
+          .then(resp => {
+            console.log(resp);
+          })
+      },
       addToFavorite:function (obj) {
-        //todo убрать путь
-        console.log(obj);
-
         var uri = obj.isFav ?  '/favorites/unset/'+obj.id :  '/favorites/set/'+obj.id;
         axios.post(uri)
           .then(resp => {

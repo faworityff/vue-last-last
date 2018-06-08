@@ -106,6 +106,7 @@
         }
     },
     methods: {
+
       moreOtzivov: function () {
         this.limitComment = this.limitComment ? 0 : 1000;
       },

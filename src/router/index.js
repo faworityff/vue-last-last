@@ -6,6 +6,7 @@ import axios from 'axios';
 
 import mainView from '@/components/mainView';
 import categoryView from '@/components/categoryView';
+import categoryMapView from '@/components/CategoryMapView';
 import aloneView from '@/components/aloneView';
 
 Vue.use(Router)
@@ -30,6 +31,7 @@ var lang = document.querySelector('html').getAttribute('lang');
 
 const mainViews = mainView;
 const categoryViews = categoryView;
+const categoryMapViews = categoryMapView;
 const aloneViews = aloneView;
 if(lang != 'ru') {
    baseHref = '/' +lang + baseHref;
@@ -67,7 +69,7 @@ for (var i = 0; i < routsArr.length; i++) {
 routsObjArr[routsArr.length] = {
   path: '/all',
   component: categoryViews,
-  props: { objcts: inst.objects, categories: inst.category, filtred: filtred[routsArr.length], location: inst.location, baseHref:baseHref},
+  props: { objcts: inst.objects,  categories: inst.category, filtred: filtred[routsArr.length], location: inst.location, baseHref:baseHref},
 }
 console.log(filtred, 'filtred');
 
@@ -77,14 +79,23 @@ routsObjArr[0] = {
   component: mainViews,
   props: { needle: inst.category,  allPoints: inst.objects, filtred: filtred[0], locations: inst.location, main: inst.main, baseHref:baseHref},
 }
-
+/* routs страницы на карте */
+routsObjArr[routsArr.length+1] = {
+  path: '/onmap',
+  component: categoryMapViews,
+  props: { objcts: inst.objects,  categories: inst.category, filtred: filtred[routsArr.length], location: inst.location, baseHref:baseHref},
+}
 
 /* routs категорий */
 for (var i = 1; i < routsArr.length ; i++) {
     routsObjArr[i] = {
       path: routsArr[i].getAttribute('to'),
       component: categoryViews,
-      props: { objcts: inst.objects, categories: inst.category, filtred: filtred[i], location: inst.location,baseHref:baseHref},
+      onBeforeChange() {
+        document.body.classList.remove('main-page');
+        document.body.classList.remove('white-menu');
+      },
+      props: { objcts: inst.objects, categories: inst.category,  filtred: filtred[i], location: inst.location,baseHref:baseHref},
     }
 }
 /* routs одного заведения */
@@ -107,6 +118,7 @@ var router = new  Router({
   linkActiveClass: 'active',
   transitionOnLoad: true,
   base:baseHref,
+
 
 })
 export default router

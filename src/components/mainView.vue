@@ -51,7 +51,7 @@
                 <div class="big-drug row">
                     <div class="background">
                     </div>
-                    <img class="big-drug-img" src="/assets/img/drugstore_map/main/drugstore_map.svg">
+                    <img class="big-drug-img" src="/assets/img/drugstore_map/main/trip_map.svg">
                 </div>
                 <div class="wave-blocks wrap row justify-content-between">
                     <div class="col-lg-9 col-md-6 col-12 carousel slide" id="mobileCarousel">
@@ -86,11 +86,29 @@
                         </div>
                         <a class="carousel-control-prev carousel-control" href="#mobileCarousel" role="button"
                            data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                           <span class="carousel-control-prev-icon forward" aria-hidden="true">
+                             <svg version="1.1" id="arr-recomnd" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 143.3 82.3" style="enable-background:new 0 0 143.3 82.3;" xml:space="preserve">
+
+    <path class="st0" d="M104.3,78.4l35.9-35.9c0,0,0,0,0,0c0.2-0.2,0.3-0.4,0.4-0.6c0.1-0.2,0.2-0.5,0.2-0.7c0,0,0,0,0,0
+        c0-0.3-0.1-0.5-0.2-0.8c-0.1-0.2-0.2-0.5-0.4-0.6L104.3,3.8c-0.8-0.8-2-0.8-2.8,0c-0.4,0.4-0.6,0.9-0.6,1.4c0,0.5,0.2,1,0.6,1.4
+        L134,39.1H5.6c-1.1,0-2,0.9-2,2c0,1.1,0.9,2,2,2H134l-32.5,32.5c-0.4,0.4-0.6,0.9-0.6,1.4c0,0.5,0.2,1,0.6,1.4
+        C102.3,79.2,103.5,79.2,104.3,78.4"></path>
+    </svg>
+                    </span>
                         </a>
                         <a class="carousel-control-next carousel-control" href="#mobileCarousel" role="button"
                            data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="carousel-control-next-icon" aria-hidden="true">
+                                <svg version="1.1" id="arr-recomnd" xmlns="http://www.w3.org/2000/svg"
+                                     xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                     viewBox="0 0 143.3 82.3" style="enable-background:new 0 0 143.3 82.3;" xml:space="preserve">
+
+<path class="st0" d="M104.3,78.4l35.9-35.9c0,0,0,0,0,0c0.2-0.2,0.3-0.4,0.4-0.6c0.1-0.2,0.2-0.5,0.2-0.7c0,0,0,0,0,0
+	c0-0.3-0.1-0.5-0.2-0.8c-0.1-0.2-0.2-0.5-0.4-0.6L104.3,3.8c-0.8-0.8-2-0.8-2.8,0c-0.4,0.4-0.6,0.9-0.6,1.4c0,0.5,0.2,1,0.6,1.4
+	L134,39.1H5.6c-1.1,0-2,0.9-2,2c0,1.1,0.9,2,2,2H134l-32.5,32.5c-0.4,0.4-0.6,0.9-0.6,1.4c0,0.5,0.2,1,0.6,1.4
+	C102.3,79.2,103.5,79.2,104.3,78.4"></path>
+</svg>
+                            </span>
                         </a>
                     </div>
                     <div class="col-lg-3 col-md-6 col-12 wave-pool">
@@ -238,12 +256,15 @@
       },
     },
     mounted() {
+      document.body.classList.add('main-page')
+      document.body.classList.add('white-menu')
       this.creatingSorting()
       this.cities = this.locations[country];
       setTimeout(function () {
         restartClub();
       }, 50)
     },
+
     methods: {
 
       creatingSorting: function () {

@@ -52,7 +52,7 @@
                         <div class="map">
                             <google-map name="map" :coord_lat="objcts[0].lat" :coord_lng="objcts[0].lng" :city="city"></google-map>
                             <div class="show-full">
-                                <a href="map.html" class="btn">
+                                <a :href="'onmap' + '?state=' + JSON.stringify(this.filtred)" class="btn">
                                     Показать карту
                                     <span class="forward">
                                         <svg version="1.1" id="MAP-arr"
@@ -82,8 +82,10 @@
                                      v-on:click="filterIdObj(value.id)">
                                     <div class="filter-title">
                                         <span class="filter-cat-icon">
-                                        <svg version="1.1" id="disko" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                                 viewBox="0 0 84.1 91.9" style="enable-background:new 0 0 84.1 91.9;" xml:space="preserve">
+                                        <svg version="1.1" id="disko"
+                                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                             x="0px" y="0px"
+                                             viewBox="0 0 84.1 91.9" style="enable-background:new 0 0 84.1 91.9;" xml:space="preserve">
                                             <path d="M33.6,26.9c0.2-1.2,0.1-2.6,0.6-3.1c3.9-3,2.4-7.2,2.5-10.9c0.2-4.3,0-8.6,0-12.9c0.4,0,0.9,0,1.3,0c0,1.9,0,3.7,0,5.6
                                                 c0,3.5,0,7,0,10.5c0,2.6-0.7,5.4,2.3,7.3c0.8,0.5,0.7,2.2,1.1,3.7c9.7,1.7,17.7,6.5,22.9,15.4c4,6.8,5,14.1,3.7,21.7
                                                 C65.5,78.6,51.6,89.7,37,89.3C22.2,89,9,77.7,6.9,63.4C4.6,47.6,13.1,31,33.6,26.9z M30.8,63.9c4.4,0,8.4,0,12.5,0
@@ -717,7 +719,7 @@ console.log(city);
                 }
             }
         }
-       this.pushState()
+       // this.pushState()
         console.log('this.filtred', this.filtred);
         console.log('this.objcts', this.objcts);
         this.$forceUpdate();

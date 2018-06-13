@@ -32,7 +32,7 @@
                             </div>
                             <div class="review-buttons col-auto">
                                 <div class="complain-button row justify-content-end align-items-center">
-                                    <div class="underline" :data-id="otz.id">Пожаловаться</div>
+                                    <div class="underline open-in-popup" v-on:click="getYammerForm(otz.id)" data-number="5"  :data-id="otz.id">Пожаловаться</div>
                                     <svg version="1.1" id="complain" xmlns="http://www.w3.org/2000/svg"
                                                                              xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                                                              viewBox="0 0 104.4 104.5" style="enable-background:new 0 0 104.4 104.5;" xml:space="preserve">
@@ -97,6 +97,9 @@
       }
   },
     methods: {
+      getYammerForm: function (ids) {
+
+      },
       moreOtzivov: function () {
         this.otzLimElse = this.otzLimElse ? 0 : 1000;
         console.log(this.otzLimElse);

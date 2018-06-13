@@ -33,19 +33,20 @@
                         </form>
                     </div>
                     <div class="btn-all-club col-xl-auto">
-                        <a class="btn btn-arrow" :href="baseHref + 'all'">
-                            {{main['longtitle']}}
-                            <span class="forward">
-                                <svg version="1.1" id="arr-all"
-                                     xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px" viewBox="0 0 143.3 82.3"
-                                     style="enable-background:new 0 0 143.3 82.3;" xml:space="preserve">
-                                    <path class="st0" d="M104.3,78.4l35.9-35.9c0,0,0,0,0,0c0.2-0.2,0.3-0.4,0.4-0.6c0.1-0.2,0.2-0.5,0.2-0.7c0,0,0,0,0,0
-                                    c0-0.3-0.1-0.5-0.2-0.8c-0.1-0.2-0.2-0.5-0.4-0.6L104.3,3.8c-0.8-0.8-2-0.8-2.8,0c-0.4,0.4-0.6,0.9-0.6,1.4c0,0.5,0.2,1,0.6,1.4
-                                    L134,39.1H5.6c-1.1,0-2,0.9-2,2c0,1.1,0.9,2,2,2H134l-32.5,32.5c-0.4,0.4-0.6,0.9-0.6,1.4c0,0.5,0.2,1,0.6,1.4
-                                    C102.3,79.2,103.5,79.2,104.3,78.4"/>
-                                </svg>
-                            </span>
-                        </a>
+                            <router-link to="/all" class="btn btn-arrow">
+                                {{main['longtitle']}}
+                                <span class="forward">
+                                    <svg version="1.1" id="arr-all"
+                                         xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px" viewBox="0 0 143.3 82.3"
+                                         style="enable-background:new 0 0 143.3 82.3;" xml:space="preserve">
+                                        <path class="st0" d="M104.3,78.4l35.9-35.9c0,0,0,0,0,0c0.2-0.2,0.3-0.4,0.4-0.6c0.1-0.2,0.2-0.5,0.2-0.7c0,0,0,0,0,0
+                                        c0-0.3-0.1-0.5-0.2-0.8c-0.1-0.2-0.2-0.5-0.4-0.6L104.3,3.8c-0.8-0.8-2-0.8-2.8,0c-0.4,0.4-0.6,0.9-0.6,1.4c0,0.5,0.2,1,0.6,1.4
+                                        L134,39.1H5.6c-1.1,0-2,0.9-2,2c0,1.1,0.9,2,2,2H134l-32.5,32.5c-0.4,0.4-0.6,0.9-0.6,1.4c0,0.5,0.2,1,0.6,1.4
+                                        C102.3,79.2,103.5,79.2,104.3,78.4"/>
+                                    </svg>
+                                </span>
+                            </router-link>
+
                     </div>
                 </div>
                 <div class="big-drug row">

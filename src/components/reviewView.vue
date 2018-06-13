@@ -38,7 +38,8 @@
                                 </div>
                                 <div class="review-buttons col-auto">
                                     <div class="complain-button row justify-content-end align-items-center">
-                                        <div class="underline" :data-id="review.id">Пожаловаться</div>
+                                        <div class="underline open-in-popup" data-number="5" :data-id="review.id"
+                                             v-on:click="getYammerForm(review.id)">Пожаловаться</div>
                                         <svg version="1.1" id="complain" xmlns="http://www.w3.org/2000/svg"
                                                                          xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                                                          viewBox="0 0 104.4 104.5" style="enable-background:new 0 0 104.4 104.5;" xml:space="preserve">
@@ -91,7 +92,7 @@
 <script>
   import Vue from 'vue'
   import otziv_view from '@/components/otzivView';
-
+  import axios from 'axios'
   Vue.component('otziv-view', otziv_view, {
     props: ['otz','obj','otzLim']
   })
@@ -106,7 +107,9 @@
         }
     },
     methods: {
+      getYammerForm: function (ids) {
 
+      },
       moreOtzivov: function () {
         this.limitComment = this.limitComment ? 0 : 1000;
       },

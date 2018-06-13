@@ -119,7 +119,7 @@
                                         <div v-for="sh in obj.schedule">Пн: {{sh.start }} - {{sh.end}}</div>
                                     </div>
                                 </div>
-                                <div class="club-params row align-items-start justify-content-start">
+                                <div class="club-params row align-items-start justify-content-start" v-if="obj.district || obj.street || obj.flat">
                                     <div class="col-auto">
                                         <div class="icon-description row align-items-center justify-content-center">
                                             <svg version="1.1" id="pin" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -134,39 +134,60 @@
 </svg>
                                         </div>
                                     </div>
-                                    <div class="col">
+                                    <div class="col" >
                                         {{obj.district}} {{obj.street}} {{obj.flat}}
                                     </div>
                                 </div>
-                                <div class="club-params row align-items-start justify-content-start">
+                                <div class="club-params row align-items-start justify-content-start" v-for="phone in obj.phones" v-if="phone">
                                     <div class="col-auto">
                                         <div class="icon-description row align-items-center justify-content-center">
-                                            <svg version="1.1" id="viber" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                                 x="0px" y="0px"	 viewBox="0 0 97.5 97.5" style="enable-background:new 0 0 97.5 97.5;" xml:space="preserve">
-<path d="M77.9,71.1l3.5,2l0.1-0.2C86.4,66.1,89,58,89,49.5c0.1-10.9-4-21.1-11.6-28.7c-7.6-7.7-17.7-12-28.5-12
+                                            <svg version="1.1" id="viber" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 97.5 97.5" xml:space="preserve"><path d="M77.9,71.1l3.5,2l0.1-0.2C86.4,66.1,89,58,89,49.5c0.1-10.9-4-21.1-11.6-28.7c-7.6-7.7-17.7-12-28.5-12
 	C26.6,8.8,8.4,27,8.4,49.3s18.1,40.4,40.4,40.4c3.9,0,7.6-0.5,11.1-1.6l0.2-0.1l-0.8-4L59,84.1c-3.4,1-6.9,1.6-10.4,1.6
-	c-20,0-36.3-16.3-36.3-36.3s16.3-36.3,36.3-36.3s36.3,16.3,36.3,36.3c0,7.7-2.4,15.1-7,21.5L77.9,71.1z"/>
-<path d="M83,14.6C73.9,5.5,61.7,0.4,48.9,0.4C44.4,0.4,40.1,1,36,2.2l-0.2,0.1L36.5,6l0.3-0.1c4-1.1,8.1-1.7,12.1-1.7
+	c-20,0-36.3-16.3-36.3-36.3s16.3-36.3,36.3-36.3s36.3,16.3,36.3,36.3c0,7.7-2.4,15.1-7,21.5L77.9,71.1z"></path> <path d="M83,14.6C73.9,5.5,61.7,0.4,48.9,0.4C44.4,0.4,40.1,1,36,2.2l-0.2,0.1L36.5,6l0.3-0.1c4-1.1,8.1-1.7,12.1-1.7
 	c24.5,0,44.5,19.9,44.5,44.5s-20,44.4-44.5,44.4C24.3,93,4.4,73,4.4,48.6c0-9.3,2.8-18.1,8.2-25.7l0.2-0.3l-3.3-1.9l-0.1,0.2
-	C3.6,29,0.6,38.6,0.6,48.7c0,26.5,21.6,48.1,48.1,48.1C75.3,96.8,97,75.2,97,48.7C97,35.8,92.1,23.7,83,14.6z"/>
-<path d="M65.9,63.3l-8.3-7.8c0,0-4.3,4.8-6.2,4.1c0,0-6-3.6-10.6-13.3c-0.9-1.9,5.4-5.2,5.4-5.2l-5.8-9.8c0,0-9.2,4.6-8.6,10
-	c0.6,5.3,4.9,19.9,21.4,28C58.9,72.1,65.9,63.3,65.9,63.3z"/>
-</svg>
+	C3.6,29,0.6,38.6,0.6,48.7c0,26.5,21.6,48.1,48.1,48.1C75.3,96.8,97,75.2,97,48.7C97,35.8,92.1,23.7,83,14.6z"></path> <path d="M65.9,63.3l-8.3-7.8c0,0-4.3,4.8-6.2,4.1c0,0-6-3.6-10.6-13.3c-0.9-1.9,5.4-5.2,5.4-5.2l-5.8-9.8c0,0-9.2,4.6-8.6,10
+	c0.6,5.3,4.9,19.9,21.4,28C58.9,72.1,65.9,63.3,65.9,63.3z"></path></svg>
                                         </div>
                                     </div>
                                     <div class="col">
                                         <!-- Для приложения Viber на ПК-->
-                                        <a title="Viber" href="viber://chat?number=+380442327001">+38 (067)232-70-01</a>,
-                                        <!--Для приложения Viber на мобильных
-                                        <a title="Viber" href="viber://add?number=380442327001">+38 (067)232-70-01</a>,-->
-
-                                        <!--Для приложения Viber на ПК-->
-                                        <a title="Viber" href="viber://chat?number=+380634979606">+38 (063)497-96-06</a>
-                                        <!-- Для приложения Viber на мобильных
-                                         <a title="Viber" href="viber://add?number=380634979606">+38 (063)497-96-06</a>-->
+                                        <a title="phone" :href="'tel:'+phone">{{phone}}</a>
+                                        <!--Для приложения Viber на мобильных,-->
                                     </div>
                                 </div>
-                                <div class="club-params row align-items-start justify-content-start">
+                                <div class="club-params row align-items-start justify-content-start" v-if="obj.viber">
+                                    <div class="col-auto">
+                                        <div class="icon-description row align-items-center justify-content-center">
+                                            <svg version="1.1" id="viber" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+     viewBox="0 0 40.5 43.3" style="enable-background:new 0 0 40.5 43.3;" xml:space="preserve">
+<path d="M20.2,0.1c-11,0-20,9-20,20c0,5,1.8,9.7,5.2,13.4l-2.1,7.1l-0.7,2.4l7.9-5.4c3,1.6,6.3,2.5,9.7,2.5c11,0,20-9,20-20
+    C40.2,9.1,31.3,0.1,20.2,0.1z M20.2,38.3c-3.3,0-6.6-0.9-9.4-2.6l-0.4-0.2l-4.8,3.2L7,34.5L7.4,33l-0.3-0.3C3.9,29.3,2,24.8,2,20.1
+    C2,10,10.2,1.9,20.2,1.9c10,0,18.2,8.2,18.2,18.2C38.4,30.1,30.3,38.3,20.2,38.3z"/>
+<path d="M25.5,21.9c-0.5,0-0.9,0.2-1.3,0.5c-0.7,0.7-1,1.4-1.3,2c-0.5,0.9-0.6,0.9-0.8,0.9c-2.2-0.4-6.4-4.6-6.8-6.8
+    c0-0.3-0.1-0.3,0.9-0.8c0.6-0.3,1.3-0.7,2-1.3c0.3-0.3,0.8-1,0.3-2.2c-0.7-2-3.8-4.9-5.3-5C13.1,9,13,9,13,9c-2.5,0-4.7,4.4-4.7,4.5
+    C8.1,13.8,8.1,14,8,14.1C8,14.2,8,14.4,8,14.6c0,3.3,3.3,9,6.1,11.9c2.8,2.8,8.6,6.1,11.9,6.1h0c0.2,0,0.4,0,0.6-0.1
+    c0.1,0,0.3-0.1,0.6-0.2c0,0,4.7-2.4,4.5-4.9C31.4,25.8,27.7,21.9,25.5,21.9z M9.4,14.4c0-0.1,0-0.2,0.1-0.3c0.7-1.5,2.4-3.7,3.4-3.7
+    v-0.4l0.1,0.4c0.7,0.1,3.5,2.4,4.1,4.1c0.1,0.2,0.2,0.6,0,0.7c-0.5,0.5-1.1,0.8-1.6,1.1c-0.8,0.4-1.9,1-1.7,2.4c0.5,2.8,5.1,7.4,8,8
+    c1.4,0.2,1.9-0.8,2.4-1.7c0.3-0.5,0.6-1.1,1.1-1.6c0,0,0.1-0.1,0.2-0.1c1.4,0,4.5,3.2,4.6,4.2c0.1,1-2.1,2.7-3.7,3.5
+    c-0.2,0.1-0.3,0.1-0.4,0.1c-0.1,0-0.1,0-0.1,0c-2.9,0-8.2-3-10.9-5.7c-2.6-2.6-5.7-7.9-5.7-10.9C9.4,14.6,9.4,14.5,9.4,14.4z"/>
+<path d="M21,8.2c2.7-0.1,5.2,0.7,7.2,2.6c2.7,2.4,3.6,5.5,3.5,8.9c-0.1,0-0.2,0.1-0.3,0.1c-0.1-0.2-0.2-0.4-0.2-0.7
+    c-0.1-2-0.5-4-1.6-5.7c-1.9-3-4.7-4.5-8.2-4.7c-0.2,0-0.5-0.1-0.7-0.1C20.9,8.4,20.9,8.3,21,8.2z"/>
+<path d="M21.8,11.1c0.2,0,0.4-0.1,0.5-0.1c4.6,0.4,6.6,3.8,6.6,7c0,0.1,0,0.2,0,0.3c-0.1,0.1-0.2,0.2-0.2,0.3
+    c-0.1-0.1-0.2-0.2-0.2-0.3c-0.1-0.6-0.1-1.2-0.2-1.8c-0.7-2.8-2.9-4.7-5.7-4.9c-0.3,0-0.5-0.1-0.8-0.2
+    C21.8,11.3,21.8,11.2,21.8,11.1z"/>
+<path d="M25.9,17.7c0-0.2-0.1-0.4-0.1-0.6c-0.2-1.6-1.1-2.5-2.7-2.7c-0.2,0-0.3-0.2-0.4-0.3c0.2-0.1,0.3-0.2,0.5-0.2
+    c1.9,0.2,3,1.4,3.1,3.3c0,0.2-0.1,0.3-0.1,0.5C26,17.7,26,17.7,25.9,17.7z"/>
+</svg>
+                                        </div>
+                                    </div>
+                                    <div class="col">
+                                        <!--Для приложения Viber на ПК-->
+                                        <a title="Viber" :href="'viber://chat?number='+obj.viber"  v-if="mobile()">{{obj.viber}}</a>
+                                        <!-- Для приложения Viber на мобильных-->
+                                        <a title="Viber" :href="'viber://add?number='+obj.viber" v-else>{{obj.viber}}</a>
+                                    </div>
+                                </div>
+                                <div class="club-params row align-items-start justify-content-start" v-if="obj.web">
                                     <div class="col-auto">
                                         <div class="icon-description row align-items-center justify-content-center">
                                             <svg version="1.1" id="site" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -203,7 +224,7 @@
                                         <a :href="obj.web">{{obj.web}}</a>
                                     </div>
                                 </div>
-                                <div class="club-params row align-items-start justify-content-start">
+                                <div class="club-params row align-items-start justify-content-start" v-if="obj.email">
                                     <div class="col-auto">
                                         <div class="icon-description row align-items-center justify-content-center">
                                             <svg version="1.1" id="mail" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -229,7 +250,7 @@
                                             <div></div>
                                         </div>
                                     </div>
-                                    <div class="col-10 social">
+                                    <div class="col-10 social" v-if="obj.socials">
                                         соцсети:
                                         <span v-for="(key, value) in obj.socials">
                                             <a :href="key">{{value}}</a>
@@ -392,7 +413,7 @@
                             <div class="map">
                                 <google-map name="map" :coord_lat="obj.lat" :coord_lng="obj.lng" :city="null"></google-map>
                                 <div class="show-full">
-                                    <a href="map.html" class="btn">Показать карту
+                                    <router-link :to="'/onmap' + '?obj=' +obj.id" class="btn">Показать карту
                                         <span class="forward">
                                             <svg version="1.1" id="MAP-arr"xmlns="http://www.w3.org/2000/svg"
                                      xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 143.3 82.3"	 style="enable-background:new 0 0 143.3 82.3;" xml:space="preserve">
@@ -403,7 +424,7 @@
 	C102.3,79.2,103.5,79.2,104.3,78.4"/>
 </svg>
                                         </span>
-                                    </a>
+                                    </router-link>
                                 </div>
                             </div>
                         </div>
@@ -501,7 +522,20 @@
                 </div>
             </div>
         </div>
+        <!--POP YAMMER REVIEW-->
+        <div class="popup" data-number="5">
+            <div class="popup-content show">
+                <div class="closeX"><span></span><span></span></div>
+                <div class="activate-popup container-fluid">
+                    <div class="row">
+                           <form method="POST"  v-on:submit.prevent="yammerReviewAdd" id="yammer-review" v-html="yammerReview"></form>
+                    </div>
 
+                </div>
+            </div>
+            <div class="closeLayout show"></div>
+        </div>
+        <!--POP YAMMER FOTOGALERY-->
         <div class="popup" data-number="2">
             <div class="popup-content show">
                 <div class="closeX"><span></span><span></span></div>
@@ -515,7 +549,7 @@
                         <div class="pop-inner pop-gallery">
                             <div class="col-lg-8 col-12 slider-gallery slider">
                                 <div class="" v-for="img in obj.gallery" v-if="img.status == 'active'">
-                                    <img :src="img.path" :title="img.title" :alt="img.alt">
+                                    <img :src="img.path" :title="img.title" :alt="img.alt" :data-id="img.id" :data-photographer="img.author" :data-date="getCreated(img.created_at)">
                                 </div>
                             </div>
                             <div class="col-lg-4 col-12 gallery-description">
@@ -552,16 +586,16 @@
                                 </div>
                                 <div class="gallery-description-col">
                                     <div class="gallery-desc">
-                                        <div class="gallery-title">"<span>Отлично погуляли</span>"</div>
-                                        <div class="gallery-desc-light">Фотографию представил:</div>
-                                        <div class="gallery-desc-bold">Александр Вальченко</div>
+                                        <div class="gallery-title">"<span></span>"</div>
+                                        <div class="gallery-desc-light ">Фотографию представил:</div>
+                                        <div class="gallery-desc-bold photographer"></div>
                                         <div class="gallery-desc-light">Дата публикации:</div>
-                                        <div class="gallery-desc-bold">Февраль 2018</div>
+                                        <div class="gallery-desc-bold date"></div>
                                     </div>
                                     <div class="gallery-problem">
                                         <div class="problem-link">Сообщить о проблеме</div>
                                         <div class="gallery-problem-descr" >
-                                            <form method="POST"  v-on:submit.prevent="yammerAdd" v-html="galleryForm">
+                                            <form method="POST"  v-on:submit.prevent="yammerAdd" id="yammer-galery" v-html="galleryForm">
                                             </form>
                                         </div>
                                     </div>
@@ -573,10 +607,57 @@
             </div>
             <div class="closeLayout show"></div>
         </div>
-
         <!--POPUP REVIEW-->
-            <div class="popup" data-number="3"  v-html="popRewiev"></div>
+            <div class="popup" data-number="3" >
+                <div class="popup-content show">
+                    <div class="closeX"><span></span><span></span></div>
+                    <div class="activate-popup container-fluid">
+                        <div class="row">
+                            <div class="pop-title">
+                                <div class="pop-title-inner">
+                                    Написать отзыв
+                                </div>
+                            </div>
+                            <div class="pop-inner popup-review">
+                                <div class="row align-items-start">
+                                    <div class="col-sm-3 col-5">
+                                        <div class="review-image">
+                                            <img src="https://sova.j2landing.com/laravel-filemanager/img/drugstore_map/clubs/Barduck/5b1e334769ae6.jpg">
+                                        </div>
+                                    </div>
+                                    <div class="col-7 col-sm-5">
+                                        <div class="row review-top-title">
+                                            <div class="review-name">
+                                              {{obj.name}}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            {{obj.district}} {{obj.street}} {{obj.flat}}
+                                        </div>
+                                    </div>
+                                    <div class="rating-wrap col-md-4 d-md-block d-none">
+                                        <div class="row align-items-center justify-content-start">
+                                            <div class="col-auto">
+                                                <div class="rating-count row align-items-center justify-content-center">
+                                                    {{obj.rating}}
+                                                </div>
+                                            </div>
+                                            <div>Оценка<br>посетителей</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="title-reting">Оценки</div>
+                                <form method="POST"  v-on:submit.prevent="new_Review()"   id="new_Review" v-html="popRewiev">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         <!--end POPUP REVIEW -->
+
+
     </div>
 </template>
 
@@ -602,7 +683,8 @@
         obj: {},
         popRewiev: '',
         limitReview:3,
-        galleryForm:''
+        galleryForm:'',
+        yammerReview:''
       }
     },
     metaInfo: {
@@ -632,11 +714,15 @@
     mounted:function () {
       axios.get('/comment-create/' + this.$route.params.alias)
         .then(resp => {
-          this.popRewiev  = resp.data ;
+          this.popRewiev  = resp.data;
         })
-      axios.get('/yammer-gallery/' + this.$route.params.alias)
+      axios.get('/yammer-gallery')
         .then(resp => {
           this.galleryForm  = resp.data ;
+        })
+      axios.get('/yammer-review')
+        .then(resp => {
+          this.yammerReview  = resp.data ;
         })
       setTimeout(function () {
         restartClub();
@@ -645,21 +731,82 @@
     },
 
     methods: {
+      getYammerForm: function (ids) {
+
+      },
+      /* ПЕРЕВОДИМ ДАТУ */
+      getCreated: function (t) {
+        var loc = $('html').attr('lang')
+        var date = new Date(t);
+        var options = { month: 'long' , year: 'numeric' };
+        return date.toLocaleDateString(loc, options)
+      },
+      /* новый отзыв */
+      new_Review: function (el) {
+        $('#new_Review input[name=inst_id]').val(this.obj.id)
+
+        $.ajax({
+          type: 'POST',
+          url:"/comment-create",
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          data: $('#new_Review').serialize(),
+          success: function (resp) {
+            if(resp) {
+              $('#new_Review').trigger('reset')
+            }
+          }
+        })
+
+      },
+      mobile: function () {
+
+      },
+      /* все отзывы */
       allReviews: function () {
         this.limitReview = 1000
       },
+      /* назад */
       goBack: function () {
         window.history.go(-1)
       },
       avgPoint: function (a, b) {
         return +a >= b ? true : false
       },
-      yammerAdd: function () {
-        axios.post('/yammer-gallery/')
-          .then(resp => {
-            console.log(resp);
-          })
+      /* новая жалоба на отзыв */
+      yammerReviewAdd: function() {
+        $.ajax({
+          type: 'POST',
+          url:"/yammer-review",
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          data: $('#yammer-review').serialize(),
+          success: function (resp) {
+            if(resp) {
+              $('#yammer-review').trigger('reset')
+            }
+          }
+        })
       },
+      /* новая жалоба на фото */
+      yammerAdd: function () {
+        $.ajax({
+          type: 'POST',
+          url:"/yammer-gallery",
+          headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+          },
+          data: $('#yammer-galery').serialize(),
+          success: function (resp) {
+            if(resp) {
+              $('#yammer-galery').trigger('reset')
+            }
+          }
+        })
+      },
+      /* добавить в избранное  */
       addToFavorite:function (obj) {
         var uri = obj.isFav ?  '/favorites/unset/'+obj.id :  '/favorites/set/'+obj.id;
         axios.post(uri)

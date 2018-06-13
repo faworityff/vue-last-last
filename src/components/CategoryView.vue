@@ -52,7 +52,7 @@
                         <div class="map">
                             <google-map name="map" :coord_lat="objcts[0].lat" :coord_lng="objcts[0].lng" :city="city"></google-map>
                             <div class="show-full">
-                                <a :href="'onmap' + '?state=' + JSON.stringify(this.filtred)" class="btn">
+                                <router-link :to="'onmap' + '?state=' + JSON.stringify(this.filtred)" class="btn">
                                     Показать карту
                                     <span class="forward">
                                         <svg version="1.1" id="MAP-arr"
@@ -65,8 +65,8 @@
                                             C102.3,79.2,103.5,79.2,104.3,78.4"/>
                                         </svg>
                                     </span>
-                                </a>
-                                <div class="input-group-select col-9 col-sm-4">
+                                </router-link>
+                                <div class="input-group-select">
                                     <select class="" v-model="city" v-on:change="newCity">
                                         <option v-for="(value, key ) in cities" :value="key" :selected="key == city">{{key}}</option>
                                     </select>
@@ -193,7 +193,7 @@
                                                         <input id="timepickerTo" type="text"
                                                                class="form-control timepicker" placeholder="до"  value="">
                                                     </div>
-                                                    <button v-on:click="timeChangeFrom">Выбрать</button>
+                                                    <button v-on:click="timeChangeFrom" class="btn btn-black">Выбрать</button>
                                                 </div>
                                             </label>
                                         </div>
@@ -457,6 +457,7 @@ console.log(city);
       titleTemplate: '%s | My Awesome Webapp',
       link: [
         {rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css'},
+        {rel: 'stylesheet', href: '/assets/css/map/club.css'},
         {rel: 'stylesheet', href: '/assets/css/map/search.css'},
         {rel: 'stylesheet', href: '/assets/css/map/responsive.css'},
         // { rel: 'favicon', href: 'favicon.ico' }
@@ -719,7 +720,7 @@ console.log(city);
                 }
             }
         }
-       // this.pushState()
+       this.pushState()
         console.log('this.filtred', this.filtred);
         console.log('this.objcts', this.objcts);
         this.$forceUpdate();

@@ -56,7 +56,8 @@
                                 </div>
                                 <div class="search-btn-right">
                                     <button class="btn btn-search" type="submit">
-                                        <svg version="1.1" id="search-inp" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 17.5 16.6" style="enable-background:new 0 0 17.5 16.6;" xml:space="preserve">
+                                        <svg version="1.1" id="search-inp" xmlns="http://www.w3.org/2000/svg"
+                                             xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 17.5 16.6" style="enable-background:new 0 0 17.5 16.6;" xml:space="preserve">
 
 <path class="st0" d="M12.2,10.2c0.7-1,1.1-2.2,1.1-3.5c0-3.5-2.8-6.3-6.3-6.3S0.7,3.1,0.7,6.6s2.8,6.3,6.3,6.3c1.3,0,2.5-0.4,3.5-1.1l4.5,4.5
 	l1.7-1.7L12.2,10.2z M2.6,6.6c0-2.4,2-4.4,4.4-4.4s4.4,2,4.4,4.4S9.4,11,7,11S2.6,9.1,2.6,6.6z"></path>
@@ -186,7 +187,7 @@
                                                             <input id="timepickerTo" type="text"
                                                                    class="form-control timepicker" placeholder="до"  value="">
                                                         </div>
-                                                        <button v-on:click="timeChangeFrom">Выбрать</button>
+                                                        <button v-on:click="timeChangeFrom" class="btn btn-black">Выбрать</button>
                                                     </div>
                                                 </label>
                                             </div>
@@ -418,7 +419,8 @@
        seen:seen,
        recomend: false,
        cities:null,
-       mapObj: []
+       mapObj: [],
+       z:0
      }
    },
    metaInfo: {
@@ -426,6 +428,7 @@
      titleTemplate: '%s | My Awesome Webapp',
      link: [
        {rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css'},
+       {rel: 'stylesheet', href: '/assets/css/map/club.css'},
        {rel: 'stylesheet', href: '/assets/css/map/search.css'},
        {rel: 'stylesheet', href: '/assets/css/map/responsive.css'},
        // { rel: 'favicon', href: 'favicon.ico' }
@@ -436,7 +439,7 @@
    },
    created: function () {
      if(window.location.search.search('state=') >= 0){
-       var  h = window.location.search.split('&')
+       var  h = window.location.search.split('&');
        for (var i = 0; i < h.length; i++){
          if(h[i].search('state=')>=0) {
            var p  = h[i].split('=')
@@ -451,6 +454,20 @@
            this.recomend =  this.filtred.recomend
          }
        }
+     } else if(window.location.search.search('obj=') >= 0) {
+       var  h = window.location.search.split('&');
+       this.filtred.mapObj = []
+       for (var i = 0; i < h.length; i++) {
+         if (h[i].search('obj=') >= 0) {
+           var p  = h[i].split('=')
+           for (var k in this.objcts) {
+             if(this.objcts[k].id == p[1]) {
+               this.filtred.mapObj.push(this.objcts[k])
+               return true
+             }
+           }
+         }
+       }
      }
      if(this.filtred.city != '' ){
        this.city = this.filtred.city
@@ -458,7 +475,7 @@
      }else {
        this.filtred.city = this.city
      }
-     this.createFilterObject()
+     // this.createFilterObject()
    },
    mounted() {
    },
@@ -483,7 +500,12 @@
      },
      /* НАзад */
      goBack: function () {
-       window.history.go(-2)
+       window.history.go(-1);
+     },
+     /* записываем состояние */
+     pushState: function (){
+       var t =  this.filtred.slug + '?state=' + JSON.stringify(this.filtred);
+       window.history.pushState(this.filtred, '',  t )
      },
      /* избранные */
      faworiteShow: function () {
@@ -556,11 +578,7 @@
        this.filtred.shown = 0
        this.pushState()
      },
-     /* записываем состояние */
-     pushState: function (){
-       var t =  this.filtred.slug + '?state=' + JSON.stringify(this.filtred);
-       window.history.pushState('', '',  t )
-     },
+
      /* переводим время в формат */
      getTimeStamp: function (a) {
        var d = new Date()

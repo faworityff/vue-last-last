@@ -1,0 +1,294 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+iframe {
+    width: 500px;
+    height: 500px;
+}
+h1 {
+    font-size: 500px !important;
+    background: #000;
+}
+/*HEADER*/
+.white-menu header {
+    background: #fff;
+    color: #141414;
+    -webkit-transition: all .3s linear;
+    -moz-transition: all .3s linear;
+    -ms-transition: all .3s linear;
+    -o-transition: all .3s linear;
+    transition: all .3s linear;
+}
+.white-menu header .search-wrap {
+    visibility: hidden;
+}
+
+.white-menu header .menu-list a::after {
+    background: #fff;
+}
+
+.white-menu header .notification-miki svg {
+    stroke: #141414;
+}
+
+
+
+.white-menu header .menu-list a::after {
+    background: #141414;
+}
+
+.white-menu header .logo svg {
+    fill: #141414;
+}
+
+.white-menu header .menu-list a,
+.white-menu header .menu-list a:hover {
+    color: #141414;
+}
+
+.notification a {
+    transition: unset;
+}
+
+.white-menu header .search-wrap {
+    visibility: hidden;
+}
+
+/*-------------FIRST MAIN BLOCK-------------*/
+.h-top-block {
+    padding: 6.25rem 0 3.75rem 0;
+}
+
+.search-btn-right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-all-club {
+    padding-right: 0;
+}
+
+.big-drug {
+    background: url('../img/bg-drug/bg.png') no-repeat center center;
+    background-size: cover;
+    overflow: hidden;
+    height: 100%;
+    margin: 0 -15px;
+}
+.big-drug.state-1 {
+    background: url('../img/bg-drug/bg.png') no-repeat center center;
+    background-size: cover;
+}
+.big-drug.state-2 {
+    background: url('../img/bg-drug/2.jpg') no-repeat center center;
+    background-size: cover;
+}
+.big-drug.state-3 {
+    background: url('../img/bg-drug/3.jpg') no-repeat center center;
+    background-size: cover;
+}
+.big-drug.state-4 {
+    background: url('../img/bg-drug/4.jpg') no-repeat center center;
+    background-size: cover;
+}
+.big-drug.state-5 {
+    background: url('../img/bg-drug/5.jpg') no-repeat center center;
+    background-size: cover;
+}
+.big-drug.state-6 {
+    background: url('../img/bg-drug/6.jpg') no-repeat center center;
+    background-size: cover;
+}
+.big-drug.state-7 {
+    background: url('../img/bg-drug/7.jpg') no-repeat center center;
+    background-size: cover;
+}
+.big-drug.state-8 {
+    background: url('../img/bg-drug/8.jpg') no-repeat center center;
+    background-size: cover;
+}
+.big-drug.state-9 {
+    background: url('../img/bg-drug/9.jpg') no-repeat center center;
+    background-size: cover;
+}
+.big-drug.state-10 {
+    background: url('../img/bg-drug/10.jpg') no-repeat center center;
+    background-size: cover;
+}
+.big-drug.state-11 {
+    background: url('../img/bg-drug/11.jpg') no-repeat center center;
+    background-size: cover;
+}
+.big-drug.state-12 {
+    background: url('../img/bg-drug/12.jpg') no-repeat center center;
+    background-size: cover;
+}
+.big-drug.state-13 {
+    background: url('../img/bg-drug/13.jpg') no-repeat center center;
+    background-size: cover;
+}
+.big-drug.state-14 {
+    background: url('../img/bg-drug/14.jpg') no-repeat center center;
+    background-size: cover;
+}
+.big-drug.state-15 {
+    background: url('../img/bg-drug/15.jpg') no-repeat center center;
+    background-size: cover;
+}
+.big-drug.state-16 {
+    background: url('../img/bg-drug/16.jpg') no-repeat center center;
+    background-size: cover;
+}
+.big-drug.state-17 {
+    background: url('../img/bg-drug/17.jpg') no-repeat center center;
+    background-size: cover;
+}
+.big-drug.state-18 {
+    background: url('../img/bg-drug/18.jpg') no-repeat center center;
+    background-size: cover;
+}
+.big-drug.state-19 {
+    background: url('../img/bg-drug/19.jpg') no-repeat center center;
+    background-size: cover;
+}
+.big-drug.state-20 {
+    background: url('../img/bg-drug/5.jpg') no-repeat center center;
+    background-size: cover;
+}
+.big-drug > img {
+    -webkit-filter: drop-shadow(0.625rem 1.25rem 2.5rem rgba(37, 12, 59, .5));
+    filter: drop-shadow(0.625rem 1.25rem 2.5rem rgba(37, 12, 59, .5));
+    height: inherit;
+    object-fit: cover;
+    margin: -1px 0;
+}
+
+.wave-blocks > div {
+    padding: 3.75rem 6rem 8rem 0;
+    text-transform: uppercase;
+}
+
+.wave-blocks > div:last-child {
+    padding-right: 0;
+    text-align: center;
+}
+
+.wave-img {
+    height: 14.5rem;
+}
+
+.wave-img img {
+    height: inherit;
+}
+
+.wave-title {
+    font-weight: 700;
+    font-size: 1.25em;
+    margin: 1.875rem 0 1.25rem 0;
+}
+
+.wave-text {
+    font-size: 0.75em;
+    font-weight: 500;
+}
+
+.wave-pool {
+    position: relative;
+}
+
+.wave-pool .wave-img {
+    width: 100%;
+    height: 100%;
+}
+
+.wave-pool img {
+    height: auto;
+    width: 100%;
+}
+
+.wave-pool .wave-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: auto;
+    background: #fff;
+    font-size: 0.8125em;
+    font-weight: 700;
+    padding: 1.25rem;
+}
+.search-btn-right .btn-search {
+    padding: 0.625rem 0;
+    width: 6.333rem;
+}
+.main-page .club-wrap-blocks .club-item::before {
+    height: 100%;
+}
+
+/*-------------end FIRST MAIN BLOCK-------------*/
+@media (min-width: 1200px) and (max-width: 1380px) {
+    .search-block h1 {
+        font-size: 3em;
+        line-height: 2.8rem;
+    }
+}
+@media (max-width: 1199px) {
+    .input-group-select::before {
+        left: 0;
+    }
+}
+
+@media (max-width: 991px) {
+    .search-block h1 {
+        font-size: 2.15rem;
+        line-height: 2.25rem;
+    }
+
+    .h-top-block {
+        padding: 3.75rem 0 2.5rem 0;
+    }
+
+    .big-drug {
+        margin-bottom: 3.333rem;
+    }
+
+    .wave-blocks > div {
+        padding: 5rem 2.188rem 2.5rem;
+        text-align: center;
+    }
+
+    .wave-blocks > div:last-child {
+        padding: 2.5rem 2.188rem;
+        text-align: center;
+    }
+
+    .wave-text {
+        font-size: 1em;
+        font-weight: 600;
+        height: 4.5rem;
+    }
+}
+
+@media (max-width: 575px) {
+    .first-screen .input-group-search {
+        margin-bottom: 1rem;
+        padding-right: 0 !important;
+    }
+
+    .first-screen .input-group-search input {
+        padding-left: 2rem;
+    }
+}
+
+@media (max-width: 400px) {
+    .search-block h1 {
+        font-size: 1.55rem;
+        line-height: 1.65rem;
+    }
+
+    .wave-text {
+        height: 8rem;
+    }
+}

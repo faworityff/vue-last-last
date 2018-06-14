@@ -10,7 +10,7 @@
                         <div class="rating-count row align-items-center justify-content-center">
                             {{obj.rating}}
                         </div>
-                        <div class="">{{ trans('map.mark') }}<br/>{{ trans('map.visitors') }}</div>
+                        <div class="">Оценка<br/>посетителей</div>
                     </div>
                 </div>
                 <div class="location-wrap col-xs-4">
@@ -40,19 +40,18 @@
                     <div class="review-rev row align-items-center justify-content-center">
                         <div class="">
                             <div class="review-rev-count">{{Object.keys(obj.reviews).length}}</div>
-                            <div>{{ trans('map.reviews_get') }}</div>
+                            <div>Отзывов</div>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="club-more">
-                <div>{{ trans('map.more') }}</div>
+                <div>Подробнее</div>
             </div>
         </div>
     </router-link>
 </template>
 <script>
-
   var seen = window.$cookies.isKey('seen') ? JSON.parse(window.$cookies.get('seen')) : {0: []};
   export default {
     props: ['obj', 'baseHref'],

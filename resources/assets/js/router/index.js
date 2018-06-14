@@ -3,7 +3,6 @@ import Router from 'vue-router';
 import Meta from 'vue-meta';
 import VueCookies from 'vue-cookies'
 import axios from 'axios';
-import _  from 'lodash';
 
 import mainView from '@/components/mainView';
 import categoryView from '@/components/categoryView';
@@ -15,18 +14,19 @@ Vue.use(Meta)
 Vue.use(VueCookies)
 
 /* получаем данные */
-var router;
-const inst = JSON.parse(window.loc_obj);
-Vue.prototype.trans = (string, args) => {
-  let value = _.get(window.i18n, string);
 
-  _.eachRight(args, (paramVal, paramKey) => {
-    value = _.replace(value, `:${paramKey}`, paramVal);
-  });
-  return value;
-};
+var obj = '';
+$.ajax({
+  url: '//sova.j2landing.com/map-api/get',
+  type:'POST',
+  async: false,
+  success:function( data ) {
+    obj = JSON.parse( data)
+  }
+})
+
 var lang = document.querySelector('html').getAttribute('lang');
-var baseHref = inst.main.base_href.slice(inst.main.base.length, inst.main.base_href.length) + '/';
+var baseHref = obj.main.base_href.slice(obj.main.base.length, obj.main.base_href.length) + '/';
 var lang = document.querySelector('html').getAttribute('lang');
 
 const mainViews = mainView;
@@ -39,15 +39,16 @@ if(lang != 'ru') {
 
 var seen = window.$cookies.isKey('seen') ? JSON.parse(window.$cookies.get('seen')) : {0:[]};
 
-// console.log(inst);
+console.log(obj);
 
+const inst = obj;
 
 var routsArr = document.querySelectorAll('router-link');
 var routsObjArr = [];
 var routsSubObjArr = [];
 var filtred=[]
 var z =0;
-// console.log(routsArr);
+console.log(routsArr);
 /* при старте получаем все фильтры в исходном положении */
 for (var cateObj  in  inst.category) {
   var VRegExp = new RegExp(/\/+/g);
@@ -70,7 +71,7 @@ routsObjArr[routsArr.length] = {
   component: categoryViews,
   props: { objcts: inst.objects,  categories: inst.category, filtred: filtred[routsArr.length], location: inst.location, baseHref:baseHref},
 }
-// console.log(filtred, 'filtred');
+console.log(filtred, 'filtred');
 
 /* routs главной страницы*/
 routsObjArr[0] = {
@@ -117,6 +118,7 @@ var router = new  Router({
   linkActiveClass: 'active',
   transitionOnLoad: true,
   base:baseHref,
-  props: true,
+
+
 })
 export default router

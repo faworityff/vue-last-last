@@ -4,7 +4,7 @@
             <div class="club-top-nav club-all">
                 <div class="wrap row align-items-center justify-content-between">
                     <a v-on:click="goBack" class="back-page">
-                        {{ trans('map.go_back') }}
+                        Назад
                         <span class="forward">
                             <svg version="1.1" id="back" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                      x="0px" y="0px" viewBox="0 0 143.3 82.3"	 style="enable-background:new 0 0 143.3 82.3;" xml:space="preserve">
@@ -17,7 +17,7 @@
                          </span>
                     </a>
                     <a href="/inst-create" class="add-location">
-                         {{ trans('map.add_location') }}
+                        Добавить локацию
                         <span class="location-pin">
                             <svg version="1.1" id="add-loc" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
              viewBox="0 0 43.8 51.4" style="enable-background:new 0 0 43.8 51.4;" xml:space="preserve">
@@ -45,10 +45,10 @@
                 <div class="club-wrap row justify-content-between">
                     <div class="club-wrap-title mob-here-block row justify-content-center align-items-start">
                         <div class="title-navigation">
-                            <a href="#review"> {{ trans('map.reviews') }}</a>
-                            <a href="#map">{{ trans('map.on_map') }}</a>
-                            <a href="#profile">{{ trans('map.purview') }}</a>
-                            <a href="#description" class="active-title">{{ trans('map.descr') }}</a>
+                            <a href="#review">Отзывы</a>
+                            <a href="#map">На карте</a>
+                            <a href="#profile">Обзор</a>
+                            <a href="#description" class="active-title">Описание</a>
                         </div>
                         <div class="line-navigation">
                             <div class="block-navigation"></div>
@@ -69,7 +69,7 @@
                                                     {{obj.rating}}
                                                 </div>
                                             </div>
-                                            <div class="">{{ trans('map.mark') }}<br/>{{ trans('map.visitors') }}</div>
+                                            <div class="">Оценка<br/>посетителей</div>
                                         </div>
                                     </div>
                                     <div class="location-wrap col-6">
@@ -111,12 +111,11 @@
 </svg>
                                         </div>
                                     </div>
-                                    <!--todo добавить в рассписание дни недели-->
                                     <div class="col club-work-time" v-if="obj.isEveryDay == true">
-                                        <div>{{  trans('map.everyday') }} : {{obj.schedule[1].start}} - {{obj.schedule[1].end}}</div>
+                                        <div>Ежедневно: {{obj.schedule[1].start}} - {{obj.schedule[1].end}}</div>
                                     </div>
                                     <div class="col club-work-time" v-else>
-                                        <div v-for="(sh, index) in obj.schedule">{{  trans('map.days_short.d' + (index - 1)) }} : {{sh.start }} - {{sh.end}} {{index}}</div>
+                                        <div v-for="sh in obj.schedule">Пн: {{sh.start }} - {{sh.end}}</div>
                                     </div>
                                 </div>
                                 <div class="club-params row align-items-start justify-content-start" v-if="obj.district || obj.street || obj.flat">
@@ -246,7 +245,7 @@
                                 </div>
                                 <div class="club-params club-params-social row align-items-start justify-content-between">
                                     <div class="col-12 social" v-if="obj.socials">
-                                        {{  trans('map.social') }}:
+                                        соцсети:
                                         <span v-for="(key, value) in obj.socials">
                                             <a :href="key">{{value}}</a>
                                             <span class="social-br">/</span>
@@ -260,13 +259,13 @@
                                         <div class="review-img">
                                             <div class="review-img-inner">
                                                 <div class="club-data-img"
-                                                     :data-img="obj.gallery[0].path"
-                                                     :style="'background-image: url('+obj.gallery[0].path+'), linear-gradient(to bottom, rgba(255,0,233,0.5) 0%,rgba(255,0,233,0.5) 100%);'"></div>
+                                                     data-img="https://45.j2landing.com/DrugStoreMap/img/6.jpg"
+                                                     style="background-image: url('img/6.jpg'), linear-gradient(to bottom, rgba(255,0,233,0.5) 0%,rgba(255,0,233,0.5) 100%);"></div>
                                             </div>
                                             <div class="review-rev row align-items-center justify-content-center">
                                                 <div class="">
                                                     <div class="review-rev-count">{{obj.reviews.length}}</div>
-                                                    <div>{{  trans('map.reviews_get') }}</div>
+                                                    <div>Отзывов</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -274,7 +273,7 @@
                                 </div>
                                 <div class="rating rating-percent">
                                     <div class="row">
-                                        <div class="col-4">{{  trans('map.perfect') }}:</div>
+                                        <div class="col-4">Отлично:</div>
                                         <div class="col-6">
                                             <span class="round active"></span>
                                             <span class="round active"></span>
@@ -285,7 +284,7 @@
                                         <div class="col-2"><span v-if="obj.precentage[5]">{{obj.precentage[5]}}</span> <span v-else>0</span></div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-4">{{  trans('map.good') }}:</div>
+                                        <div class="col-4">Хорошо:</div>
                                         <div class="col-6">
                                             <span class="round active"></span>
                                             <span class="round active"></span>
@@ -295,7 +294,7 @@
                                         <div class="col-2"><span v-if="obj.precentage[4] ">{{obj.precentage[4]}}</span> <span v-else>0</span></div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-4">{{  trans('map.not_bad') }}:</div>
+                                        <div class="col-4">Неплохо:</div>
                                         <div class="col-6">
                                             <span class="round active"></span>
                                             <span class="round active"></span>
@@ -304,7 +303,7 @@
                                         <div class="col-2"><span v-if="obj.precentage[3] ">{{obj.precentage[3]}}</span> <span v-else>0</span></div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-4">{{  trans('map.bad') }}:</div>
+                                        <div class="col-4">Плохо:</div>
                                         <div class="col-6">
                                             <span class="round active"></span>
                                             <span class="round active"></span>
@@ -312,7 +311,7 @@
                                         <div class="col-2" ><span v-if="obj.precentage[2] ">{{obj.precentage[2]}}</span> <span v-else>0</span></div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-4">{{  trans('map.awfully') }}:</div>
+                                        <div class="col-4">Ужасно:</div>
                                         <div class="col-6">
                                             <span class="round active"></span>
                                         </div>
@@ -391,7 +390,7 @@
                                             </div>
                                         </div>
                                         <div class="col">
-                                            {{  trans('map.average_bill') }}: {{obj.avg_cost}}
+                                            Средний чек: {{obj.avg_cost}}
                                         </div>
                                     </div>
                                 </div>
@@ -408,8 +407,7 @@
                             <div class="map">
                                 <google-map name="map" :coord_lat="obj.lat" :coord_lng="obj.lng" :city="null"></google-map>
                                 <div class="show-full">
-                                    <router-link :to="'/onmap' + '?obj=' +obj.id" class="btn">
-                                        {{  trans('map.show_on_map') }}
+                                    <router-link :to="'/onmap' + '?obj=' +obj.id" class="btn">Показать карту
                                         <span class="forward">
                                             <svg version="1.1" id="MAP-arr"xmlns="http://www.w3.org/2000/svg"
                                      xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 143.3 82.3"	 style="enable-background:new 0 0 143.3 82.3;" xml:space="preserve">
@@ -447,7 +445,7 @@
 </svg>
                                         </div>
                                         <div class="gallery open-in-popup" data-number="2">
-                                            <div class="underline">{{  trans('map.fotogallery') }}</div>
+                                            <div class="underline">Фотогалерея</div>
                                             <span class="forward">
                                                 <svg version="1.1" id="back" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                                      x="0px" y="0px" viewBox="0 0 143.3 82.3" style="enable-background:new 0 0 143.3 82.3;" xml:space="preserve">
@@ -463,7 +461,7 @@
                                         <div class="content-club" v-html="obj.content">
                                         </div>
                                         <div class="social">
-                                            {{  trans('map.share') }}:
+                                            поделиться:
                                             <a href="#!">facebook</a>
                                             /
                                             <a href="#!">twitter</a>
@@ -484,7 +482,7 @@
                     <div class="filter-club col-md-8 col-lg-9">
                         <div class="content-club-wrap row justify-content-between">
                             <a class="back-page" v-on:click="allReviews">
-                                {{  trans('map.all_reviews') }}
+                                Все отзывы
                                 <span class="rew">
                                         <svg version="1.1" id="rew" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                              x="0px" y="0px"	 viewBox="0 0 92.8 77.6" style="enable-background:new 0 0 92.8 77.6;" xml:space="preserve">
@@ -503,7 +501,7 @@
                                 </span>
                             </a>
                             <a class="add-location open-in-popup" data-number="3">
-                                {{  trans('map.add_reviews') }}
+                                Добавить отзыв
                                 <span class="add-locate">
                                         <svg version="1.1" id="add" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                              x="0px" y="0px" viewBox="0 0 528.9 530.6" style="enable-background:new 0 0 528.9 530.6;" xml:space="preserve">
@@ -526,7 +524,7 @@
                     <div class="row">
                         <div class="pop-title">
                             <div class="pop-title-inner">
-                                {{  trans('map.add_yammer') }}
+                            Пожаловаться
                             </div>
                         </div>
                         <div class="pop-inner">
@@ -545,7 +543,7 @@
                     <div class="row">
                         <div class="pop-title">
                             <div class="pop-title-inner">
-                                {{  trans('map.fotogallery') }}
+                                Фотогалерея
                             </div>
                         </div>
                         <div class="pop-inner pop-gallery">
@@ -589,13 +587,13 @@
                                 <div class="gallery-description-col">
                                     <div class="gallery-desc">
                                         <div class="gallery-title">"<span></span>"</div>
-                                        <div class="gallery-desc-light "> {{  trans('map.foto_from') }}:</div>
+                                        <div class="gallery-desc-light ">Фотографию представил:</div>
                                         <div class="gallery-desc-bold photographer"></div>
-                                        <div class="gallery-desc-light">{{  trans('map.pub_date') }}:</div>
+                                        <div class="gallery-desc-light">Дата публикации:</div>
                                         <div class="gallery-desc-bold date"></div>
                                     </div>
                                     <div class="gallery-problem">
-                                        <div class="problem-link">{{  trans('map.yammer_foto') }} </div>
+                                        <div class="problem-link">Сообщить о проблеме</div>
                                         <div class="gallery-problem-descr" >
                                             <form method="POST"  v-on:submit.prevent="yammerAdd" id="yammer-galery" v-html="galleryForm">
                                             </form>
@@ -617,7 +615,7 @@
                         <div class="row">
                             <div class="pop-title">
                                 <div class="pop-title-inner">
-
+                                    Написать отзыв
                                 </div>
                             </div>
                             <div class="pop-inner popup-review">
@@ -644,11 +642,11 @@
                                                     {{obj.rating}}
                                                 </div>
                                             </div>
-                                            <div>{{ trans('map.mark') }}<br>{{ trans('map.посетителей') }}</div>
+                                            <div>Оценка<br>посетителей</div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="title-reting"> {{  trans('map.marks') }}</div>
+                                <div class="title-reting">Оценки</div>
                                 <form method="POST"  v-on:submit.prevent="new_Review()"   id="new_Review" v-html="popRewiev">
                                 </form>
                             </div>
@@ -658,6 +656,8 @@
 
             </div>
         <!--end POPUP REVIEW -->
+
+
     </div>
 </template>
 
@@ -684,8 +684,7 @@
         popRewiev: '',
         limitReview:3,
         galleryForm:'',
-        yammerReview:'',
-        lang: document.querySelector('html').getAttribute('lang')
+        yammerReview:''
       }
     },
     metaInfo: {
@@ -715,18 +714,15 @@
     mounted:function () {
       document.body.classList.remove('main-page');
       document.body.classList.remove('white-menu');
-      console.log(this.lang);
-      var urls = this.lang == 'ru' ? '' : '/' + this.lang
-      console.log(urls);
-      axios.get(urls +'/comment-create/' + this.$route.params.alias)
+      axios.get('/comment-create/' + this.$route.params.alias)
         .then(resp => {
           this.popRewiev  = resp.data;
         })
-      axios.get(urls + '/yammer-gallery')
+      axios.get('/yammer-gallery')
         .then(resp => {
           this.galleryForm  = resp.data ;
         })
-      axios.get(urls + '/yammer-review')
+      axios.get('/yammer-review')
         .then(resp => {
           this.yammerReview  = resp.data ;
         })
@@ -750,9 +746,10 @@
       /* новый отзыв */
       new_Review: function (el) {
         $('#new_Review input[name=inst_id]').val(this.obj.id)
+
         $.ajax({
           type: 'POST',
-          url:   "/yammer-review",
+          url:"/comment-create",
           headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },
@@ -781,10 +778,9 @@
       },
       /* новая жалоба на отзыв */
       yammerReviewAdd: function() {
-
         $.ajax({
           type: 'POST',
-          url: "/yammer-review",
+          url:"/yammer-review",
           headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },
@@ -800,7 +796,7 @@
       yammerAdd: function () {
         $.ajax({
           type: 'POST',
-          url:   "/yammer-review",
+          url:"/yammer-gallery",
           headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },

@@ -510,12 +510,12 @@
                                                     </div>
                                                     <div class="col-5">
                                                         <input id="#timepickerFr" type="text"
-                                                               class="form-control timepicker" :placeholder="trans('map.from') ">
+                                                               class="form-control timepicker" placeholder="от">
                                                     </div>
                                                     -
                                                     <div class="col-5">
                                                         <input id="#timepickerTo" type="text"
-                                                               class="form-control timepicker" placeholder="trans('map.till')">
+                                                               class="form-control timepicker" placeholder="до">
                                                     </div>
                                                 </div>
                                             </label>

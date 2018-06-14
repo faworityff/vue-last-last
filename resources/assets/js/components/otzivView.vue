@@ -32,7 +32,7 @@
                             </div>
                             <div class="review-buttons col-auto">
                                 <div class="complain-button row justify-content-end align-items-center">
-                                    <div class="underline open-in-popup" v-on:click="getYammerForm(otz.id)" data-number="5"  :data-id="otz.id">{{ trans('map.add_yammer') }}</div>
+                                    <div class="underline open-in-popup" v-on:click="getYammerForm(otz.id)" data-number="5"  :data-id="otz.id">Пожаловаться</div>
                                     <svg version="1.1" id="complain" xmlns="http://www.w3.org/2000/svg"
                                                                              xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                                                              viewBox="0 0 104.4 104.5" style="enable-background:new 0 0 104.4 104.5;" xml:space="preserve">
@@ -47,7 +47,7 @@
     </svg>
                                 </div>
                                 <div class="answer-button row justify-content-end align-items-center">
-                                    <div class="underline">{{ trans('map.add_answer') }}</div>
+                                    <div class="underline">Ответить</div>
                                     <svg version="1.1" id="add" xmlns="http://www.w3.org/2000/svg"
                                              xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                         viewBox="0 0 528.9 530.6" style="enable-background:new 0 0 528.9 530.6;" xml:space="preserve">
@@ -62,7 +62,7 @@
                     <div class="col-12 review-block answer-block">
                         <form class="row" :id="'addAnswer' + otz.id" v-on:submit.prevent="addAnswer('addAnswer' + otz.id)">
                             <textarea name="content_ru" rows="4"></textarea>
-                            <input class="answer-btn"  type="submit" :value=" trans('map.add_answer') "></input>
+                            <input class="answer-btn"  type="submit" value="Ответить"></input>
                             <input type="hidden" name="rev_id"  :value="otz.id">
                             <input type="hidden" name="inst_id"  :value="obj.id">
                         </form>
@@ -74,7 +74,7 @@
         <div v-if="index < otzLimElse">
             <otziv-view :otz="val" :obj="obj" :otzLimElse="otzLimElse"></otziv-view>
         </div>
-        <div v-else-if="index == otzLimElse"  v-on:click="moreOtzivov" class="more-comments underline">{{ trans('map.show_all_answers') }}</div>
+        <div v-else-if="index == otzLimElse"  v-on:click="moreOtzivov" class="more-comments underline">Показать все ответы</div>
 
     </div>
     </div>

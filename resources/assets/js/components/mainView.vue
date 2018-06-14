@@ -10,7 +10,7 @@
                         <form class="row align-items-end justify-content-between">
                             <div class="input-group-search col-12 col-sm-6 ">
                                 <input list="searchlist" type="search" v-model="input" v-on:input="searchFilter"
-                                       :placeholder="  trans('map.place_place_name') ">
+                                       placeholder="Введите название клуба">
                                 <ul id="searchlist" class="search-list">
                                     <li v-for="point in searched" :val="point['name']">
                                         <router-link :to="'/'+ point.category_slug +'/'+ point.slug">{{ point['name']}}</router-link>
@@ -52,6 +52,7 @@
                                     </svg>
                                 </span>
                             </router-link>
+
                     </div>
                 </div>
                 <div class="big-drug row">
@@ -119,7 +120,7 @@
                     </div>
                     <div class="col-lg-3 col-md-6 col-12 wave-pool">
                         <div class="wave-img">
-                            <img src="/assets/img/drugstore_map/bg-drug/wave-4.png">
+                            <img src="/assets/img/drugstore_map/4-4.png">
                         </div>
                         <div class="wave-btn">{{main['btnLuck']}}</div>
                     </div>
@@ -129,7 +130,7 @@
             <div class="club-section">
                 <div class="club-wrap row justify-content-between">
                     <div class="club-wrap-title row justify-content-center align-items-start">
-                        <div class="">{{ trans('map.recomended') }}</div>
+                        <div class="">Рекомендованные</div>
                     </div>
                     <div class="club-wrap-blocks row" >
                         <div class="club-item col-lg-3 col-6"  v-for="(obj, index) in listRecom" v-if="filtred.limitList > index">
@@ -139,7 +140,7 @@
                 </div>
                 <a  :href="baseHref + 'all?'+recomendHref" class="club-all row align-items-center">
                     <div class="wrap row align-items-center justify-content-end">
-                        {{ trans('map.all_recomended') }}
+                        Все рекомендованные
                         <span class="forward">
                             <svg version="1.1" id="arr-recomnd" xmlns="http://www.w3.org/2000/svg"
                                  xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 143.3 82.3"   style="enable-background:new 0 0 143.3 82.3;" xml:space="preserve">
@@ -156,7 +157,7 @@
             <div class="club-section">
                 <div class="club-wrap row justify-content-between">
                     <div class="club-wrap-title row justify-content-center align-items-start">
-                        <div class="">{{ trans('map.clubs') }}</div>
+                        <div class="">Клубы</div>
                     </div>
                     <div class="club-wrap-blocks row">
                         <div class="club-item col-lg-3 col-6"  v-for="(obj, index) in listClub"   v-if="filtred.limitList > index">
@@ -166,7 +167,7 @@
                 </div>
                 <a :href="baseHref + 'all?'+clubHref"  class="club-all row align-items-center">
                     <div class="wrap row align-items-center justify-content-end">
-                        {{ trans('map.all_clubs') }}
+                        Все клубы
                         <span class="forward">
                             <svg version="1.1" id="arr-all-clb"
                                  xmlns="http://www.w3.org/2000/svg"  x="0px" y="0px" viewBox="0 0 143.3 82.3"
@@ -184,7 +185,7 @@
             <div class="club-section" v-if="seen[0].length">
                 <div class="club-wrap row justify-content-between">
                     <div class="club-wrap-title row justify-content-center align-items-start">
-                        <div class="">{{ trans('map.recently_watched') }}</div>
+                        <div class="">Вы недавно смотрели</div>
                     </div>
                     <div class="club-wrap-blocks row">
                         <div class="club-item col-lg-3 col-6"  v-for="(obj, index) in listSeen"
@@ -201,7 +202,6 @@
 <script>
   import Vue from 'vue'
   import item_vue from '@/components/itemVue';
-
 
   Vue.component('item-vues', item_vue,  {
     props: ['obj','seen','baseHref']
@@ -239,7 +239,6 @@
         limRecomended: 0,
         limClubs:0,
         limWached:0
-
       }
     },
     metaInfo: {

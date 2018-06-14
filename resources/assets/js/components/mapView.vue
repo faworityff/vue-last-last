@@ -92,7 +92,7 @@
                 '</div>\n' +
                 '<div class="club-info-bottom">\n' +
                 '<div class="rating">' + _obj.rating + '</div>\n' +
-                '<div class="review"><span>' + _obj.reviews.length + '</span>'+ trans('map.reviews_get') +'</div>\n' +
+                '<div class="review"><span>' + _obj.reviews.length + '</span> отзывов</div>\n' +
                 '<a href="!#" class="go-club"></a>\n' +
                 '</div>\n' +
                 '</div>\n' +
@@ -282,7 +282,7 @@
                 '</div>\n' +
                 '<div class="club-info-bottom">\n' +
                 '<div class="rating">' + _obj.rating + '</div>\n' +
-                '<div class="review"><span>' + _obj.reviews.length + '</span>'+trans('map.reviews_get') +'</div>\n' +
+                '<div class="review"><span>' + _obj.reviews.length + '</span> отзывов</div>\n' +
                 '<a href="!#" class="go-club"></a>\n' +
                 '</div>\n' +
                 '</div>\n' +

@@ -16,7 +16,7 @@
                                         {{review.author_name}}
                                     </div>
                                     <div class="review-date row">
-                                        {{ getCreated(review.created_at)}}
+                                        <!--{{review.date}}-->
                                     </div>
                                 </div>
                                 <div class="col-auto review-rating">
@@ -39,7 +39,7 @@
                                 <div class="review-buttons col-auto">
                                     <div class="complain-button row justify-content-end align-items-center">
                                         <div class="underline open-in-popup" data-number="5" :data-id="review.id"
-                                             >{{ trans('map.add_yammer') }}</div>
+                                             v-on:click="getYammerForm(review.id)">Пожаловаться</div>
                                         <svg version="1.1" id="complain" xmlns="http://www.w3.org/2000/svg"
                                                                          xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                                                          viewBox="0 0 104.4 104.5" style="enable-background:new 0 0 104.4 104.5;" xml:space="preserve">
@@ -54,7 +54,7 @@
 </svg>
                                     </div>
                                     <div class="answer-button row justify-content-end align-items-center">
-                                        <div class="underline">{{ trans('map.add_answer') }}</div>
+                                        <div class="underline">Ответить</div>
                                         <svg version="1.1" id="add" xmlns="http://www.w3.org/2000/svg"
                                                                          xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                                                          viewBox="0 0 528.9 530.6" style="enable-background:new 0 0 528.9 530.6;" xml:space="preserve">
@@ -69,7 +69,7 @@
                         <div class="col-12 review-block answer-block">
                             <form class="row" :id="'addAnswer' + review.id" v-on:submit.prevent="addAnswer('addAnswer' + review.id)">
                                 <textarea name="content_ru" rows="4"></textarea>
-                                <input class="answer-btn"  type="submit" :value=" trans('map.add_answer') "></input>
+                                <input class="answer-btn"  type="submit" value="Ответить"></input>
                                 <input type="hidden" name="rev_id"  :value="review.id">
                                 <input type="hidden" name="inst_id"  :value="obj.id">
                             </form>
@@ -81,7 +81,7 @@
                 <div v-if="index < limitComment">
                     <otziv-view :otz="otz" :obj="obj" :otzLim="otzLim"></otziv-view>
                 </div>
-                <div v-else-if="index == limitComment"   v-on:click="moreOtzivov" class="more-comments underline">{{ trans('map.show_all_answers') }}</div>
+                <div v-else-if="index == limitComment"   v-on:click="moreOtzivov" class="more-comments underline">Показать все ответы</div>
             </div>
 
         </div>
@@ -107,11 +107,8 @@
         }
     },
     methods: {
-      getCreated: function (t) {
-        var loc = $('html').attr('lang')
-        var date = new Date(t);
-        var options = { day: '2-digit',month: 'long' , year: 'numeric' };
-        return date.toLocaleDateString(loc, options)
+      getYammerForm: function (ids) {
+
       },
       moreOtzivov: function () {
         this.limitComment = this.limitComment ? 0 : 1000;

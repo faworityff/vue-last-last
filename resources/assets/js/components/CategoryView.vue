@@ -3,7 +3,7 @@
         <div class="club-top-nav club-all">
             <div class="wrap row align-items-center justify-content-between">
                 <a class="back-page" v-on:click="goBack">
-                    {{ trans('map.go_back') }}
+                    Назад
                     <span class="forward">
                         <svg version="1.1" id="back"
                              xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 143.3 82.3"
@@ -29,7 +29,7 @@
                             </g>
                     </svg>
                 </span>
-                    {{ trans('map.add_location') }}
+                    Добавить локацию
                     <span class="add-locate">
                         <svg version="1.1" id="add" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                  viewBox="0 0 528.9 530.6" style="enable-background:new 0 0 528.9 530.6;" xml:space="preserve">
@@ -44,7 +44,7 @@
         <div class="club-section">
             <div class="club-wrap row justify-content-between">
                 <div class="club-wrap-title row justify-content-center align-items-start">
-                    <div class="">{{ trans('map.search_location') }}</div>
+                    <div class="">Поиск локации</div>
                 </div>
                 <div class="club-wrap-blocks row">
                     <!--FILTERS-->
@@ -53,7 +53,7 @@
                             <google-map name="map" :coord_lat="objcts[0].lat" :coord_lng="objcts[0].lng" :city="city"></google-map>
                             <div class="show-full">
                                 <router-link :to="'onmap' + '?state=' + JSON.stringify(this.filtred)" class="btn">
-                                    {{ trans('map.show_on_map') }}
+                                    Показать карту
                                     <span class="forward">
                                         <svg version="1.1" id="MAP-arr"
                                              xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 143.3 82.3"
@@ -127,7 +127,7 @@
                                                 {{subcategory.name}}
                                             </label>
                                         </div>
-                                        <div class="additional-marks">{{ trans('map.with_markers') }}</div>
+                                        <div class="additional-marks">С метками</div>
                                         <div class="form-check" v-for="oneMark in value.marks">
                                             <input class="form-check-input" type="checkbox" name="exampleRadios1-1"
                                                    :id="'mark_'+oneMark['id']" :value="oneMark['id']"
@@ -162,7 +162,7 @@
                                                 </g>
                                             </svg>
                                     </span>
-                                        {{ trans('map.work_time') }}<span class="arr"></span>
+                                        Время работы<span class="arr"></span>
                                     </div>
                                 </div>
                                 <div id="collapse6" class="collapse show" aria-labelledby="heading6">
@@ -171,7 +171,7 @@
                                             <input class="form-check-input" type="checkbox" name="exampleRadios6"
                                                    id="exampleRadios6-1" value="option6-1">
                                             <label class="form-check-label" for="exampleRadios6-1">
-                                                {{ trans('map.now_open') }}
+                                                Открыто сейчас
                                             </label>
                                         </div>
                                         <div class="form-check">
@@ -182,7 +182,7 @@
 
                                                 <div class="row">
                                                     <div class="col-12">
-                                                        {{ trans('map.when_work') }}:
+                                                        По времени работы:
                                                     </div>
                                                     <div class="col-5">
                                                         <input id="timepickerFr" type="text"
@@ -193,7 +193,7 @@
                                                         <input id="timepickerTo" type="text"
                                                                class="form-control timepicker" placeholder="до"  value="">
                                                     </div>
-                                                    <button v-on:click="timeChangeFrom" class="btn btn-black">{{ trans('map.select') }}</button>
+                                                    <button v-on:click="timeChangeFrom" class="btn btn-black">Выбрать</button>
                                                 </div>
                                             </label>
                                         </div>
@@ -216,7 +216,7 @@
                                             </g>
                                         </svg>
                                     </span>
-                                        {{ trans('map.recomended_adm_site') }}<span class="arr"></span>
+                                        Рекомендовано администрацией сайта<span class="arr"></span>
                                     </div>
                                 </div>
                                 <div id="collapse7" class="collapse show" aria-labelledby="heading7">
@@ -226,7 +226,7 @@
                                                    id="exampleRadios7-1" value="option7-1"  :checked="recomend == 'true'">
                                             <label class="form-check-label" for="exampleRadios7-1"
                                                    v-on:click="recomendFilterObj()">
-                                                {{ trans('map.yes') }}
+                                                Да
                                             </label>
                                         </div>
                                     </div>
@@ -249,7 +249,7 @@
                                             </g>
                                         </svg>
                                     </span>
-                                        {{ trans('map.search_by_district') }}<span class="arr"></span>
+                                        Поиск по району<span class="arr"></span>
                                     </div>
                                 </div>
                                 <div id="collapse8" class="collapse show" aria-labelledby="heading8">
@@ -281,7 +281,7 @@
 </g>
 </svg>
                                     </span>
-                                        {{ trans('map.early_selected') }}<span class="arr"></span>
+                                        Ранее избранные<span class="arr"></span>
                                     </div>
                                 </div>
                                 <div id="collapse9" class="collapse show" aria-labelledby="heading9">
@@ -290,7 +290,7 @@
                                             <input class="form-check-input" type="checkbox" name="exampleRadios9"
                                                    id="exampleRadios9-1" value="option9-1" :checked="faworite == true" v-on:click="faworiteShow()">
                                             <label class="form-check-label" for="exampleRadios9-1">
-                                                {{ trans('map.yes') }}
+                                                Да
                                             </label>
                                         </div>
                                     </div>
@@ -332,7 +332,7 @@
                                             <path d="M75.7,80.4c-0.6-4.3-2.5-6.8-7-7.3c4.6,0,6.4-2.6,6.6-7.5c1.9,6.3,1.9,6.3,7.7,7.7C78.3,74,75.1,75.4,75.7,80.4z"/>
                                         </svg>
                                     </span>
-                                        {{ trans('map.common_mark') }}
+                                        {{value['name']}}
                                         <span class="arr"></span>
                                     </div>
                                 </div>
@@ -348,7 +348,7 @@
                                                 {{subcategory.name}}
                                             </label>
                                         </div>
-                                        <div class="additional-marks">{{ trans('map.with_markers') }}</div>
+                                        <div class="additional-marks">С метками</div>
                                         <div class="form-check" v-for="oneMark in value.marks">
                                             <input class="form-check-input" type="checkbox" name="exampleRadios1-1"
                                                    :id="'mark_'+oneMark['id']" :value="oneMark['id']"
@@ -393,7 +393,7 @@
              <!--показать еще -->
             <a href="!#" class="club-all row alignl-center border-b-mob" v-on:click="showMore">
                 <div class="add-more wrap row align-items-center justify-content-center" >
-                    {{ trans('map.load_more') }}
+                    Загрузить еще
                     <span>
                          <svg version="1.1" id="more" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                              viewBox="0 0 54.9 55" style="enable-background:new 0 0 54.9 55;" xml:space="preserve">
@@ -428,6 +428,7 @@
 
   var city = window.$cookies.isKey('city') ? window.$cookies.get('city') : 'Київ';
   window.$cookies.set('city', city, Infinity, '/map');
+console.log(city);
   var country = 'Украина';
 
   Object.defineProperty(Object.prototype, 'length', {
@@ -466,7 +467,6 @@
       ]
     },
     created: function () {
-
       if(window.location.search.search('state=') >= 0){
         var  h = window.location.search.split('&')
         for (var i = 0; i < h.length; i++){
@@ -491,9 +491,6 @@
     mounted() {
       document.body.classList.remove('main-page');
       document.body.classList.remove('white-menu');
-      // this.$route.history = []
-      // this.$route.history.push(this.$route.path)
-
     },
     computed: {
       objctsGet: function () {
@@ -611,9 +608,13 @@
           var time_from = this.getTimeStamp(this.filtred.time_from);
           var time_till = this.getTimeStamp(this.filtred.time_till);
           if (time_from > time_till) {
+            // time_till = new Date(time_till).setDate((new Date(time_till)).getDate() + 1)
             if (shedule_from > shedule_till ) {
+              console.log(shedule_till, 'dsfsfds');
               shedule_till = new Date(shedule_till).setDate((new Date(shedule_till)).getDate() + 1);
               if (shedule_till > time_from ) {
+                console.log(shedule_till > time_from , shedule_till , time_from);
+                console.log( '1' , this.objcts[this.obj].name, new Date(shedule_till), new Date(time_from))
                 return true;
               }
             }else {
@@ -623,6 +624,7 @@
                 shedule_from =  this.getTimeStamp(shedule_from);
                 shedule_from = new Date(shedule_from).setDate((new Date(shedule_from)).getDate() + 1);
                 if (shedule_from < time_till ) {
+                  console.log( '2' , this.objcts[this.obj].name, new Date(shedule_from), new Date(time_till))
 
                   return true;
                 }
@@ -630,6 +632,7 @@
             }
             }else{
                 if (shedule_till > time_till ) {
+                  console.log( '3' , this.objcts[this.obj].name, new Date(shedule_till), new Date(time_till))
                   return true;
                 }
             }
@@ -661,6 +664,7 @@
       filtersubFilter: function (k) {
         this.cities = this.location[country];
 
+        console.log('this.filtred---', this.filtred);
         var day = new Date()
             day = day.getDay()
         this.filtred.shown = 0
@@ -719,10 +723,8 @@
             }
         }
        this.pushState()
-
-
-        // console.log('this.filtred', this.filtred);
-        // console.log('this.objcts', this.objcts);
+        console.log('this.filtred', this.filtred);
+        console.log('this.objcts', this.objcts);
         this.$forceUpdate();
         setTimeout(function () {
           restartClub()

@@ -6,6 +6,7 @@
 
   import axios from 'axios';
 
+
   export default {
     props: ['name', 'city', 'coord_lat', 'coord_lng', 'objctsAll'],
     data: function () {
@@ -19,7 +20,6 @@
       objctsAll(val, oldval) { this.changeMarkers()  }
     },
     mounted: function () {
-      console.log(this.objctsAll, '-objctsAll');
         this.beforeCreateMap()
     },
     methods: {

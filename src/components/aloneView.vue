@@ -677,7 +677,7 @@
 
 
   export default {
-    props: ['objcts','seen'],
+    props: ['objcts', 'seen', 'main'],
     data() {
       return {
         obj: {},
@@ -685,39 +685,54 @@
         limitReview:3,
         galleryForm:'',
         yammerReview:'',
-        lang: document.querySelector('html').getAttribute('lang')
+        lang: document.querySelector('html').getAttribute('lang'),
+        title:'',
+        description:'',
+        keywords: '',
+        text:'',
+        og_title:'',
+        og_image:'',
+        og_description:'',
       }
     },
-    metaInfo: {
-      title: 'Default Title',
-      titleTemplate: '%s | My Awesome Webapp',
-      link: [
-        {rel: 'stylesheet', href: '/assets/css/map/club.css'},
-        {rel: 'stylesheet', href: '/assets/css/map/responsive.css'},
-        // { rel: 'favicon', href: 'favicon.ico' }
-      ],
-      script: [
-        {src: '//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js', type: 'text/javascript', body: true},
-        {src: 'https://sova.j2landing.com/assets/js/map/sliders.js', type: 'text/javascript', body: true},
-        {src: 'https://sova.j2landing.com/assets/js/map/jquery.scrollTo-min.js', type: 'text/javascript', body: true},
-      ]
+    beforeMount: function () {
+        this.getSeo()
     },
-    created: function () {
-      var objName = this.$route.params.alias
-      for (this.objs in this.objcts) {
-        if (this.objcts[this.objs].slug == objName) {
-          this.obj = this.objcts[this.objs]
-          console.log(this.objcts[this.objs]);
+    watch: {
+      '$route'(to, from) {
+        if(to.path != from.path) {
+          this.getSeo()
         }
       }
-
+    },
+    metaInfo () {
+      return {
+        title: this.title ,
+        titleTemplate: '%s',
+        meta: [
+          { vmid: 'description', name: 'description', content: this.description },
+          { vmid: 'keywords', name: 'keywords', content: this.keywords },
+          { vmid: 'text', name: 'text', content: this.text },
+          { vmid: 'og:title', name: 'og:title', content: this.og_title },
+          { vmid: 'og:image', name: 'og:image', content: this.og_image },
+          { vmid: 'og:description', name: 'og:description', content: this.og_description },
+        ],
+        link: [
+          {rel: 'stylesheet', href: '/assets/css/map/club.css'},
+          {rel: 'stylesheet', href: '/assets/css/map/responsive.css'},
+          // { rel: 'favicon', href: 'favicon.ico' }
+        ],
+        script: [
+          {src: '//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js', type: 'text/javascript', body: true},
+          {src: 'https://sova.j2landing.com/assets/js/map/sliders.js', type: 'text/javascript', body: true},
+          {src: 'https://sova.j2landing.com/assets/js/map/jquery.scrollTo-min.js', type: 'text/javascript', body: true},
+        ]
+      }
     },
     mounted:function () {
       document.body.classList.remove('main-page');
       document.body.classList.remove('white-menu');
-      console.log(this.lang);
       var urls = this.lang == 'ru' ? '' : '/' + this.lang
-      console.log(urls);
       axios.get(urls +'/comment-create/' + this.$route.params.alias)
         .then(resp => {
           this.popRewiev  = resp.data;
@@ -737,9 +752,35 @@
     },
 
     methods: {
-      getYammerForm: function (ids) {
+      getSeo: function() {
+        var objName = this.$route.params.alias
+        for (this.objs in this.objcts) {
+          if (this.objcts[this.objs].slug == objName) {
+            this.obj = this.objcts[this.objs];
+            console.log(this.obj);
 
-      },
+            if( this.main['seo'] != null) {
+              this.title =  this.obj.name+' | ' + this.main.base_name
+              this.description = this.main.seo.seo_description != null ? this.main.seo.seo_description : this.description;
+              this.keywords = this.main.seo.seo_keywords != null ? this.main.seo.seo_keywords : this.keywords;
+              this.text = this.main.seo.seo_text != null ? this.main.seo.seo_text : this.text;
+              this.og_title = this.main.seo.og_title != null ? this.main.seo.og_title : this.og_title;
+              this.og_image = this.main.seo.og_image != null ? this.main.seo.og_image : this.og_image;
+              this.og_description = this.main.seo.og_description != null ? this.main.seo.og_description : this.og_description;
+
+            }
+            if(this.obj['seo'] != null) {
+              this.title = this.obj.seo.seo_title != null ? this.obj.seo.seo_title  : this.obj.name+' | ' + this.main.base_name;
+              this.description = this.obj.seo.seo_description != null  ? this.obj.seo.seo_description : this.description;
+              this.keywords = this.obj.seo.seo_keywords != null  ? this.obj.seo.seo_keywords : this.keywords;
+              this.text = this.obj.seo.seo_text != null  ? this.obj.seo.seo_text : this.text;
+              this.og_title = this.obj.seo.og_title != null  ? this.obj.seo.og_title : this.og_title;
+              this.og_image = this.obj.seo.og_image != null  ? this.obj.seo.og_image : this.og_image;
+              this.og_description = this.obj.seo.og_description != null  ? this.obj.seo.og_description : this.og_description;
+            }
+          }
+        }
+       },
       /* ПЕРЕВОДИМ ДАТУ */
       getCreated: function (t) {
         var loc = $('html').attr('lang')

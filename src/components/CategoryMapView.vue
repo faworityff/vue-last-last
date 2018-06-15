@@ -414,14 +414,12 @@
  })
 
  var seen = window.$cookies.isKey('seenseen') ? JSON.parse(window.$cookies.get('seen')) : {0:[]};
-
- var city = window.$cookies.isKey('city') ? window.$cookies.get('city') : 'Київ';
- window.$cookies.set('city', city, Infinity, '/map');
- console.log(city);
+ var city = window.$cookies.isKey('city_default') ? window.$cookies.get('city_default') : window.$cookies.isKey('city') ? window.$cookies.get('city') : 'Київ';
+ window.$cookies.set('city', city, Infinity, '/');
  var country = 'Украина';
 
  export default {
-   props: ['objcts', 'filtred', 'categories', 'location', 'baseHref'],
+   props: ['objcts', 'filtred', 'categories', 'location', 'baseHref', 'main'],
    data() {
      return {
        faworite: false,
@@ -435,22 +433,35 @@
        searched: '',
        searchedMark: '',
        searchedCategory: '',
-       z:0
+       z:0,
+       title:'',
+       description:'',
+       keywords: '',
+       text:'',
+       og_title:'',
+       og_image:'',
+       og_description:'',
      }
    },
-   metaInfo: {
-     title: 'Default Title',
-     titleTemplate: '%s | My Awesome Webapp',
-     link: [
-       {rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css'},
-       {rel: 'stylesheet', href: '/assets/css/map/club.css'},
-       {rel: 'stylesheet', href: '/assets/css/map/search.css'},
-       {rel: 'stylesheet', href: '/assets/css/map/responsive.css'},
-       // { rel: 'favicon', href: 'favicon.ico' }
-     ],
-     script: [
-       // { src: 'https://45.j2landing.com/DrugStoreMap/js/main-page.js', type: 'text/javascript', body: true },
-     ]
+   metaInfo () {
+     return {
+       title: this.title,
+       titleTemplate: '%s',
+       meta: [
+         {vmid: 'description', name: 'description', content: this.description},
+         {vmid: 'keywords', name: 'keywords', content: this.keywords},
+         {vmid: 'text', name: 'text', content: this.text},
+         {vmid: 'og:title', name: 'og:title', content: this.og_title},
+         {vmid: 'og:image', name: 'og:image', content: this.og_image},
+         {vmid: 'og:description', name: 'og:description', content: this.og_description},
+       ],
+       link: [
+         {rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css'},
+         {rel: 'stylesheet', href: '/assets/css/map/club.css'},
+         {rel: 'stylesheet', href: '/assets/css/map/search.css'},
+         {rel: 'stylesheet', href: '/assets/css/map/responsive.css'},
+       ],
+     }
    },
    created: function () {
      if(window.location.search.search('state=') >= 0){
@@ -487,13 +498,36 @@
      }
      if(this.filtred.city != '' ){
        this.city = this.filtred.city
-       window.$cookies.set('city', this.city, Infinity, '/map');
+       window.$cookies.set('city', this.city, Infinity, '/');
      }else {
        this.filtred.city = this.city
      }
      this.createFilterObject()
    },
    mounted() {
+     for (var categ in this.categories) {
+       if(categ == this.$route.path.slice(1, this.$route.path.length)) {
+         if( this.main['seo'] != null) {
+           this.title =  this.categories[categ].name+' | ' + this.main.base_name
+           this.description = this.main.seo.seo_description != null ? this.main.seo.seo_description : this.description;
+           this.keywords = this.main.seo.seo_keywords != null ? this.main.seo.seo_keywords : this.keywords;
+           this.text = this.main.seo.seo_text != null ? this.main.seo.seo_text : this.text;
+           this.og_title = this.main.seo.og_title != null ? this.main.seo.og_title : this.og_title;
+           this.og_image = this.main.seo.og_image != null ? this.main.seo.og_image : this.og_image;
+           this.og_description = this.main.seo.og_description != null ? this.main.seo.og_description : this.og_description;
+
+         }
+         if(this.obj['seo'] != null) {
+           this.title = this.categories[categ].seo.seo_title != null ? this.categories[categ].seo.seo_title  : this.categories[categ].name +' | ' + this.main.base_name;
+           this.description = this.categories[categ].seo.seo_description != null  ?this.categories[categ].seo.seo_description : this.description;
+           this.keywords = this.categories[categ].seo.seo_keywords != null  ? this.categories[categ].seo.seo_keywords : this.keywords;
+           this.text = this.categories[categ].seo.seo_text != null  ? tthis.categories[categ].seo.seo_text : this.text;
+           this.og_title = this.categories[categ].seo.og_title != null  ? this.categories[categ].seo.og_title : this.og_title;
+           this.og_image = this.categories[categ].seo.og_image != null  ? this.categories[categ].seo.og_image : this.og_image;
+           this.og_description = this.categories[categ].seo.og_description != null  ? this.categories[categ].seo.og_description : this.og_description;
+         }
+       }
+     }
      document.body.classList.remove('main-page');
      document.body.classList.remove('white-menu');
    },
@@ -555,7 +589,7 @@
 
      },
      newCity: function () {
-       window.$cookies.set('city', this.city, Infinity, '/map');
+       window.$cookies.set('city', this.city, Infinity, '/');
        this.filtred.city = this.city
        this.filtersubFilter()
      },

@@ -24,7 +24,7 @@
                                 </ul>
                             </div>
                             <div class="input-group-select col-9 col-sm-4">
-                                <select class="" v-model="city" v-on:change="newCity">
+                                <select class="" v-model="city" >
                                     <option v-for="(value, key ) in cities" :value="key" :selected="key == city">{{key}}</option>
                                 </select>
                             </div>
@@ -209,9 +209,10 @@
   var seen = window.$cookies.isKey('seen') ? JSON.parse(window.$cookies.get('seen')) : {0:[]};
   var lang = document.querySelector('html').getAttribute('lang');
   var country = 'Украина';
-  var city = window.$cookies.isKey('city') ? window.$cookies.get('city') : 'Київ';
+  var city = window.$cookies.isKey('city_default') ? window.$cookies.get('city_default') : window.$cookies.isKey('city') ? window.$cookies.get('city') : 'Київ';
 
-  window.$cookies.set('city', city, Infinity, '/map');
+  window.$cookies.set('city', city, Infinity, '/');
+
   export default {
     input: '',
     lang: lang,
@@ -238,23 +239,48 @@
         listSeen: [],
         limRecomended: 0,
         limClubs:0,
-        limWached:0
+        limWached:0,
+        title:'',
+        description:'',
+        keywords: '',
+        text:'',
+        og_title:'',
+        og_image:'',
+        og_description:'',
 
       }
     },
-    metaInfo: {
-      title: 'Default Title',
-      titleTemplate: '%s | My Awesome Webapp',
-      link: [
-        { rel: 'stylesheet', href: '/assets/css/map/main-page.css' },
-        { rel: 'stylesheet', href: '/assets/css/map/responsive.css' },
-        // { rel: 'favicon', href: 'favicon.ico' }
-      ],
-      script: [
-        { src: 'https://sova.j2landing.com/assets/js/map/main-page.js', type: 'text/javascript', body: true },
-      ]
+    watch: {
+      '$route'(to, from) {
+        if(to.path != from.path) {
+          this.getSeo()
+        }
+      }
+    },
+    metaInfo () {
+      return {
+        title: this.title,
+        titleTemplate: '%s',
+        meta: [
+          {vmid: 'description', name: 'description', content: this.description},
+          {vmid: 'keywords', name: 'keywords', content: this.keywords},
+          {vmid: 'text', name: 'text', content: this.text},
+          {vmid: 'og:title', name: 'og:title', content: this.og_title},
+          {vmid: 'og:image', name: 'og:image', content: this.og_image},
+          {vmid: 'og:description', name: 'og:description', content: this.og_description},
+        ],
+        link: [
+          {rel: 'stylesheet', href: '/assets/css/map/main-page.css'},
+          {rel: 'stylesheet', href: '/assets/css/map/responsive.css'},
+          // { rel: 'favicon', href: 'favicon.ico' }
+        ],
+        script: [
+          {src: 'https://sova.j2landing.com/assets/js/map/main-page.js', type: 'text/javascript', body: true},
+        ]
+      }
     },
     computed: {
+
       getNeedle: function () {
         return this.needle;
       },
@@ -265,6 +291,7 @@
       },
     },
     mounted() {
+      this.getSeo()
       document.body.classList.add('main-page');
       document.body.classList.add('white-menu');
       this.creatingSorting()
@@ -275,6 +302,20 @@
     },
 
     methods: {
+      getSeo: function () {
+          if(this.main.title != null) {
+            this.title =   this.main.title+' | ' + this.main.base_name
+          }
+          if( this.main['seo'] != null) {
+            this.title =  this.main.seo.seo_title != null ? this.main.seo.seo_title  : this.title;
+            this.description = this.main.seo.seo_description != null ? this.main.seo.seo_description : this.description;
+            this.keywords = this.main.seo.seo_keywords != null ? this.main.seo.seo_keywords : this.keywords;
+            this.text = this.main.seo.seo_text != null ? this.main.seo.seo_text : this.text;
+            this.og_title = this.main.seo.og_title != null ? this.main.seo.og_title : this.og_title;
+            this.og_image = this.main.seo.og_image != null ? this.main.seo.og_image : this.og_image;
+            this.og_description = this.main.seo.og_description != null ? this.main.seo.og_description : this.og_description;
+          }
+      },
       getHref: function (ids, el) {
         return '/all?state={"'+el+'":['+ids+']}'
       },
@@ -342,13 +383,7 @@
         this.limWached  = this.limWached + 1
         return true
       },
-      newCity: function () {
-      //   window.$cookies.set('city', this.city, Infinity, '/map');
-      //   this.creatingSorting()
-      //   setTimeout(function () {
-      //     restartClub();
-      //   }, 50)
-      }
+
     },
 
   };

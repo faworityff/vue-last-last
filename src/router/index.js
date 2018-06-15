@@ -4,7 +4,7 @@ import Meta from 'vue-meta';
 import VueCookies from 'vue-cookies'
 import axios from 'axios';
 import _  from 'lodash';
-
+import createHistory from 'history/createBrowserHistory';
 import mainView from '@/components/mainView';
 import categoryView from '@/components/categoryView';
 import categoryMapView from '@/components/CategoryMapView';
@@ -17,14 +17,16 @@ Vue.use(VueCookies)
 /* получаем данные */
 var router;
 const inst = JSON.parse(window.loc_obj);
+const history = createHistory();
+
 Vue.prototype.trans = (string, args) => {
   let value = _.get(window.i18n, string);
-
   _.eachRight(args, (paramVal, paramKey) => {
     value = _.replace(value, `:${paramKey}`, paramVal);
   });
   return value;
 };
+
 var lang = document.querySelector('html').getAttribute('lang');
 var baseHref = inst.main.base_href.slice(inst.main.base.length, inst.main.base_href.length) + '/';
 var lang = document.querySelector('html').getAttribute('lang');
@@ -33,25 +35,23 @@ const mainViews = mainView;
 const categoryViews = categoryView;
 const categoryMapViews = categoryMapView;
 const aloneViews = aloneView;
-if(lang != 'ru') {
-   baseHref = '/' +lang + baseHref;
-}
 
 var seen = window.$cookies.isKey('seen') ? JSON.parse(window.$cookies.get('seen')) : {0:[]};
-
-// console.log(inst);
-
-
 var routsArr = document.querySelectorAll('router-link');
 var routsObjArr = [];
 var routsSubObjArr = [];
 var filtred=[]
 var z =0;
+
+if(lang != 'ru') {
+   baseHref = '/' +lang + baseHref;
+}
+console.log(inst);
+
 // console.log(routsArr);
 /* при старте получаем все фильтры в исходном положении */
 for (var cateObj  in  inst.category) {
   var VRegExp = new RegExp(/\/+/g);
-
   filtred[z] = {sub:[],mark:[],slug:[],category_id:[],district:[], time_from:'', time_till:'', limitList:11,shown:0,city:''};
   filtred[z].slug.push(routsArr[z].getAttribute('to').replace(VRegExp, ''))
   filtred[z].category_id.push(+routsArr[z].getAttribute('data-id'))
@@ -82,7 +82,7 @@ routsObjArr[0] = {
 routsObjArr[routsArr.length+1] = {
   path: '/onmap',
   component: categoryMapViews,
-  props: { objcts: inst.objects,  categories: inst.category, filtred: filtred[routsArr.length], location: inst.location, baseHref:baseHref},
+  props: { objcts: inst.objects,  main: inst.main, categories: inst.category, filtred: filtred[routsArr.length], location: inst.location, baseHref:baseHref},
 }
 
 /* routs категорий */
@@ -94,7 +94,7 @@ for (var i = 1; i < routsArr.length ; i++) {
         document.body.classList.remove('main-page');
         document.body.classList.remove('white-menu');
       },
-      props: { objcts: inst.objects, categories: inst.category,  filtred: filtred[i], location: inst.location,baseHref:baseHref},
+      props: { objcts: inst.objects, categories: inst.category, main: inst.main, filtred: filtred[i], location: inst.location,baseHref:baseHref},
     }
 }
 /* routs одного заведения */
@@ -103,7 +103,7 @@ for (var i = 1; i < routsArr.length; i++) {
     path: routsArr[i].getAttribute('to') + '/:alias',
     name: 'category',
     component: aloneViews,
-    props: { objcts: inst.objects},
+    props: { objcts: inst.objects, main: inst.main},
   }
   routsObjArr.push(routsSubObjArr[i])
 }

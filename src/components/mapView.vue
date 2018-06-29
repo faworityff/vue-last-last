@@ -1,11 +1,11 @@
 <template>
     <div class="google-map" :id="mapName"></div>
 </template>
+//todo километры в попапе
 
 <script>
 
   import axios from 'axios';
-
 
   export default {
     props: ['name', 'city', 'coord_lat', 'coord_lng', 'objctsAll'],
@@ -13,7 +13,8 @@
       return {
         mapName: this.name,
         map: null,
-        markers: []
+        markers: [],
+        curObj:''
       }
     },
     watch: {
@@ -47,7 +48,7 @@
         this.markers = [];
         this.map.setCenter({lat: this.objctsAll[0].lat, lng: this.objctsAll[0].lng})
         var drugMap = {
-          url: 'http://45.j2landing.com/DrugStoreMap/img/main/location-map2.svg',
+          url: '/assets/img/drugstore_map/main/location-map2.svg',
           scaledSize: new google.maps.Size(50, 50),
           origin: new google.maps.Point(0, 0),
           anchor: new google.maps.Point(20, 40)
@@ -78,6 +79,7 @@
                 'background': 'transparent'
               });
             });
+
             google.maps.event.addListener(marker, 'click', function () {
               infowindow.close(); // Close previously opened infowindow
               infowindow.setContent('<div id="infowindow">\n' +
@@ -92,8 +94,8 @@
                 '</div>\n' +
                 '<div class="club-info-bottom">\n' +
                 '<div class="rating">' + _obj.rating + '</div>\n' +
-                '<div class="review"><span>' + _obj.reviews.length + '</span>'+ trans('map.reviews_get') +'</div>\n' +
-                '<a href="!#" class="go-club"></a>\n' +
+                '<div class="review"><span>' + _obj.reviews.length + '</span>'+ 222+'</div>\n' +
+                '<router-link :href="_obj.slug +\'/\'+_obj.alias" class="go-club"></router-link>\n' +
                 '</div>\n' +
                 '</div>\n' +
                 '</div>');
@@ -278,23 +280,28 @@
                 '<div class="name">' + _obj.name + '</div>\n' +
                 '<div class="address">' + _obj.city + ' ' + _obj.street + ' ' +  _obj.flat + '</div>\n' +
                 '</div>\n' +
-                '<div class="km">1.7km</div>\n' +
                 '</div>\n' +
                 '<div class="club-info-bottom">\n' +
                 '<div class="rating">' + _obj.rating + '</div>\n' +
-                '<div class="review"><span>' + _obj.reviews.length + '</span>'+trans('map.reviews_get') +'</div>\n' +
-                '<a href="!#" class="go-club"></a>\n' +
+                '<div class="review"><span>' + _obj.reviews.length + '</span>'+ 2223 +'</div>\n' +
+                '<a href="'+_obj.category_slug +'/'+_obj.slug+'"  class="go-club"></a>\n' +
                 '</div>\n' +
                 '</div>\n' +
                 '</div>');
               infowindow.open(this.map, marker);
             });
+
+
           }
         }
         setTimeout(function () {
           hMap();
         }, 50)
+      },
+      clickTo:function (n) {
+        router.go(n)
       }
+
     }
   }
 </script>

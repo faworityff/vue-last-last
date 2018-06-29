@@ -1,5 +1,5 @@
 <template>
-    <router-link :to=" obj.category_slug +'/'+ obj.slug" v-on:click="clickItem(obj.id)" class="one-club">
+    <router-link :to=" obj.category_slug +'/'+ obj.slug" data-v="fdf"  class="one-club">
         <div class="club-block row">
             <div class="clone-img"></div>
             <div class="club-arr"></div>
@@ -53,21 +53,12 @@
 </template>
 <script>
 
-  var seen = window.$cookies.isKey('seen') ? JSON.parse(window.$cookies.get('seen')) : {0: []};
   export default {
+
     props: ['obj', 'baseHref'],
     data: function () {
       return {
-        seen: seen
       }
     },
-    methods: {
-      clickItem: function (a) {
-        if (this.seen[0].indexOf(a) < 0) {
-          this.seen[0].push(a)
-          window.$cookies.set('seen', JSON.stringify(this.seen), Infinity, '/map');
-        }
-      }
-    }
   }
 </script>

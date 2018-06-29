@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div class="club-content container-fluid m-top">
+    <div v-if="seenLoaded()">
+        <div class="club-content container-fluid club-inside m-top ">
             <div class="club-top-nav club-all">
                 <div class="wrap row align-items-center justify-content-between">
                     <a v-on:click="goBack" class="back-page">
@@ -17,7 +17,7 @@
                          </span>
                     </a>
                     <a href="/inst-create" class="add-location">
-                         {{ trans('map.add_location') }}
+                        {{ trans('map.add_location') }}
                         <span class="location-pin">
                             <svg version="1.1" id="add-loc" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
              viewBox="0 0 43.8 51.4" style="enable-background:new 0 0 43.8 51.4;" xml:space="preserve">
@@ -44,7 +44,7 @@
             <div class="club-section">
                 <div class="club-wrap row justify-content-between">
                     <div class="club-wrap-title mob-here-block row justify-content-center align-items-start">
-                        <div class="title-navigation">
+                        <div class="title-navigation navigation-club">
                             <a href="#review"> {{ trans('map.reviews') }}</a>
                             <a href="#map">{{ trans('map.on_map') }}</a>
                             <a href="#profile">{{ trans('map.purview') }}</a>
@@ -113,13 +113,18 @@
                                     </div>
                                     <!--todo добавить в рассписание дни недели-->
                                     <div class="col club-work-time" v-if="obj.isEveryDay == true">
-                                        <div>{{  trans('map.everyday') }} : {{obj.schedule[1].start}} - {{obj.schedule[1].end}}</div>
+                                        <div>{{ trans('map.everyday') }} : {{obj.schedule[1].start}} -
+                                            {{obj.schedule[1].end}}
+                                        </div>
                                     </div>
                                     <div class="col club-work-time" v-else>
-                                        <div v-for="(sh, index) in obj.schedule">{{  trans('map.days_short.d' + (index - 1)) }} : {{sh.start }} - {{sh.end}} {{index}}</div>
+                                        <div v-for="(sh, index) in obj.schedule">{{ trans('map.days_short.d' + (index -
+                                            1)) }} : {{sh.start }} - {{sh.end}} {{index}}
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="club-params row align-items-start justify-content-start" v-if="obj.district || obj.street || obj.flat">
+                                <div class="club-params row align-items-start justify-content-start"
+                                     v-if="obj.district || obj.street || obj.flat">
                                     <div class="col-auto">
                                         <div class="icon-description row align-items-center justify-content-center">
                                             <svg version="1.1" id="pin" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -134,11 +139,12 @@
 </svg>
                                         </div>
                                     </div>
-                                    <div class="col" >
+                                    <div class="col">
                                         {{obj.district}} {{obj.street}} {{obj.flat}}
                                     </div>
                                 </div>
-                                <div class="club-params row align-items-start justify-content-start" v-for="phone in obj.phones" v-if="phone">
+                                <div class="club-params row align-items-start justify-content-start"
+                                     v-for="phone in obj.phones" v-if="phone">
                                     <div class="col-auto">
                                         <div class="icon-description row align-items-center justify-content-center">
                                             <svg version="1.1" id="viber" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 97.5 97.5" xml:space="preserve"><path d="M77.9,71.1l3.5,2l0.1-0.2C86.4,66.1,89,58,89,49.5c0.1-10.9-4-21.1-11.6-28.7c-7.6-7.7-17.7-12-28.5-12
@@ -182,9 +188,10 @@
                                     </div>
                                     <div class="col">
                                         <!--Для приложения Viber на ПК-->
-                                        <a title="Viber" :href="'viber://chat?number='+obj.viber"  v-if="mobile()">{{obj.viber}}</a>
+                                        <a title="Viber" :href="'viber://chat?number='+obj.viber" v-if="mobile()">{{obj.viber}}</a>
                                         <!-- Для приложения Viber на мобильных-->
-                                        <a title="Viber" :href="'viber://add?number='+obj.viber" v-else>{{obj.viber}}</a>
+                                        <a title="Viber" :href="'viber://add?number='+obj.viber"
+                                           v-else>{{obj.viber}}</a>
                                     </div>
                                 </div>
                                 <div class="club-params row align-items-start justify-content-start" v-if="obj.web">
@@ -246,7 +253,7 @@
                                 </div>
                                 <div class="club-params club-params-social row align-items-start justify-content-between">
                                     <div class="col-12 social" v-if="obj.socials">
-                                        {{  trans('map.social') }}:
+                                        {{ trans('map.social') }}:
                                         <span v-for="(key, value) in obj.socials">
                                             <a :href="key">{{value}}</a>
                                             <span class="social-br">/</span>
@@ -266,7 +273,7 @@
                                             <div class="review-rev row align-items-center justify-content-center">
                                                 <div class="">
                                                     <div class="review-rev-count">{{obj.reviews.length}}</div>
-                                                    <div>{{  trans('map.reviews_get') }}</div>
+                                                    <div>{{ trans('map.reviews_get') }}</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -274,7 +281,7 @@
                                 </div>
                                 <div class="rating rating-percent">
                                     <div class="row">
-                                        <div class="col-4">{{  trans('map.perfect') }}:</div>
+                                        <div class="col-4">{{ trans('map.perfect') }}:</div>
                                         <div class="col-6">
                                             <span class="round active"></span>
                                             <span class="round active"></span>
@@ -282,45 +289,51 @@
                                             <span class="round active"></span>
                                             <span class="round active"></span>
                                         </div>
-                                        <div class="col-2"><span v-if="obj.precentage[5]">{{obj.precentage[5]}}</span> <span v-else>0</span></div>
+                                        <div class="col-2"><span v-if="obj.precentage[5]">{{obj.precentage[5]}}</span>
+                                            <span v-else>0</span></div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-4">{{  trans('map.good') }}:</div>
+                                        <div class="col-4">{{ trans('map.good') }}:</div>
                                         <div class="col-6">
                                             <span class="round active"></span>
                                             <span class="round active"></span>
                                             <span class="round active"></span>
                                             <span class="round active"></span>
                                         </div>
-                                        <div class="col-2"><span v-if="obj.precentage[4] ">{{obj.precentage[4]}}</span> <span v-else>0</span></div>
+                                        <div class="col-2"><span v-if="obj.precentage[4] ">{{obj.precentage[4]}}</span>
+                                            <span v-else>0</span></div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-4">{{  trans('map.not_bad') }}:</div>
+                                        <div class="col-4">{{ trans('map.not_bad') }}:</div>
                                         <div class="col-6">
                                             <span class="round active"></span>
                                             <span class="round active"></span>
                                             <span class="round active"></span>
                                         </div>
-                                        <div class="col-2"><span v-if="obj.precentage[3] ">{{obj.precentage[3]}}</span> <span v-else>0</span></div>
+                                        <div class="col-2"><span v-if="obj.precentage[3] ">{{obj.precentage[3]}}</span>
+                                            <span v-else>0</span></div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-4">{{  trans('map.bad') }}:</div>
+                                        <div class="col-4">{{ trans('map.bad') }}:</div>
                                         <div class="col-6">
                                             <span class="round active"></span>
                                             <span class="round active"></span>
                                         </div>
-                                        <div class="col-2" ><span v-if="obj.precentage[2] ">{{obj.precentage[2]}}</span> <span v-else>0</span></div>
+                                        <div class="col-2"><span v-if="obj.precentage[2] ">{{obj.precentage[2]}}</span>
+                                            <span v-else>0</span></div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-4">{{  trans('map.awfully') }}:</div>
+                                        <div class="col-4">{{ trans('map.awfully') }}:</div>
                                         <div class="col-6">
                                             <span class="round active"></span>
                                         </div>
-                                        <div class="col-2"><span v-if="obj.precentage[1] ">{{obj.precentage[1]}}</span> <span v-else>0</span></div>
+                                        <div class="col-2"><span v-if="obj.precentage[1] ">{{obj.precentage[1]}}</span>
+                                            <span v-else>0</span></div>
                                     </div>
                                 </div>
                                 <div class="marks col">
-                                    <div class="club-params row align-items-center justify-content-start" v-for="mark in obj.marks">
+                                    <div class="club-params row align-items-center justify-content-start"
+                                         v-for="mark in obj.marks">
                                         <div class="col-auto">
                                             <div class="icon-description row align-items-center justify-content-center">
                                                 <img :src="mark.icon" alt="">
@@ -331,7 +344,8 @@
                                         </div>
                                     </div>
 
-                                    <div class="club-params row align-items-center justify-content-start" v-if="obj.cuisine != null">
+                                    <div class="club-params row align-items-center justify-content-start"
+                                         v-if="obj.cuisine != null">
                                         <div class="col-auto">
                                             <div class="icon-description row align-items-center justify-content-center">
                                                 <svg version="1.1" id="food" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -361,7 +375,8 @@
                                             {{obj.cuisine}}
                                         </div>
                                     </div>
-                                    <div class="club-params row align-items-center justify-content-start" v-if="obj.avg_cost != null">
+                                    <div class="club-params row align-items-center justify-content-start"
+                                         v-if="obj.avg_cost != null">
                                         <div class="col-auto">
                                             <div class="icon-description row align-items-center justify-content-center">
                                                 <svg version="1.1" id="dolor" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -391,7 +406,7 @@
                                             </div>
                                         </div>
                                         <div class="col">
-                                            {{  trans('map.average_bill') }}: {{obj.avg_cost}}
+                                            {{ trans('map.average_bill') }}: {{obj.avg_cost}}
                                         </div>
                                     </div>
                                 </div>
@@ -406,10 +421,11 @@
                                 </div>
                             </div>
                             <div class="map">
-                                <google-map name="map" :coord_lat="obj.lat" :coord_lng="obj.lng" :city="null"></google-map>
+                                <google-map name="map" :coord_lat="obj.lat" :coord_lng="obj.lng"
+                                            :city="null"></google-map>
                                 <div class="show-full">
                                     <router-link :to="'/onmap' + '?obj=' +obj.id" class="btn">
-                                        {{  trans('map.show_on_map') }}
+                                        {{ trans('map.show_on_map') }}
                                         <span class="forward">
                                             <svg version="1.1" id="MAP-arr"xmlns="http://www.w3.org/2000/svg"
                                      xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 143.3 82.3"	 style="enable-background:new 0 0 143.3 82.3;" xml:space="preserve">
@@ -434,8 +450,9 @@
                                                 <img :src="img.path" :title="img.title" :alt="img.alt">
                                             </div>
                                         </div>
-                                        <div class="club-name-slider" v-html="obj.name_short"></div>
-                                        <div class="recommended" v-on:click="addToFavorite(obj)" v-bind:class="{active: obj.isFav}">
+                                        <div class="club-name-slider" style="display: none" v-html="obj.name_short"></div>
+                                        <div class="recommended" v-on:click="addToFavorite(obj)"
+                                             v-bind:class="{active: obj.isFav}">
                                             <svg version="1.1" id="reccom" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                                  x="0px" y="0px"	 viewBox="0 0 40.9 39" style="enable-background:new 0 0 40.9 39;" xml:space="preserve">
 <g>
@@ -447,7 +464,7 @@
 </svg>
                                         </div>
                                         <div class="gallery open-in-popup" data-number="2">
-                                            <div class="underline">{{  trans('map.fotogallery') }}</div>
+                                            <div class="underline">{{ trans('map.fotogallery') }}</div>
                                             <span class="forward">
                                                 <svg version="1.1" id="back" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                                      x="0px" y="0px" viewBox="0 0 143.3 82.3" style="enable-background:new 0 0 143.3 82.3;" xml:space="preserve">
@@ -463,10 +480,18 @@
                                         <div class="content-club" v-html="obj.content">
                                         </div>
                                         <div class="social">
-                                            {{  trans('map.share') }}:
-                                            <a href="#!">facebook</a>
+                                            {{ trans('map.share') }}:
+                                            <a :href="'http://www.facebook.com/sharer.php?s=100&p[url]=' + encodeURI(obj.url) +'&p[title]='+ og_title +'&p[summary]='+og_description +'&p[images][0]='+og_image"
+                                               onclick="window.open(this.href, this.title, 'toolbar=0, status=0, width=548, height=325'); return false"
+                                               title="Поделиться ссылкой на Фейсбук" target="_parent">facebook</a>
+
                                             /
-                                            <a href="#!">twitter</a>
+
+                                            <a :href="'http://twitter.com/share?text='+ obj.name +'&url='+ obj.url"
+                                               title="Поделиться ссылкой в Твиттере"
+                                               onclick="window.open(this.href, this.title, 'toolbar=0, status=0, width=548, height=325'); return false"
+                                               target="_parent">twitter</a>
+
                                         </div>
                                     </div>
                                 </div>
@@ -484,7 +509,7 @@
                     <div class="filter-club col-md-8 col-lg-9">
                         <div class="content-club-wrap row justify-content-between">
                             <a class="back-page" v-on:click="allReviews">
-                                {{  trans('map.all_reviews') }}
+                                {{ trans('map.all_reviews') }}
                                 <span class="rew">
                                         <svg version="1.1" id="rew" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                              x="0px" y="0px"	 viewBox="0 0 92.8 77.6" style="enable-background:new 0 0 92.8 77.6;" xml:space="preserve">
@@ -503,7 +528,7 @@
                                 </span>
                             </a>
                             <a class="add-location open-in-popup" data-number="3">
-                                {{  trans('map.add_reviews') }}
+                                {{ trans('map.add_reviews') }}
                                 <span class="add-locate">
                                         <svg version="1.1" id="add" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
                                              x="0px" y="0px" viewBox="0 0 528.9 530.6" style="enable-background:new 0 0 528.9 530.6;" xml:space="preserve">
@@ -526,11 +551,12 @@
                     <div class="row">
                         <div class="pop-title">
                             <div class="pop-title-inner">
-                                {{  trans('map.add_yammer') }}
+                                {{ trans('map.add_yammer') }}
                             </div>
                         </div>
                         <div class="pop-inner">
-                            <form method="POST"  v-on:submit.prevent="yammerReviewAdd" id="yammer-review" v-html="yammerReview"></form>
+                            <form method="POST" v-on:submit.prevent="yammerReviewAdd" id="yammer-review"
+                                  v-html="yammerReview"></form>
                         </div>
                     </div>
                 </div>
@@ -545,13 +571,14 @@
                     <div class="row">
                         <div class="pop-title">
                             <div class="pop-title-inner">
-                                {{  trans('map.fotogallery') }}
+                                {{ trans('map.fotogallery') }}
                             </div>
                         </div>
                         <div class="pop-inner pop-gallery">
                             <div class="col-lg-8 col-12 slider-gallery slider">
                                 <div class="" v-for="img in obj.gallery" v-if="img.status == 'active'">
-                                    <img :src="img.path" :title="img.title" :alt="img.alt" :data-id="img.id" :data-photographer="img.author" :data-date="getCreated(img.created_at)">
+                                    <img :src="img.path" :title="img.title" :alt="img.alt" :data-id="img.id"
+                                         :data-photographer="img.author" :data-date="getCreated(img.created_at)">
                                 </div>
                             </div>
                             <div class="col-lg-4 col-12 gallery-description">
@@ -589,15 +616,16 @@
                                 <div class="gallery-description-col">
                                     <div class="gallery-desc">
                                         <div class="gallery-title">"<span></span>"</div>
-                                        <div class="gallery-desc-light "> {{  trans('map.foto_from') }}:</div>
+                                        <div class="gallery-desc-light "> {{ trans('map.foto_from') }}:</div>
                                         <div class="gallery-desc-bold photographer"></div>
-                                        <div class="gallery-desc-light">{{  trans('map.pub_date') }}:</div>
+                                        <div class="gallery-desc-light">{{ trans('map.pub_date') }}:</div>
                                         <div class="gallery-desc-bold date"></div>
                                     </div>
                                     <div class="gallery-problem">
-                                        <div class="problem-link">{{  trans('map.yammer_foto') }} </div>
-                                        <div class="gallery-problem-descr" >
-                                            <form method="POST"  v-on:submit.prevent="yammerAdd" id="yammer-galery" v-html="galleryForm">
+                                        <div class="problem-link">{{ trans('map.yammer_foto') }}</div>
+                                        <div class="gallery-problem-descr">
+                                            <form method="POST" v-on:submit.prevent="yammerAdd" id="yammer-galery"
+                                                  v-html="galleryForm">
                                             </form>
                                         </div>
                                     </div>
@@ -610,53 +638,53 @@
             <div class="closeLayout show"></div>
         </div>
         <!--POPUP REVIEW-->
-            <div class="popup" data-number="3" >
-                <div class="popup-content show">
-                    <div class="closeX"><span></span><span></span></div>
-                    <div class="activate-popup container-fluid">
-                        <div class="row">
-                            <div class="pop-title">
-                                <div class="pop-title-inner">
+        <div class="popup" data-number="3">
+            <div class="popup-content show">
+                <div class="closeX"><span></span><span></span></div>
+                <div class="activate-popup container-fluid">
+                    <div class="row">
+                        <div class="pop-title">
+                            <div class="pop-title-inner">
 
-                                </div>
                             </div>
-                            <div class="pop-inner popup-review">
-                                <div class="row align-items-start">
-                                    <div class="col-sm-3 col-5">
-                                        <div class="review-image">
-                                            <img src="https://sova.j2landing.com/laravel-filemanager/img/drugstore_map/clubs/Barduck/5b1e334769ae6.jpg">
-                                        </div>
-                                    </div>
-                                    <div class="col-7 col-sm-5">
-                                        <div class="row review-top-title">
-                                            <div class="review-name">
-                                              {{obj.name}}
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            {{obj.district}} {{obj.street}} {{obj.flat}}
-                                        </div>
-                                    </div>
-                                    <div class="rating-wrap col-md-4 d-md-block d-none">
-                                        <div class="row align-items-center justify-content-start">
-                                            <div class="col-auto">
-                                                <div class="rating-count row align-items-center justify-content-center">
-                                                    {{obj.rating}}
-                                                </div>
-                                            </div>
-                                            <div>{{ trans('map.mark') }}<br>{{ trans('map.посетителей') }}</div>
-                                        </div>
+                        </div>
+                        <div class="pop-inner popup-review">
+                            <div class="row align-items-start">
+                                <div class="col-sm-3 col-5">
+                                    <div class="review-image">
+                                        <img src="/laravel-filemanager/img/drugstore_map/clubs/Barduck/5b1e334769ae6.jpg">
                                     </div>
                                 </div>
-                                <div class="title-reting"> {{  trans('map.marks') }}</div>
-                                <form method="POST"  v-on:submit.prevent="new_Review()"   id="new_Review" v-html="popRewiev">
-                                </form>
+                                <div class="col-7 col-sm-5">
+                                    <div class="row review-top-title">
+                                        <div class="review-name">
+                                            {{obj.name}}
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        {{obj.district}} {{obj.street}} {{obj.flat}}
+                                    </div>
+                                </div>
+                                <div class="rating-wrap col-md-4 d-md-block d-none">
+                                    <div class="row align-items-center justify-content-start">
+                                        <div class="col-auto">
+                                            <div class="rating-count row align-items-center justify-content-center">
+                                                {{obj.rating}}
+                                            </div>
+                                        </div>
+                                        <div>{{ trans('map.mark') }}<br>{{ trans('map.посетителей') }}</div>
+                                    </div>
+                                </div>
                             </div>
+                            <div class="title-reting"> {{ trans('map.marks') }}</div>
+                            <form method="POST" v-on:submit.prevent="new_Review()" id="new_Review" v-html="popRewiev">
+                            </form>
                         </div>
                     </div>
                 </div>
-
             </div>
+
+        </div>
         <!--end POPUP REVIEW -->
     </div>
 </template>
@@ -675,117 +703,130 @@
     props: ['name', 'coord_lat', 'coord_lng', 'city']
   })
 
+  var seen = window.$cookies.isKey('seen') ? JSON.parse(window.$cookies.get('seen')) : {0: []};
 
   export default {
-    props: ['objcts', 'seen', 'main'],
+    props: ['objcts', 'main'],
     data() {
       return {
+        input:  '',
         obj: {},
         popRewiev: '',
-        limitReview:3,
-        galleryForm:'',
-        yammerReview:'',
+        limitReview: 3,
+        galleryForm: '',
+        yammerReview: '',
         lang: document.querySelector('html').getAttribute('lang'),
-        title:'',
-        description:'',
+        titles: 'sarwersae',
+        description: '',
+        seen: seen,
         keywords: '',
-        text:'',
-        og_title:'',
-        og_image:'',
-        og_description:'',
+        text: '',
+        og_title: '',
+        og_image: '',
+        og_description: '',
       }
     },
+    beforeDestroy:function () {
+      $('body').removeClass('club-inside')
+    },
+    beforeCreate:function () {
+      $('body').addClass('club-inside')
+    },
     beforeMount: function () {
-        this.getSeo()
+      $('body').addClass('club-inside')
+      this.getSeo()
     },
     watch: {
       '$route'(to, from) {
-        if(to.path != from.path) {
+        if (to.path != from.path) {
           this.getSeo()
         }
       }
     },
-    metaInfo () {
+    metaInfo() {
       return {
-        title: this.title ,
-        titleTemplate: '%s',
+        title: this.titles,
         meta: [
-          { vmid: 'description', name: 'description', content: this.description },
-          { vmid: 'keywords', name: 'keywords', content: this.keywords },
-          { vmid: 'text', name: 'text', content: this.text },
-          { vmid: 'og:title', name: 'og:title', content: this.og_title },
-          { vmid: 'og:image', name: 'og:image', content: this.og_image },
-          { vmid: 'og:description', name: 'og:description', content: this.og_description },
+          {vmid: 'description', name: 'description', content: this.description},
+          {vmid: 'title', name: 'title', content: this.titles},
+          {vmid: 'keywords', name: 'keywords', content: this.keywords},
+          {vmid: 'text', name: 'text', content: this.text},
+          {vmid: 'og:title', name: 'og:title', content: this.og_title},
+          {vmid: 'og:image', name: 'og:image', content: this.og_image},
+          {vmid: 'og:description', name: 'og:description', content: this.og_description},
         ],
         link: [
           {rel: 'stylesheet', href: '/assets/css/map/club.css'},
           {rel: 'stylesheet', href: '/assets/css/map/responsive.css'},
-          // { rel: 'favicon', href: 'favicon.ico' }
         ],
-        script: [
-          {src: '//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js', type: 'text/javascript', body: true},
-          {src: 'https://sova.j2landing.com/assets/js/map/sliders.js', type: 'text/javascript', body: true},
-          {src: 'https://sova.j2landing.com/assets/js/map/jquery.scrollTo-min.js', type: 'text/javascript', body: true},
-        ]
       }
     },
-    mounted:function () {
+
+    mounted: function () {
+
       document.body.classList.remove('main-page');
       document.body.classList.remove('white-menu');
       var urls = this.lang == 'ru' ? '' : '/' + this.lang
-      axios.get(urls +'/comment-create/' + this.$route.params.alias)
+      axios.get(urls + '/comment-create/' + this.$route.params.alias)
         .then(resp => {
-          this.popRewiev  = resp.data;
+          this.popRewiev = resp.data;
         })
       axios.get(urls + '/yammer-gallery')
         .then(resp => {
-          this.galleryForm  = resp.data ;
+          this.galleryForm = resp.data;
         })
       axios.get(urls + '/yammer-review')
         .then(resp => {
-          this.yammerReview  = resp.data ;
+          this.yammerReview = resp.data;
         })
-      setTimeout(function () {
+
         restartClub();
-        initSliders()
-      },500)
+        initSliders();
+        modalsListners();
+        navigationInit()
     },
 
     methods: {
-      getSeo: function() {
+      seenLoaded: function () {
+        if (this.seen[0].indexOf(this.obj.id) < 0) {
+          this.seen[0].push(this.obj.id)
+          window.$cookies.set('seen', JSON.stringify(this.seen), Infinity, '/');
+        }
+        return true
+      },
+      getSeo: function () {
         var objName = this.$route.params.alias
         for (this.objs in this.objcts) {
           if (this.objcts[this.objs].slug == objName) {
             this.obj = this.objcts[this.objs];
             console.log(this.obj);
-
-            if( this.main['seo'] != null) {
-              this.title =  this.obj.name+' | ' + this.main.base_name
+            if (this.main['seo'] != null) {
+              this.titles = this.obj.name + ' | ' + this.main.base_name
               this.description = this.main.seo.seo_description != null ? this.main.seo.seo_description : this.description;
               this.keywords = this.main.seo.seo_keywords != null ? this.main.seo.seo_keywords : this.keywords;
               this.text = this.main.seo.seo_text != null ? this.main.seo.seo_text : this.text;
               this.og_title = this.main.seo.og_title != null ? this.main.seo.og_title : this.og_title;
               this.og_image = this.main.seo.og_image != null ? this.main.seo.og_image : this.og_image;
               this.og_description = this.main.seo.og_description != null ? this.main.seo.og_description : this.og_description;
-
             }
-            if(this.obj['seo'] != null) {
-              this.title = this.obj.seo.seo_title != null ? this.obj.seo.seo_title  : this.obj.name+' | ' + this.main.base_name;
-              this.description = this.obj.seo.seo_description != null  ? this.obj.seo.seo_description : this.description;
-              this.keywords = this.obj.seo.seo_keywords != null  ? this.obj.seo.seo_keywords : this.keywords;
-              this.text = this.obj.seo.seo_text != null  ? this.obj.seo.seo_text : this.text;
-              this.og_title = this.obj.seo.og_title != null  ? this.obj.seo.og_title : this.og_title;
-              this.og_image = this.obj.seo.og_image != null  ? this.obj.seo.og_image : this.og_image;
-              this.og_description = this.obj.seo.og_description != null  ? this.obj.seo.og_description : this.og_description;
+            if (this.obj['seo'] != null) {
+              this.titles = this.obj.seo.seo_title != null ? this.obj.seo.seo_title : this.obj.name + ' | ' + this.main.base_name;
+              this.description = this.obj.seo.seo_description != null ? this.obj.seo.seo_description : this.description;
+              this.keywords = this.obj.seo.seo_keywords != null ? this.obj.seo.seo_keywords : this.keywords;
+              this.text = this.obj.seo.seo_text != null ? this.obj.seo.seo_text : this.text;
+              this.og_title = this.obj.seo.og_title != null ? this.obj.seo.og_title : this.og_title;
+              this.og_image = this.obj.seo.og_image != null ? this.obj.seo.og_image : this.og_image;
+              this.og_description = this.obj.seo.og_description != null ? this.obj.seo.og_description : this.og_description;
             }
           }
         }
-       },
+        console.log(this.titles);
+      },
       /* ПЕРЕВОДИМ ДАТУ */
       getCreated: function (t) {
         var loc = $('html').attr('lang')
         var date = new Date(t);
-        var options = { month: 'long' , year: 'numeric' };
+        var options = {month: 'long', year: 'numeric'};
         return date.toLocaleDateString(loc, options)
       },
       /* новый отзыв */
@@ -793,14 +834,17 @@
         $('#new_Review input[name=inst_id]').val(this.obj.id)
         $.ajax({
           type: 'POST',
-          url:   "/yammer-review",
+          url: "/comment-create",
           headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },
           data: $('#new_Review').serialize(),
           success: function (resp) {
-            if(resp) {
-              $('#new_Review').trigger('reset')
+            if(resp){
+              $('#new_Review').trigger('reset'); $('#new_Review').parents('.answer-block').slideToggle(100); popThanks();
+              $('#new_Review').parents('.popup').find('.closeX').trigger('click');
+            }else if(resp.responseJSON.message ==  "Unauthenticated.") {
+              $('.account.open-in-popup').trigger('click');
             }
           }
         })
@@ -821,8 +865,7 @@
         return +a >= b ? true : false
       },
       /* новая жалоба на отзыв */
-      yammerReviewAdd: function() {
-
+      yammerReviewAdd: function () {
         $.ajax({
           type: 'POST',
           url: "/yammer-review",
@@ -831,8 +874,15 @@
           },
           data: $('#yammer-review').serialize(),
           success: function (resp) {
-            if(resp) {
-              $('#yammer-review').trigger('reset')
+            if (resp) {
+              $('#yammer-review').trigger('reset');
+              popThanks();
+              $('#yammer-review').parents('.popup').find('.closeX').trigger('click');
+            }
+          },
+          error: function (resp) {
+            if(resp.responseJSON.message ==  "Unauthenticated.") {
+              $('.account.open-in-popup').trigger('click');
             }
           }
         })
@@ -841,27 +891,72 @@
       yammerAdd: function () {
         $.ajax({
           type: 'POST',
-          url:   "/yammer-review",
+          url: "/yammer-gallery",
           headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
           },
           data: $('#yammer-galery').serialize(),
           success: function (resp) {
-            if(resp) {
-              $('#yammer-galery').trigger('reset')
+            if (resp) {
+              $('#yammer-galery').trigger('reset');
+              popThanks();
+              $('#yammer-galery').parents('.popup').find('.closeX').trigger('click');
+            }
+          },
+          error: function (resp) {
+            if(resp.responseJSON.message ==  "Unauthenticated.") {
+             $('.account.open-in-popup').trigger('click');
             }
           }
         })
       },
       /* добавить в избранное  */
-      addToFavorite:function (obj) {
-        var uri = obj.isFav ?  '/favorites/unset/'+obj.id :  '/favorites/set/'+obj.id;
+      addToFavorite: function (obj) {
+        var uri = obj.isFav ? '/favorites/unset/' + obj.id : '/favorites/set/' + obj.id;
         axios.post(uri)
           .then(resp => {
-            obj.isFav  = resp.data ;
+            obj.isFav = resp.data;
           })
-      }
+      },
+      searchFilter: function () {
+        var p = this.input
+        var l = [];
+        var cat = []
+        var mark = []
+        if(p.length) {
+          /* search in objects */
+          this.allPoints.filter(function (obj) {
+            var searchRegex = new RegExp(p, 'i');
+            if ((searchRegex.test(obj['name']) || searchRegex.test(['obj.content'])) && this.city == obj.city)
+              l.push(obj);
+          }.bind(this))
+          /* search in subcategories */
+          for (var k in this.categories) {
+            this.categories[k]['marks'].filter(function (obj) {
+              var searchRegex = new RegExp(p, 'i');
+              if ((searchRegex.test(obj['name']))){
+                mark.push(obj);
+              }
+            }.bind(this))
+            if(k != 'common_mark') {
+              this.categories[k]['subcat'].filter(function (obj) {
+                var searchRegex = new RegExp(p, 'i');
+                if ((searchRegex.test(obj['name']))){
+                  cat.push(obj);
+                }
+              }.bind(this))
+            }
+          }
+          this.searchedMark = mark;
+          this.searchedCategory = cat;
+          this.searched = l;
+        }else {
+          this.searched = l;
+        }
+      },
     }
+
+
   }
 
 </script>

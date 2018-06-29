@@ -68,7 +68,7 @@
                                 </router-link>
                                 <div class="input-group-select">
                                     <select class="" v-model="city" v-on:change="newCity">
-                                        <option v-for="(value, key ) in cities" :value="key" :selected="key == city">{{key}}</option>
+                                        <option v-for="(value, key ) in cities" :value="key" :selected="key == city" >{{key}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -78,39 +78,12 @@
                                 <div class="card-header" v-bind:class="{collapsed: filterOpen(value.id)}"
                                      :id="'heading_'+ value.id"
                                      data-toggle="collapse" :data-target="'#collapse_'+ value.id"
-                                     aria-expanded="false" :aria-controls="'collapse_'+ value.id"
+                                     :aria-expanded="!filterOpen(value.id)" :aria-controls="'collapse_'+ value.id"
                                      v-on:click="filterIdObj(value.id)">
                                     <div class="filter-title">
                                         <span class="filter-cat-icon">
-                                        <svg version="1.1" id="disko"
-                                             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                             x="0px" y="0px"
-                                             viewBox="0 0 84.1 91.9" style="enable-background:new 0 0 84.1 91.9;" xml:space="preserve">
-                                            <path d="M33.6,26.9c0.2-1.2,0.1-2.6,0.6-3.1c3.9-3,2.4-7.2,2.5-10.9c0.2-4.3,0-8.6,0-12.9c0.4,0,0.9,0,1.3,0c0,1.9,0,3.7,0,5.6
-                                                c0,3.5,0,7,0,10.5c0,2.6-0.7,5.4,2.3,7.3c0.8,0.5,0.7,2.2,1.1,3.7c9.7,1.7,17.7,6.5,22.9,15.4c4,6.8,5,14.1,3.7,21.7
-                                                C65.5,78.6,51.6,89.7,37,89.3C22.2,89,9,77.7,6.9,63.4C4.6,47.6,13.1,31,33.6,26.9z M30.8,63.9c4.4,0,8.4,0,12.5,0
-                                                c0-4.4,0-8.4,0-12.4c-4.3,0-8.4,0-12.5,0C30.8,55.7,30.8,59.6,30.8,63.9z M56.3,52.5c-3.9-0.4-7.4-0.7-11.1-1.1c0,4.3,0,8.3,0,12.7
-                                                c3.8-0.4,7.3-0.7,11.1-1.1C56.3,59.5,56.3,56.3,56.3,52.5z M43.5,49.7c-0.3-3.2-0.4-5.9-0.9-8.6c-0.1-0.8-1.3-1.8-2.1-1.9
-                                                c-2.2-0.3-4.5-0.3-6.7,0c-0.8,0.1-2,1.1-2.1,1.9c-0.5,2.7-0.6,5.5-0.8,8.6c3.2,0,6,0,8.9,0C40.8,49.7,41.9,49.7,43.5,49.7z
-                                                 M44.1,76.6c10.6-1.6,10.6-0.8,11.8-11.9c-3.6,0.4-7.1,0.7-10.7,1.1C44.8,69.4,44.5,72.8,44.1,76.6z M19,64.7
-                                                c1.6,10.6,1.8,10.8,11.2,11.7c-0.4-3.6-0.7-7.1-1-10.8C25.7,65.3,22.5,65,19,64.7z M44.1,39.8c0.4,3.5,0.8,6.7,1.2,10
-                                                c3.7,0.3,7.1,0.6,10.6,0.9C54.7,41,54.6,40.8,44.1,39.8z M30.2,39.6c-9.4,1-11.4,3.2-10.5,11.1c3.1-0.3,6.3-0.7,9.4-1
-                                                C29.5,46.2,29.9,43.1,30.2,39.6z M32.3,37.5c3.4,0,6.4,0,9.5,0c-0.4-6.7-0.8-7.3-4.5-7.3C33,30.2,32.6,30.9,32.3,37.5z M17,53
-                                                c-7.5,0.7-7.9,1.1-7.3,6.3c0.3,2.4,2.9,3.4,7.3,2.6C17,59,17,56,17,53z M65,54.1c-2.3-0.4-4.5-0.9-6.9-1.3c0,3.4,0,6.3,0,9.2
-                                                C65,62.8,65.8,62,65,54.1z M32.4,78.9c0.9,7.1,1.2,7.5,6.1,6.9c4.7-0.5,2.1-4.5,3.9-6.9C38.6,78.9,35.7,78.9,32.4,78.9z M52.7,77
-                                                c-9.1,1-10.1,1.8-9.7,8.2C49.4,84.2,50.6,83.2,52.7,77z M22.1,39.6c8.8-0.9,10.1-2.1,9.2-8.4C26,31.5,23.1,34.6,22.1,39.6z M43,31
-                                                c-0.1,6.8,2.1,8.5,9.6,7.9C51.5,33.8,48.2,31.5,43,31z M64.4,63.2c-7.1,1.2-7.6,1.8-7.9,10C62.7,71.2,64.2,69.4,64.4,63.2z
-                                                 M64.4,52.1c-0.3-5.3-3.2-7.9-7.9-9.1C57.8,52.2,56.7,51.3,64.4,52.1z M14.5,41.6c0.3,0.3,0.5,0.5,0.8,0.8c3.5-0.9,6.4-2.6,6.5-7.6
-                                                C19.1,37.3,16.8,39.4,14.5,41.6z M60.7,73.9c-4.8,0.6-6.7,2.9-6.6,7C56.1,78.8,58.1,76.7,60.7,73.9z M14.7,74.7
-                                                c2.1,2,4.2,4.1,6.9,6.8C21.1,76.5,18.8,74.6,14.7,74.7z M58.7,42.8c0.4-0.4,0.9-0.7,1.3-1.1c-1.9-2.2-3.9-4.4-5.8-6.5
-                                                c-0.5,0.5-0.9,0.9-1.4,1.4C54.7,38.6,56.7,40.7,58.7,42.8z M40.8,25.3c-1.7-1-2.6-2-3.3-1.9c-0.8,0.1-1.4,1.3-2.1,2
-                                                c0.7,0.5,1.4,1.5,2.1,1.5C38.3,27,39.1,26.2,40.8,25.3z"/>
-                                            <path d="M65,37.8c-0.6-4.3-2.5-6.8-7-7.3c4.6,0,6.4-2.6,6.6-7.5c1.9,6.3,1.9,6.3,7.7,7.7C67.7,31.5,64.5,32.9,65,37.8z"/>
-                                            <path d="M14.6,19.4c-0.6-4.3-2.5-6.8-7-7.3c4.6,0,6.4-2.6,6.6-7.5c1.9,6.3,1.9,6.3,7.7,7.7C17.3,13,14.1,14.4,14.6,19.4z"/>
-                                            <path d="M7.4,91c-0.6-4.3-2.5-6.8-7-7.3c4.6,0,6.4-2.6,6.6-7.5c1.9,6.3,1.9,6.3,7.7,7.6C10,84.7,6.8,86.1,7.4,91z"/>
-                                            <path d="M75.7,80.4c-0.6-4.3-2.5-6.8-7-7.3c4.6,0,6.4-2.6,6.6-7.5c1.9,6.3,1.9,6.3,7.7,7.7C78.3,74,75.1,75.4,75.7,80.4z"/>
-                                        </svg>
-                                    </span>
+                                           <img :src="value.icon" :alt="value.name" >
+                                        </span>
                                         {{value['name']}}
                                         <span class="arr"></span>
                                     </div>
@@ -186,12 +159,14 @@
                                                     </div>
                                                     <div class="col-5">
                                                         <input id="timepickerFr" type="text"
-                                                               class="form-control timepicker" placeholder="от" value="">
+                                                               class="form-control timepicker"
+                                                               :placeholder="trans('map.from')" value="">
                                                     </div>
                                                     -
                                                     <div class="col-5">
                                                         <input id="timepickerTo" type="text"
-                                                               class="form-control timepicker" placeholder="до"  value="">
+                                                               class="form-control timepicker"
+                                                               :placeholder="trans('map.till')" value="">
                                                     </div>
                                                     <button v-on:click="timeChangeFrom" class="btn btn-black">{{ trans('map.select') }}</button>
                                                 </div>
@@ -305,33 +280,16 @@
                                      v-on:click="filterIdObj(value.id)">
                                     <div class="filter-title">
                                         <span class="filter-cat-icon">
-                                        <svg version="1.1" id="disko" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-                                                 viewBox="0 0 84.1 91.9" style="enable-background:new 0 0 84.1 91.9;" xml:space="preserve">
-                                            <path d="M33.6,26.9c0.2-1.2,0.1-2.6,0.6-3.1c3.9-3,2.4-7.2,2.5-10.9c0.2-4.3,0-8.6,0-12.9c0.4,0,0.9,0,1.3,0c0,1.9,0,3.7,0,5.6
-                                                c0,3.5,0,7,0,10.5c0,2.6-0.7,5.4,2.3,7.3c0.8,0.5,0.7,2.2,1.1,3.7c9.7,1.7,17.7,6.5,22.9,15.4c4,6.8,5,14.1,3.7,21.7
-                                                C65.5,78.6,51.6,89.7,37,89.3C22.2,89,9,77.7,6.9,63.4C4.6,47.6,13.1,31,33.6,26.9z M30.8,63.9c4.4,0,8.4,0,12.5,0
-                                                c0-4.4,0-8.4,0-12.4c-4.3,0-8.4,0-12.5,0C30.8,55.7,30.8,59.6,30.8,63.9z M56.3,52.5c-3.9-0.4-7.4-0.7-11.1-1.1c0,4.3,0,8.3,0,12.7
-                                                c3.8-0.4,7.3-0.7,11.1-1.1C56.3,59.5,56.3,56.3,56.3,52.5z M43.5,49.7c-0.3-3.2-0.4-5.9-0.9-8.6c-0.1-0.8-1.3-1.8-2.1-1.9
-                                                c-2.2-0.3-4.5-0.3-6.7,0c-0.8,0.1-2,1.1-2.1,1.9c-0.5,2.7-0.6,5.5-0.8,8.6c3.2,0,6,0,8.9,0C40.8,49.7,41.9,49.7,43.5,49.7z
-                                                 M44.1,76.6c10.6-1.6,10.6-0.8,11.8-11.9c-3.6,0.4-7.1,0.7-10.7,1.1C44.8,69.4,44.5,72.8,44.1,76.6z M19,64.7
-                                                c1.6,10.6,1.8,10.8,11.2,11.7c-0.4-3.6-0.7-7.1-1-10.8C25.7,65.3,22.5,65,19,64.7z M44.1,39.8c0.4,3.5,0.8,6.7,1.2,10
-                                                c3.7,0.3,7.1,0.6,10.6,0.9C54.7,41,54.6,40.8,44.1,39.8z M30.2,39.6c-9.4,1-11.4,3.2-10.5,11.1c3.1-0.3,6.3-0.7,9.4-1
-                                                C29.5,46.2,29.9,43.1,30.2,39.6z M32.3,37.5c3.4,0,6.4,0,9.5,0c-0.4-6.7-0.8-7.3-4.5-7.3C33,30.2,32.6,30.9,32.3,37.5z M17,53
-                                                c-7.5,0.7-7.9,1.1-7.3,6.3c0.3,2.4,2.9,3.4,7.3,2.6C17,59,17,56,17,53z M65,54.1c-2.3-0.4-4.5-0.9-6.9-1.3c0,3.4,0,6.3,0,9.2
-                                                C65,62.8,65.8,62,65,54.1z M32.4,78.9c0.9,7.1,1.2,7.5,6.1,6.9c4.7-0.5,2.1-4.5,3.9-6.9C38.6,78.9,35.7,78.9,32.4,78.9z M52.7,77
-                                                c-9.1,1-10.1,1.8-9.7,8.2C49.4,84.2,50.6,83.2,52.7,77z M22.1,39.6c8.8-0.9,10.1-2.1,9.2-8.4C26,31.5,23.1,34.6,22.1,39.6z M43,31
-                                                c-0.1,6.8,2.1,8.5,9.6,7.9C51.5,33.8,48.2,31.5,43,31z M64.4,63.2c-7.1,1.2-7.6,1.8-7.9,10C62.7,71.2,64.2,69.4,64.4,63.2z
-                                                 M64.4,52.1c-0.3-5.3-3.2-7.9-7.9-9.1C57.8,52.2,56.7,51.3,64.4,52.1z M14.5,41.6c0.3,0.3,0.5,0.5,0.8,0.8c3.5-0.9,6.4-2.6,6.5-7.6
-                                                C19.1,37.3,16.8,39.4,14.5,41.6z M60.7,73.9c-4.8,0.6-6.7,2.9-6.6,7C56.1,78.8,58.1,76.7,60.7,73.9z M14.7,74.7
-                                                c2.1,2,4.2,4.1,6.9,6.8C21.1,76.5,18.8,74.6,14.7,74.7z M58.7,42.8c0.4-0.4,0.9-0.7,1.3-1.1c-1.9-2.2-3.9-4.4-5.8-6.5
-                                                c-0.5,0.5-0.9,0.9-1.4,1.4C54.7,38.6,56.7,40.7,58.7,42.8z M40.8,25.3c-1.7-1-2.6-2-3.3-1.9c-0.8,0.1-1.4,1.3-2.1,2
-                                                c0.7,0.5,1.4,1.5,2.1,1.5C38.3,27,39.1,26.2,40.8,25.3z"/>
-                                            <path d="M65,37.8c-0.6-4.3-2.5-6.8-7-7.3c4.6,0,6.4-2.6,6.6-7.5c1.9,6.3,1.9,6.3,7.7,7.7C67.7,31.5,64.5,32.9,65,37.8z"/>
-                                            <path d="M14.6,19.4c-0.6-4.3-2.5-6.8-7-7.3c4.6,0,6.4-2.6,6.6-7.5c1.9,6.3,1.9,6.3,7.7,7.7C17.3,13,14.1,14.4,14.6,19.4z"/>
-                                            <path d="M7.4,91c-0.6-4.3-2.5-6.8-7-7.3c4.6,0,6.4-2.6,6.6-7.5c1.9,6.3,1.9,6.3,7.7,7.6C10,84.7,6.8,86.1,7.4,91z"/>
-                                            <path d="M75.7,80.4c-0.6-4.3-2.5-6.8-7-7.3c4.6,0,6.4-2.6,6.6-7.5c1.9,6.3,1.9,6.3,7.7,7.7C78.3,74,75.1,75.4,75.7,80.4z"/>
-                                        </svg>
-                                    </span>
+                                             <svg version="1.1" id="test" xmlns="http://www.w3.org/2000/svg"
+                                                  xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                  viewBox="0 0 31 47.9" style="enable-background:new 0 0 31 47.9;" xml:space="preserve">
+
+                                                <path class="st0" d="M2.1,46.4c0.3,0,0.6-0.1,0.8-0.4l12.5-17l12.8,17.4c0.2,0.3,0.5,0.4,0.8,0.4c0.2,0,0.4-0.1,0.6-0.2
+                                                    c0.3-0.2,0.4-0.5,0.4-0.8c0-0.2-0.1-0.4-0.2-0.6L16.7,27.3c1.8-2.4,8.2-11.4,8.2-16.7c0-5.2-4.3-9.5-9.5-9.5s-9.5,4.3-9.5,9.5
+                                                    c0,5.7,6.4,14.4,8.2,16.7L1.3,44.8c-0.1,0.2-0.2,0.4-0.2,0.6c0,0.3,0.1,0.6,0.4,0.8C1.7,46.3,1.9,46.4,2.1,46.4z M15.4,3.1
+                                                    c4.1,0,7.5,3.4,7.5,7.5c0,4.3-5.5,12.2-7.5,15.1C13.3,23,7.9,15.4,7.9,10.6C7.9,6.5,11.3,3.1,15.4,3.1z"></path>
+                                                </svg>
+                                        </span>
                                         {{ trans('map.common_mark') }}
                                         <span class="arr"></span>
                                     </div>
@@ -339,15 +297,7 @@
                                 <div :id="'collapse_'+ value.id" class="collapse"
                                      v-bind:class="{show: !filterOpen(value.id)}" aria-labelledby="heading1">
                                     <div class="card-body">
-                                        <div class="form-check" v-for="subcategory in value.subcat">
-                                            <input class="form-check-input" type="checkbox" name="exampleRadios1"
-                                                   :id="'subcategory_'+subcategory['id']" :val="subcategory['id']"
-                                                   v-on:click="subFilterObj(subcategory['id'])"
-                                                   :checked="filtred.sub.indexOf(subcategory['id']) >=0">
-                                            <label class="form-check-label" :for="'subcategory_'+subcategory['id']">
-                                                {{subcategory.name}}
-                                            </label>
-                                        </div>
+
                                         <div class="additional-marks">{{ trans('map.with_markers') }}</div>
                                         <div class="form-check" v-for="oneMark in value.marks">
                                             <input class="form-check-input" type="checkbox" name="exampleRadios1-1"
@@ -372,17 +322,6 @@
                                  obj.show_marks == true && (obj.isCounsel  == (recomend ? true : obj.isCounsel))
                                   && (obj.isFav  == (faworite ? true : obj.isFav)) && city == obj.city
                                   && obj.show_time == true && filtred.limitList >= filtred.shown">
-
-                                <!--<span v-if="obj.schedule[2] != undefined "> {{obj.schedule[2].start}} </span> - -->
-
-                                <!--<span v-if="obj.schedule[2] != undefined "> {{obj.schedule[2].end}} </span> &#45;&#45;&#45;&#45;-->
-                                <!--<span v-if="obj.schedule[3] != undefined "> {{obj.schedule[3].start}} </span> - -->
-
-                                <!--<span v-if="obj.schedule[3] != undefined "> {{obj.schedule[3].end}} </span>-->
-
-                                    <!--ежедневно-->
-                                <!--<span v-if="obj.schedule[2] == undefined"> {{obj.schedule[1].start}} </span> - -->
-                                <!--<span v-if="obj.schedule[2]== undefined "> {{obj.schedule[1].end}} </span>-->
 
                                 <item-vues :obj="obj" :seen="seen" v-if="calcShow()" :baseHref="baseHref"></item-vues>
                             </div>
@@ -426,9 +365,7 @@
 
   var seen = window.$cookies.isKey('seenseen') ? JSON.parse(window.$cookies.get('seen')) : {0:[]};
 
-  var city = window.$cookies.isKey('city_default') ? window.$cookies.get('city_default') : window.$cookies.isKey('city') ? window.$cookies.get('city') : 'Київ';
-  window.$cookies.set('city', city, Infinity, '/');
-  console.log(city,'city', window.$cookies.isKey('city_default'), window.$cookies.get('city_default') );
+
   var country = 'Украина';
 
   Object.defineProperty(Object.prototype, 'length', {
@@ -444,8 +381,9 @@
     props: ['objcts', 'filtred', 'categories', 'location', 'baseHref', 'main'],
     data() {
       return {
+        input:  '',
         faworite: false,
-        city: city,
+        city: '',
         country: country,
         seen:seen,
         recomend: false,
@@ -472,7 +410,7 @@
           {vmid: 'og:description', name: 'og:description', content: this.og_description},
         ],
         link: [
-          {rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css'},
+          {rel: 'stylesheet', href: '/assets/css/map/gijgo.css'},
           {rel: 'stylesheet', href: '/assets/css/map/club.css'},
           {rel: 'stylesheet', href: '/assets/css/map/search.css'},
           {rel: 'stylesheet', href: '/assets/css/map/responsive.css'},
@@ -499,13 +437,16 @@
       }else {
         this.filtred.city = this.city
       }
-      this.createFilterObject()
+      this.createFilterObject('replace')
     },
     mounted() {
+      this.city = window.$cookies.isKey('city_default') ? window.$cookies.get('city_default') : window.$cookies.isKey('city') ? window.$cookies.get('city') : 'Київ';
+      console.log(this.city,window.$cookies.get('city_default'), window.$cookies.get('city'));
+      window.$cookies.set('city', this.city, Infinity, '/');
       document.body.classList.remove('main-page');
       document.body.classList.remove('white-menu');
       this.getSeo();
-
+      timepickerStart();
     },
     computed: {
       objctsGet: function () {
@@ -519,11 +460,12 @@
       '$route'(to, from) {
         if(to.path != from.path) {
           this.getSeo();
-          this.filtersubFilter();
+          this.createFilterObject('replace');
         }
       }
     },
     methods: {
+
       getSeo: function () {
         for (var categ in this.categories) {
           if(categ == this.$route.path.slice(1, this.$route.path.length)) {
@@ -551,6 +493,7 @@
       },
       newCity: function () {
           window.$cookies.set('city', this.city, Infinity, '/');
+          console.log( this.city);
             this.filtred.city = this.city
           this.filtersubFilter()
       },
@@ -578,12 +521,19 @@
           console.log(2);
           this.filtred.city = this.city
         }
+        console.log(435);
         this.createFilterObject('no')
       },
       /* записываем состояние */
       pushState: function (){
         var t =  this.filtred.slug + '?state=' + JSON.stringify(this.filtred);
+        console.log(t);
         window.history.pushState('', '',  t )
+      },
+      replaceState: function (){
+        var t =  this.filtred.slug + '?state=' + JSON.stringify(this.filtred);
+        console.log('pushing', t);
+        window.history.replaceState('', '',  t )
       },
       /* избранные */
       faworiteShow: function () {
@@ -781,17 +731,14 @@
                 }
             }
         }
-        k == 'no' ? '' : this.pushState();
-
-
-        // console.log('this.filtred', this.filtred);
-        // console.log('this.objcts', this.objcts);
+        k == 'no' ? '' : k =='replace' ? this.replaceState() : this.pushState();
         this.$forceUpdate();
         setTimeout(function () {
           restartClub()
         }, 50)
       },
     },
+
   }
   ;
 </script>

@@ -20,7 +20,8 @@
                                     </div>
                                 </div>
                                 <div class="col-auto review-rating">
-                                    <span class="round" v-for="n in 5" v-bind:class="{active: actPoint(review.rat_avg ,n)}"></span>
+                                    <span class="round" v-for="n in 5"
+                                          v-bind:class="{active: actPoint(review.rat_avg ,n)}"></span>
                                 </div>
                             </div>
                         </div>
@@ -39,7 +40,8 @@
                                 <div class="review-buttons col-auto">
                                     <div class="complain-button row justify-content-end align-items-center">
                                         <div class="underline open-in-popup" data-number="5" :data-id="review.id"
-                                             >{{ trans('map.add_yammer') }}</div>
+                                        >{{ trans('map.add_yammer') }}
+                                        </div>
                                         <svg version="1.1" id="complain" xmlns="http://www.w3.org/2000/svg"
                                                                          xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                                                          viewBox="0 0 104.4 104.5" style="enable-background:new 0 0 104.4 104.5;" xml:space="preserve">
@@ -67,21 +69,24 @@
                             </div>
                         </div>
                         <div class="col-12 review-block answer-block">
-                            <form class="row" :id="'addAnswer' + review.id" v-on:submit.prevent="addAnswer('addAnswer' + review.id)">
+                            <form class="row" :id="'addAnswer' + review.id"
+                                  v-on:submit.prevent="addAnswer('addAnswer' + review.id)">
                                 <textarea name="content_ru" rows="4"></textarea>
-                                <input class="answer-btn"  type="submit" :value=" trans('map.add_answer') "></input>
-                                <input type="hidden" name="rev_id"  :value="review.id">
-                                <input type="hidden" name="inst_id"  :value="obj.id">
+                                <input class="answer-btn" type="submit" :value=" trans('map.add_answer') "></input>
+                                <input type="hidden" name="rev_id" :value="review.id">
+                                <input type="hidden" name="inst_id" :value="obj.id">
                             </form>
                         </div>
                     </div>
                 </div>
             </div>
-            <div v-for="(otz, index) in review.comments" >
+            <div v-for="(otz, index) in review.comments">
                 <div v-if="index < limitComment">
                     <otziv-view :otz="otz" :obj="obj" :otzLim="otzLim"></otziv-view>
                 </div>
-                <div v-else-if="index == limitComment"   v-on:click="moreOtzivov" class="more-comments underline">{{ trans('map.show_all_answers') }}</div>
+                <div v-else-if="index == limitComment" v-on:click="moreOtzivov" class="more-comments underline">{{
+                    trans('map.show_all_answers') }}
+                </div>
             </div>
 
         </div>
@@ -93,38 +98,68 @@
   import Vue from 'vue'
   import otziv_view from '@/components/otzivView';
   import axios from 'axios'
+
   Vue.component('otziv-view', otziv_view, {
-    props: ['otz','obj','otzLim']
+    props: ['otz', 'obj', 'otzLim']
   })
 
 
   export default {
-    props: ['obj','limit'],
-    data: function (){
-        return {
-          otzLim:0,
-          limitComment:0
-        }
+    props: ['obj', 'limit'],
+    data: function () {
+      return {
+        otzLim: 0,
+        limitComment: 0
+      }
     },
     methods: {
       getCreated: function (t) {
         var loc = $('html').attr('lang')
         var date = new Date(t);
-        var options = { day: '2-digit',month: 'long' , year: 'numeric' };
+        var options = {day: '2-digit', month: 'long', year: 'numeric'};
         return date.toLocaleDateString(loc, options)
       },
+
       moreOtzivov: function () {
         this.limitComment = this.limitComment ? 0 : 1000;
+        setTimeout(function () {
+          $('.open-in-popup').unbind('click');
+          $('.open-in-popup').bind('click', openPopUp);
+          modalsListners()
+        }, 700)
       },
-      actPoint: function (a,b) {
+      actPoint: function (a, b) {
         return +a >= b ? true : false
       },
+      addAnswer: function (k) {
+        axios({
+          method: 'post',
+          url: '/comment-create',
+          data: $('#' + k).serialize(),
+        })
+          .then(function (resp) {
+
+            if (resp) {
+              $('#' + k).trigger('reset');
+              $('#' + k).parents('.answer-block').slideToggle(100);
+              popThanks();
+            } else if (resp.responseJSON.message == "Unauthenticated.") {
+              $('.account.open-in-popup').trigger('click');
+            }
+          })
+          .catch(function (error) {
+           console.log(error.response.data, 555555);
+            if (error.response.data.message == "Unauthenticated.") {
+              $('.account.open-in-popup').trigger('click');
+            }
+          })
+      }
     }
   }
 </script>
 
 <style scoped>
-#review {
-    width: 100%;
-}
+    #review {
+        width: 100%;
+    }
 </style>

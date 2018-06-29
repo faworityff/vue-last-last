@@ -4,7 +4,6 @@ import Meta from 'vue-meta';
 import VueCookies from 'vue-cookies'
 import axios from 'axios';
 import _  from 'lodash';
-import createHistory from 'history/createBrowserHistory';
 import mainView from '@/components/mainView';
 import categoryView from '@/components/categoryView';
 import categoryMapView from '@/components/CategoryMapView';
@@ -17,7 +16,6 @@ Vue.use(VueCookies)
 /* получаем данные */
 var router;
 const inst = JSON.parse(window.loc_obj);
-const history = createHistory();
 
 Vue.prototype.trans = (string, args) => {
   let value = _.get(window.i18n, string);
@@ -48,7 +46,6 @@ if(lang != 'ru') {
 }
 console.log(inst);
 
-// console.log(routsArr);
 /* при старте получаем все фильтры в исходном положении */
 for (var cateObj  in  inst.category) {
   var VRegExp = new RegExp(/\/+/g);

@@ -24,7 +24,7 @@
                                 </ul>
                             </div>
                             <div class="input-group-select col-9 col-sm-4">
-                                <select class="" v-model="city" >
+                                <select class="" v-model="city" v-on:change="newCity">
                                     <option v-for="(value, key ) in cities" :value="key" :selected="key == city">{{key}}</option>
                                 </select>
                             </div>
@@ -137,7 +137,7 @@
                         </div>
                     </div>
                 </div>
-                <a  :href="baseHref + 'all?'+recomendHref" class="club-all row align-items-center">
+                <a  :href="'/' +baseHref + 'all?'+recomendHref" class="club-all row align-items-center">
                     <div class="wrap row align-items-center justify-content-end">
                         {{ trans('map.all_recomended') }}
                         <span class="forward">
@@ -164,7 +164,7 @@
                         </div>
                     </div>
                 </div>
-                <a :href="baseHref + 'all?'+clubHref"  class="club-all row align-items-center">
+                <a :href="'/' + baseHref + 'all?'+clubHref"  class="club-all row align-items-center">
                     <div class="wrap row align-items-center justify-content-end">
                         {{ trans('map.all_clubs') }}
                         <span class="forward">
@@ -181,7 +181,7 @@
                 </a>
             </div>
             <!--недавно просмотренные-->
-            <div class="club-section" v-if="seen[0].length">
+            <div class="club-section" v-if="listSeen.length">
                 <div class="club-wrap row justify-content-between">
                     <div class="club-wrap-title row justify-content-center align-items-start">
                         <div class="">{{ trans('map.recently_watched') }}</div>
@@ -203,10 +203,10 @@
   import item_vue from '@/components/itemVue';
 
 
+
   Vue.component('item-vues', item_vue,  {
     props: ['obj','seen','baseHref']
   })
-  var seen = window.$cookies.isKey('seen') ? JSON.parse(window.$cookies.get('seen')) : {0:[]};
   var lang = document.querySelector('html').getAttribute('lang');
   var country = 'Украина';
   var city = window.$cookies.isKey('city_default') ? window.$cookies.get('city_default') : window.$cookies.isKey('city') ? window.$cookies.get('city') : 'Київ';
@@ -233,7 +233,7 @@
         recomendHref: 'state={"recomend":"true"}',
         clubHref: 'state={"sub":[9]}',
         clubs: [],
-        seen:seen,
+        seen: '',
         listRecom: [],
         listClub: [],
         listSeen: [],
@@ -275,7 +275,7 @@
           // { rel: 'favicon', href: 'favicon.ico' }
         ],
         script: [
-          {src: 'https://sova.j2landing.com/assets/js/map/main-page.js', type: 'text/javascript', body: true},
+          {src: '/assets/js/map/main-page.js', type: 'text/javascript', body: true},
         ]
       }
     },
@@ -291,6 +291,7 @@
       },
     },
     mounted() {
+      this.seen = window.$cookies.isKey('seen') ? JSON.parse(window.$cookies.get('seen')) : {0:[]};
       this.getSeo()
       document.body.classList.add('main-page');
       document.body.classList.add('white-menu');
@@ -302,6 +303,12 @@
     },
 
     methods: {
+      newCity: function () {
+        window.$cookies.set('city', this.city, Infinity, '/');
+        window.$cookies.set('city_default', this.city, Infinity, '/')
+        console.log( this.city);
+        this.filtred.city = this.city
+      },
       getSeo: function () {
           if(this.main.title != null) {
             this.title =   this.main.title+' | ' + this.main.base_name
@@ -334,7 +341,7 @@
           }
         }
         for (this.obj in this.allPoints) {
-          if(seen[0].indexOf(this.allPoints[this.obj].id)  >= 0 && this.allPoints[this.obj].city == this.city ) {
+          if(this.seen[0].indexOf(this.allPoints[this.obj].id)  >= 0 && this.allPoints[this.obj].city == this.city ) {
             this.listSeen.push(this.allPoints[this.obj]);
           }
         }
@@ -352,7 +359,6 @@
               l.push(obj);
           }.bind(this))
           /* search in subcategories */
-
           for (var k in this.categories) {
             this.categories[k]['marks'].filter(function (obj) {
               var searchRegex = new RegExp(p, 'i');
@@ -368,7 +374,6 @@
                 }
               }.bind(this))
             }
-
           }
           this.searchedMark = mark;
           this.searchedCategory = cat;
@@ -376,9 +381,7 @@
         }else {
           this.searched = l;
         }
-
       },
-
       controlLimit: function () {
         this.limWached  = this.limWached + 1
         return true

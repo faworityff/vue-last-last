@@ -1,6 +1,6 @@
 <template>
-    <div class="parent">
-        <div class="review-answer review-block row justify-content-between align-items-start" >
+    <div class="parent" :id="'comment_id-'+otz.id">
+        <div class="review-answer review-block row justify-content-between align-items-start">
             <div class="col-auto">
                 <div class="review-image row">
                     <img :src="otz.author_avatar">
@@ -32,7 +32,9 @@
                             </div>
                             <div class="review-buttons col-auto">
                                 <div class="complain-button row justify-content-end align-items-center">
-                                    <div class="underline open-in-popup" v-on:click="getYammerForm(otz.id)" data-number="5"  :data-id="otz.id">{{ trans('map.add_yammer') }}</div>
+                                    <div class="underline open-in-popup" v-on:click="getYammerForm(otz.id)"
+                                         data-number="5" :data-id="otz.id">{{ trans('map.add_yammer') }}
+                                    </div>
                                     <svg version="1.1" id="complain" xmlns="http://www.w3.org/2000/svg"
                                                                              xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                                                                              viewBox="0 0 104.4 104.5" style="enable-background:new 0 0 104.4 104.5;" xml:space="preserve">
@@ -60,23 +62,26 @@
                         </div>
                     </div>
                     <div class="col-12 review-block answer-block">
-                        <form class="row" :id="'addAnswer' + otz.id" v-on:submit.prevent="addAnswer('addAnswer' + otz.id)">
+                        <form class="row" :id="'addAnswer' + otz.id"
+                              v-on:submit.prevent="addAnswer('addAnswer' + otz.id)">
                             <textarea name="content_ru" rows="4"></textarea>
-                            <input class="answer-btn"  type="submit" :value=" trans('map.add_answer') "></input>
-                            <input type="hidden" name="rev_id"  :value="otz.id">
-                            <input type="hidden" name="inst_id"  :value="obj.id">
+                            <input class="answer-btn" type="submit" :value=" trans('map.add_answer') "></input>
+                            <input type="hidden" name="rev_id" :value="otz.id">
+                            <input type="hidden" name="inst_id" :value="obj.id">
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-    <div   class="child-comment ml-5" v-for="(val, index) in otz.comments" >
-        <div v-if="index < otzLimElse">
-            <otziv-view :otz="val" :obj="obj" :otzLimElse="otzLimElse"></otziv-view>
-        </div>
-        <div v-else-if="index == otzLimElse"  v-on:click="moreOtzivov" class="more-comments underline">{{ trans('map.show_all_answers') }}</div>
+        <div class="child-comment ml-5" v-for="(val, index) in otz.comments">
+            <div v-if="index < otzLimElse">
+                <otziv-view :otz="val" :obj="obj" :otzLimElse="otzLimElse"></otziv-view>
+            </div>
+            <div v-else-if="index == otzLimElse" v-on:click="moreOtzivov" class="more-comments underline">{{
+                trans('map.show_all_answers') }}
+            </div>
 
-    </div>
+        </div>
     </div>
 </template>
 
@@ -86,30 +91,49 @@
   import otziv_view from '@/components/otzivView';
 
   Vue.component('otziv-view', otziv_view, {
-    props: ['otz','obj','otzLimElse']
+    props: ['otz', 'obj', 'otzLimElse']
   })
 
   export default {
-    props: ['otz','obj','otzLim'],
-    data () {
+    props: ['otz', 'obj', 'otzLim'],
+    data() {
       return {
-        otzLimElse:0
+        otzLimElse: 0
       }
-  },
+    },
     methods: {
       getYammerForm: function (ids) {
 
       },
       moreOtzivov: function () {
         this.otzLimElse = this.otzLimElse ? 0 : 1000;
-        console.log(this.otzLimElse);
+        setTimeout(function () {
+          $('.open-in-popup').unbind('click');
+          $('.open-in-popup').bind('click', openPopUp);
+          modalsListners()
+        }, 700)
       },
-      addAnswer:function (k) {
+      addAnswer: function (k) {
         axios({
           method: 'post',
           url: '/comment-create',
           data: $('#' + k).serialize()
-        });
+        })
+          .then(function (resp) {
+            if (resp) {
+              $('#' + k).trigger('reset');
+              $('#' + k).parents('.answer-block').slideToggle(100);
+              popThanks();
+            } else if (resp.responseJSON.message == "Unauthenticated.") {
+              $('.account.open-in-popup').trigger('click');
+            }
+          })
+          .catch(function (error) {
+            console.log(error.response.data, 555555);
+            if (error.response.data.message == "Unauthenticated.") {
+              $('.account.open-in-popup').trigger('click');
+            }
+          })
       }
     }
   }
